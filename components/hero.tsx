@@ -194,7 +194,7 @@ export function Hero() {
       {/* Main content — two-layer mask reveal tied to torch position */}
       <div
         ref={textRef}
-        className="relative z-10 mx-auto max-w-6xl px-6 pt-32 pb-20 lg:px-8 lg:pt-40 w-full"
+        className="relative z-10 mx-auto max-w-6xl px-6 pt-32 pb-32 lg:px-8 lg:pt-40 lg:pb-36 w-full"
         style={{
           maskImage: "radial-gradient(circle 0px at 5% 40%, transparent 0%, transparent 100%)",
           WebkitMaskImage: "radial-gradient(circle 0px at 5% 40%, transparent 0%, transparent 100%)",

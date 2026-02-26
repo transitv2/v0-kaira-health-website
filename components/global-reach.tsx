@@ -8,6 +8,16 @@ export function GlobalReach() {
 
   return (
     <section ref={ref} id="global" className="relative py-28 lg:py-40 overflow-hidden">
+      {/* Globe with city connections background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "url('/images/brand/kaira-global-section-bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: "calc(0.15 * (1 - var(--scroll-brightness, 0)))",
+        }}
+      />
       {/* Subtle gold glow accent */}
       <div className="absolute inset-0 pointer-events-none" style={{ opacity: "calc(1 - var(--scroll-brightness, 0) * 0.6)" }}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[50vh] bg-gold/[0.05] rounded-full blur-[140px]" />

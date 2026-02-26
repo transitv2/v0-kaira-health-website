@@ -35,7 +35,16 @@ export function HowItWorks() {
 
   return (
     <section ref={ref} id="how-it-works" className="relative py-28 lg:py-40">
-      {/* Background — transparent so scroll brightness shows through */}
+      {/* Gold particle stream accent */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "url('/images/brand/kaira_hero_bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: "calc(0.08 * (1 - var(--scroll-brightness, 0)))",
+        }}
+      />
       {/* Growing gold glow — light emerging */}
       <div
         className="absolute left-0 top-1/3 w-[500px] h-[500px] bg-gold/[0.025] rounded-full blur-[120px] pointer-events-none"

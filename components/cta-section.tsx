@@ -9,6 +9,16 @@ export function CTASection() {
 
   return (
     <section ref={ref} id="begin" className="relative py-32 lg:py-44 overflow-hidden">
+      {/* Light beam background */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "url('/images/brand/kaira-hero-background.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center 40%",
+          opacity: "calc(0.12 * (1 - var(--scroll-brightness, 0)))",
+        }}
+      />
       {/* Subtle gold accent glow on bright background */}
       <div className="absolute inset-0 pointer-events-none" style={{ opacity: "calc(1 - var(--scroll-brightness, 0) * 0.6)" }}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[50vh] w-[70vw] rounded-full bg-gold/[0.06] blur-[160px]" />

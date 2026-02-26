@@ -2,22 +2,20 @@
 
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 import { cn } from "@/lib/utils"
+import { PixelatedWaveform } from "@/components/pixelated-waveform"
 
 export function BrandStatement() {
   const { ref, isVisible } = useScrollAnimation<HTMLElement>(0.2)
 
   return (
     <section ref={ref} className="relative py-28 lg:py-40 overflow-hidden">
-      {/* Brand background image — fades out as page brightens */}
+      {/* Pixelated waveform water animation — subtle animated backdrop */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: "url('/images/brand/kaira-brand-statement-bg.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          opacity: "calc(0.10 * (1 - var(--scroll-brightness, 0)))",
-        }}
-      />
+        style={{ opacity: "calc(0.8 * (1 - var(--scroll-brightness, 0) * 0.7))" }}
+      >
+        <PixelatedWaveform />
+      </div>
       {/* Subtle gold glow — first hint of light */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gold/[0.025] rounded-full blur-[120px] pointer-events-none"
