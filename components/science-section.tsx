@@ -114,6 +114,39 @@ export function ScienceSection() {
             )
           })}
         </div>
+
+        {/* Transition phrase — fades in as you scroll toward the light */}
+        <div
+          className="mt-24 lg:mt-32"
+          style={{ opacity: "var(--scroll-brightness, 0)" }}
+        >
+          <p
+            className={cn(
+              "text-center font-serif text-3xl italic text-cream sm:text-4xl lg:text-5xl leading-snug transition-all duration-1000 delay-500",
+              isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
+            )}
+          >
+            An approach that takes you out of the darkness
+            <br />
+            and into the light.
+          </p>
+          {/* Decorative wave accent */}
+          <div
+            className={cn(
+              "mt-8 flex justify-center transition-all duration-1000 delay-700",
+              isVisible ? "animate-fade-up" : "opacity-0 translate-y-4"
+            )}
+          >
+            <svg width="120" height="20" viewBox="0 0 120 20" fill="none" className="text-gold/40">
+              <path
+                d="M0 10 Q15 0 30 10 Q45 20 60 10 Q75 0 90 10 Q105 20 120 10"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                fill="none"
+              />
+            </svg>
+          </div>
+        </div>
       </div>
     </section>
   )
