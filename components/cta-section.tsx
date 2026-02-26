@@ -5,66 +5,66 @@ import { cn } from "@/lib/utils"
 import { ArrowRight } from "lucide-react"
 
 export function CTASection() {
-  const { ref, isVisible } = useScrollAnimation<HTMLElement>()
+  const { ref, isVisible } = useScrollAnimation<HTMLElement>(0.15)
 
   return (
-    <section ref={ref} id="contact" className="relative py-32 lg:py-44 overflow-hidden">
-      {/* Background glows */}
+    <section ref={ref} id="begin" className="relative py-32 lg:py-44 overflow-hidden bg-navy-light/30">
+      {/* Atmospheric glow */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[60vh] w-[80vw] rounded-full bg-accent/[0.04] blur-[120px]" />
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[50vh] w-[70vw] rounded-full bg-gold/[0.03] blur-[140px]" />
       </div>
 
       <div className="relative mx-auto max-w-4xl px-6 lg:px-8 text-center">
-        {/* Tagline */}
-        <p
+        <div
           className={cn(
-            "text-lg text-muted-foreground italic",
-            isVisible ? "animate-fade-up" : "opacity-0"
+            "transition-all duration-1000",
+            isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
           )}
         >
-          Life is short?
-        </p>
-
-        {/* Bold statement */}
-        <h2
-          className={cn(
-            "mt-4 font-serif text-4xl font-bold tracking-tight text-foreground sm:text-5xl md:text-6xl lg:text-7xl text-balance",
-            isVisible ? "animate-fade-up delay-100" : "opacity-0"
-          )}
-        >
-          We disagree.
-        </h2>
+          <p className="text-[13px] uppercase tracking-[0.3em] text-gold/40 mb-8">
+            Begin
+          </p>
+          <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-[3.5rem] text-balance">
+            Your Health Deserves More Than an Annual Physical
+          </h2>
+        </div>
 
         <p
           className={cn(
-            "mt-8 max-w-2xl mx-auto text-lg leading-relaxed text-muted-foreground text-pretty",
-            isVisible ? "animate-fade-up delay-200" : "opacity-0"
+            "mt-8 max-w-2xl mx-auto text-lg leading-relaxed text-cream-dim/50 text-pretty transition-all duration-1000 delay-200",
+            isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
           )}
         >
-          Kaira Health brings you the most advanced preventative diagnostics available
-          — so you can spend more time doing what matters most.
+          KAIRA Health offers personalized longevity programs designed around your
+          health profile, risk factors, and goals. Our team will work with you to
+          determine the right level of engagement — from comprehensive annual
+          assessments to full concierge care with continuous monitoring.
         </p>
 
         <div
           className={cn(
-            "mt-12 flex flex-col sm:flex-row items-center justify-center gap-4",
-            isVisible ? "animate-fade-up delay-300" : "opacity-0"
+            "mt-14 flex flex-col sm:flex-row items-center justify-center gap-4 transition-all duration-1000 delay-400",
+            isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
           )}
         >
           <a
             href="mailto:info@kairahealth.com"
-            className="group inline-flex items-center gap-2.5 rounded-full bg-accent px-10 py-4.5 text-base font-semibold text-accent-foreground shadow-lg shadow-accent/20 transition-all duration-300 hover:shadow-xl hover:shadow-accent/30 hover:scale-[1.02] active:scale-[0.98]"
+            className="group inline-flex items-center gap-3 rounded-full bg-gold px-10 py-4 text-[15px] font-semibold text-navy tracking-wide shadow-lg shadow-gold/15 transition-all duration-300 hover:shadow-xl hover:shadow-gold/25 hover:scale-[1.02] active:scale-[0.98]"
           >
-            Start Your Assessment
-            <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-          </a>
-          <a
-            href="#mission"
-            className="inline-flex items-center gap-2 rounded-full border border-foreground/[0.12] bg-foreground/[0.04] backdrop-blur-xl px-8 py-4 text-base font-medium text-foreground/80 transition-all duration-300 hover:border-foreground/[0.2] hover:bg-foreground/[0.07]"
-          >
-            How It Works
+            Schedule Your Consultation
+            <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
           </a>
         </div>
+
+        {/* Pricing note */}
+        <p
+          className={cn(
+            "mt-8 text-xs text-cream-dim/25 italic transition-all duration-1000 delay-500",
+            isVisible ? "animate-fade-in" : "opacity-0"
+          )}
+        >
+          Programs are tailored by consultation. No generic packages.
+        </p>
       </div>
     </section>
   )

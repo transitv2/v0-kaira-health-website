@@ -2,105 +2,99 @@
 
 import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 import { cn } from "@/lib/utils"
-import Image from "next/image"
-import { ArrowRight, CheckCircle2 } from "lucide-react"
+import { Microscope, Brain, UserCheck } from "lucide-react"
 
-const features = [
-  "AI-enhanced MRI interpretation for earliest cancer detection",
-  "Proprietary algorithms detecting 50+ cancer types from blood samples",
-  "Coronary soft-plaque detection before cardiac events",
-  "Machine-learning biological age assessment from DNA methylation",
-  "Whole genome sequencing with 350,000+ health associations",
-  "Continuous R&D partnerships with global diagnostic leaders",
+const pillars = [
+  {
+    icon: Microscope,
+    title: "Advanced Diagnostics Aggregation",
+    description:
+      "We draw from the world\u2019s leading laboratories and imaging centers \u2014 not a single vendor, but a curated network of the best. Over 200 biomarkers across metabolic, hormonal, cardiovascular, inflammatory, immune, and genomic panels.",
+    accent: "We don\u2019t choose what\u2019s convenient. We choose what\u2019s definitive.",
+    number: "01",
+  },
+  {
+    icon: Brain,
+    title: "AI-Powered Pattern Recognition",
+    description:
+      "KAIRA\u2019s proprietary analytics engine identifies patterns, correlations, and early signals that no single physician could spot across hundreds of data points. It learns your baseline. It detects deviation. It flags what matters before it becomes a diagnosis.",
+    accent: "Your data, read with a precision that matches its complexity.",
+    number: "02",
+  },
+  {
+    icon: UserCheck,
+    title: "Physician-Led Concierge Care",
+    description:
+      "Every KAIRA client is matched with a dedicated physician who reviews every result, explains every finding, and builds a personalized longevity protocol \u2014 with direct access, unhurried consultations, and coordination across specialists when needed.",
+    accent: "The rarest thing in modern medicine: a doctor who has the time to care.",
+    number: "03",
+  },
 ]
 
 export function ScienceSection() {
-  const { ref, isVisible } = useScrollAnimation<HTMLElement>()
+  const { ref, isVisible } = useScrollAnimation<HTMLElement>(0.1)
 
   return (
-    <section ref={ref} id="science" className="relative py-24 lg:py-32 overflow-hidden">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
-          {/* Image */}
-          <div
-            className={cn(
-              "relative",
-              isVisible ? "animate-scale-in" : "opacity-0"
-            )}
-          >
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl">
-              <Image
-                src="/images/services-lab.jpg"
-                alt="Advanced diagnostic laboratory"
-                fill
-                className="object-cover"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
-            </div>
-            {/* Floating stat card */}
-            <div className="absolute -bottom-6 -right-4 rounded-xl border border-foreground/[0.1] bg-background/80 backdrop-blur-xl p-5 shadow-xl lg:-right-8 animate-float">
-              <div className="text-3xl font-bold text-accent font-serif">98%</div>
-              <div className="text-xs text-muted-foreground mt-1">Detection Accuracy</div>
-            </div>
-          </div>
+    <section ref={ref} id="science" className="relative py-28 lg:py-40 bg-navy-light/50">
+      {/* Background accent */}
+      <div className="absolute right-0 top-1/4 w-[500px] h-[500px] bg-gold/[0.02] rounded-full blur-[150px] pointer-events-none" />
 
-          {/* Content */}
-          <div>
-            <span
-              className={cn(
-                "text-sm font-medium uppercase tracking-widest text-accent",
-                isVisible ? "animate-fade-up" : "opacity-0"
-              )}
-            >
-              The Science
-            </span>
-            <h2
-              className={cn(
-                "mt-4 font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl text-balance",
-                isVisible ? "animate-fade-up delay-100" : "opacity-0"
-              )}
-            >
-              Breakthrough AI-Enabled Diagnostics
-            </h2>
-            <p
-              className={cn(
-                "mt-6 text-lg leading-relaxed text-muted-foreground text-pretty",
-                isVisible ? "animate-fade-up delay-200" : "opacity-0"
-              )}
-            >
-              Global advancements in diagnostic R&D combined with breakthrough AI
-              have propelled screening technologies to levels almost unimaginable
-              a short time ago. Kaira Health brings these innovations to you.
-            </p>
+      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Header */}
+        <div
+          className={cn(
+            "max-w-3xl transition-all duration-1000",
+            isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
+          )}
+        >
+          <p className="text-[13px] uppercase tracking-[0.3em] text-gold/40 mb-6">
+            The Science
+          </p>
+          <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-5xl text-balance">
+            The Most Comprehensive Health Intelligence System Ever Built
+          </h2>
+          <p className="mt-6 text-lg leading-relaxed text-cream-dim/50 max-w-2xl">
+            {"Other platforms test. KAIRA "}
+            <em>synthesizes</em>
+            {". We don\u2019t believe in one test, one scan, or one data point. We believe in resolution \u2014 the kind that comes from aggregating the world\u2019s most advanced diagnostics into a single, coherent picture of your health."}
+          </p>
+        </div>
 
-            <ul className="mt-8 space-y-4">
-              {features.map((feature, i) => (
-                <li
-                  key={i}
-                  className={cn(
-                    "flex items-start gap-3",
-                    isVisible ? "animate-fade-up" : "opacity-0"
-                  )}
-                  style={{ animationDelay: `${300 + i * 60}ms` }}
-                >
-                  <CheckCircle2 className="h-5 w-5 text-accent shrink-0 mt-0.5" />
-                  <span className="text-sm text-foreground leading-relaxed">{feature}</span>
-                </li>
-              ))}
-            </ul>
+        {/* Three pillar cards */}
+        <div className="mt-16 lg:mt-24 grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
+          {pillars.map((pillar, i) => {
+            const Icon = pillar.icon
+            return (
+              <div
+                key={pillar.number}
+                className={cn(
+                  "group relative rounded-2xl border border-cream/[0.06] bg-cream/[0.02] p-8 lg:p-10 transition-all duration-700 hover:border-gold/[0.15] hover:bg-cream/[0.04]",
+                  isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
+                )}
+                style={{ animationDelay: `${200 + i * 150}ms` }}
+              >
+                <span className="text-[11px] font-mono tracking-widest text-gold/30">
+                  {pillar.number}
+                </span>
 
-            <a
-              href="#contact"
-              className={cn(
-                "group mt-8 inline-flex items-center gap-2 text-sm font-semibold text-accent transition-all duration-300 hover:gap-3",
-                isVisible ? "animate-fade-up delay-700" : "opacity-0"
-              )}
-            >
-              Learn more about our science
-              <ArrowRight className="h-4 w-4" />
-            </a>
-          </div>
+                <div className="mt-6 flex h-12 w-12 items-center justify-center rounded-xl border border-gold/[0.12] bg-gold/[0.05]">
+                  <Icon className="h-5 w-5 text-gold/70" strokeWidth={1.5} />
+                </div>
+
+                <h3 className="mt-6 font-serif text-xl font-bold text-cream leading-snug">
+                  {pillar.title}
+                </h3>
+
+                <p className="mt-4 text-[15px] leading-relaxed text-cream-dim/45">
+                  {pillar.description}
+                </p>
+
+                <p className="mt-6 text-sm italic text-gold/40 leading-relaxed border-t border-cream/[0.04] pt-6">
+                  {pillar.accent}
+                </p>
+              </div>
+            )
+          })}
         </div>
       </div>
     </section>

@@ -1,14 +1,11 @@
 import { Navigation } from "@/components/navigation"
 import { Hero } from "@/components/hero"
-import { MissionSection } from "@/components/mission-section"
-import { BiomarkerTicker } from "@/components/biomarker-ticker"
-import { ServicesSection } from "@/components/services-section"
+import { BrandStatement } from "@/components/brand-statement"
 import { ScienceSection } from "@/components/science-section"
-import { DiseaseMonitor } from "@/components/disease-monitor"
+import { HowItWorks } from "@/components/how-it-works"
 import { StatsSection } from "@/components/stats-section"
-import { AboutSection } from "@/components/about-section"
+import { GlobalReach } from "@/components/global-reach"
 import { CTASection } from "@/components/cta-section"
-import { TestimonialsSection } from "@/components/testimonials-section"
 import { Footer } from "@/components/footer"
 
 export default function Home() {
@@ -16,14 +13,11 @@ export default function Home() {
     <main>
       <Navigation />
       <Hero />
-      <BiomarkerTicker />
-      <MissionSection />
-      <ServicesSection />
+      <BrandStatement />
       <ScienceSection />
-      <DiseaseMonitor />
+      <HowItWorks />
       <StatsSection />
-      <TestimonialsSection />
-      <AboutSection />
+      <GlobalReach />
       <CTASection />
       <Footer />
     </main>

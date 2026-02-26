@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Space_Grotesk } from 'next/font/google'
+import { Inter, Syne } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
@@ -8,22 +8,23 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
-const spaceGrotesk = Space_Grotesk({
+const syne = Syne({
   subsets: ['latin'],
-  variable: '--font-space-grotesk',
+  variable: '--font-display',
 })
 
 export const metadata: Metadata = {
-  title: 'Kaira Health | The Future of Preventative Healthcare',
+  title: 'KAIRA Health | See Everything. Miss Nothing.',
   description:
-    'Kaira Health delivers AI-enabled longevity medicine with the earliest detection and intervention for cancers, cardiovascular, and neurological disorders. Live younger, live longer.',
+    'KAIRA Health combines the world\'s most advanced diagnostics with AI-powered analysis and physician-led concierge care. The most important medical discovery is the one that happens before you need it.',
   keywords: [
     'preventative healthcare',
     'longevity medicine',
     'AI diagnostics',
     'functional medicine',
-    'Kaira Health',
-    'early cancer detection',
+    'KAIRA Health',
+    'early detection',
+    'concierge medicine',
     'health optimization',
   ],
   icons: {
@@ -46,7 +47,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#1a1d2e',
+  themeColor: '#0A1628',
   width: 'device-width',
   initialScale: 1,
 }
@@ -57,7 +58,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${inter.variable} ${syne.variable}`}>
       <body className="font-sans antialiased">
         {children}
         <Analytics />

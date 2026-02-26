@@ -4,15 +4,19 @@ import { useScrollAnimation } from "@/hooks/use-scroll-animation"
 import { cn } from "@/lib/utils"
 import { useEffect, useState, useRef } from "react"
 
-interface AnimatedCounterProps {
+function AnimatedCounter({
+  end,
+  suffix = "",
+  prefix = "",
+  duration = 2200,
+  isVisible,
+}: {
   end: number
   suffix?: string
   prefix?: string
   duration?: number
   isVisible: boolean
-}
-
-function AnimatedCounter({ end, suffix = "", prefix = "", duration = 2000, isVisible }: AnimatedCounterProps) {
+}) {
   const [count, setCount] = useState(0)
   const hasAnimated = useRef(false)
 
@@ -23,7 +27,7 @@ function AnimatedCounter({ end, suffix = "", prefix = "", duration = 2000, isVis
     const timer = setInterval(() => {
       const elapsed = Date.now() - startTime
       const progress = Math.min(elapsed / duration, 1)
-      const eased = 1 - Math.pow(1 - progress, 3) // ease-out cubic
+      const eased = 1 - Math.pow(1 - progress, 3)
       setCount(Math.floor(eased * end))
       if (progress === 1) clearInterval(timer)
     }, 16)
@@ -32,89 +36,95 @@ function AnimatedCounter({ end, suffix = "", prefix = "", duration = 2000, isVis
 
   return (
     <span>
-      {prefix}{count}{suffix}
+      {prefix}
+      {count}
+      {suffix}
     </span>
   )
 }
 
 const stats = [
-  {
-    value: 50,
-    suffix: "%",
-    label: "of heart attack victims had no prior symptoms",
-    detail: "Making early cardiac screening critical",
-  },
-  {
-    value: 50,
-    suffix: "+",
-    label: "cancer types detectable from a single blood test",
-    detail: "At stages 0 and 1, before symptoms appear",
-  },
-  {
-    value: 8,
-    suffix: "x",
-    label: "earlier detection than traditional screening",
-    detail: "Through AI-enhanced diagnostic technology",
-  },
-  {
-    value: 350,
-    suffix: "K+",
-    label: "genomic associations analyzed",
-    detail: "The most comprehensive DNA health test available",
-  },
+  { value: 200, suffix: "+", label: "Biomarkers analyzed per client" },
+  { value: 5, suffix: "x", label: "More comprehensive than standard physicals" },
+  { value: 2, suffix: "", label: "Markets served: North America & Middle East" },
+  { value: 24, suffix: "/7", label: "Physician access for concierge members" },
+]
+
+const trustSignals = [
+  "Currently operating and serving patients",
+  "Founded by practicing physicians",
+  "World-leading laboratory and imaging network",
+  "HIPAA-compliant, enterprise-grade security",
 ]
 
 export function StatsSection() {
-  const { ref, isVisible } = useScrollAnimation<HTMLElement>()
+  const { ref, isVisible } = useScrollAnimation<HTMLElement>(0.1)
 
   return (
-    <section ref={ref} className="relative py-24 lg:py-32 bg-foreground/[0.04] overflow-hidden">
-      {/* Background decoration */}
+    <section ref={ref} id="credibility" className="relative py-28 lg:py-40 bg-navy-light/50">
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-0 left-1/4 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 h-80 w-80 rounded-full bg-accent/5 blur-3xl" />
+        <div className="absolute top-1/4 left-0 w-[400px] h-[400px] bg-gold/[0.02] rounded-full blur-[150px]" />
       </div>
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-16">
-          <span
-            className={cn(
-              "text-sm font-medium uppercase tracking-widest text-accent",
-              isVisible ? "animate-fade-up" : "opacity-0"
-            )}
-          >
-            Why It Matters
-          </span>
-          <h2
-            className={cn(
-              "mt-4 font-serif text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl text-balance",
-              isVisible ? "animate-fade-up delay-100" : "opacity-0"
-            )}
-          >
-            The Numbers Speak for Themselves
+        {/* Header */}
+        <div
+          className={cn(
+            "max-w-3xl transition-all duration-1000",
+            isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
+          )}
+        >
+          <p className="text-[13px] uppercase tracking-[0.3em] text-gold/40 mb-6">
+            Built on Evidence
+          </p>
+          <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-5xl text-balance">
+            Trusted by Those Who Demand the Best
           </h2>
+          <p className="mt-6 text-lg leading-relaxed text-cream-dim/50 max-w-2xl">
+            {"KAIRA Health was founded by physicians and technologists who believe that the gap between what modern medicine "}
+            <em>can</em>
+            {" detect and what it "}
+            <em>does</em>
+            {" detect is the greatest preventable risk in healthcare today."}
+          </p>
         </div>
 
-        <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Stat grid */}
+        <div className="mt-16 lg:mt-20 grid grid-cols-2 gap-6 lg:grid-cols-4 lg:gap-8">
           {stats.map((stat, i) => (
             <div
               key={stat.label}
               className={cn(
-                "text-center p-6 rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03] backdrop-blur-sm",
-                isVisible ? "animate-fade-up" : "opacity-0"
+                "rounded-2xl border border-cream/[0.06] bg-cream/[0.02] p-6 lg:p-8 transition-all duration-700",
+                isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
               )}
               style={{ animationDelay: `${200 + i * 100}ms` }}
             >
-              <div className="text-4xl font-bold text-accent font-serif lg:text-5xl">
+              <div className="font-serif text-3xl font-bold text-gold lg:text-4xl">
                 <AnimatedCounter end={stat.value} suffix={stat.suffix} isVisible={isVisible} />
               </div>
-              <p className="mt-3 text-sm font-medium text-foreground/90">
+              <p className="mt-3 text-sm leading-snug text-cream-dim/50">
                 {stat.label}
               </p>
-              <p className="mt-2 text-xs text-muted-foreground">
-                {stat.detail}
-              </p>
             </div>
+          ))}
+        </div>
+
+        {/* Trust signals */}
+        <div
+          className={cn(
+            "mt-16 flex flex-wrap gap-3",
+            isVisible ? "animate-fade-up delay-600" : "opacity-0"
+          )}
+        >
+          {trustSignals.map((signal) => (
+            <span
+              key={signal}
+              className="inline-flex items-center gap-2 rounded-full border border-cream/[0.06] bg-cream/[0.02] px-4 py-2 text-[13px] text-cream-dim/40"
+            >
+              <span className="h-1 w-1 rounded-full bg-gold/50" />
+              {signal}
+            </span>
           ))}
         </div>
       </div>
