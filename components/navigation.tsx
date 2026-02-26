@@ -15,9 +15,16 @@ const navLinks = [
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [isBright, setIsBright] = useState(false)
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50)
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50)
+      // Check if we've scrolled past the dark→light transition point
+      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
+      const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0
+      setIsBright(progress > 0.35) // past transition midpoint
+    }
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
@@ -27,12 +34,14 @@ export function Navigation() {
       className={cn(
         "fixed top-0 left-0 right-0 z-50 transition-all duration-700",
         isScrolled
-          ? "bg-navy/80 backdrop-blur-2xl border-b border-gold/[0.08]"
+          ? isBright
+            ? "bg-white/80 backdrop-blur-2xl border-b border-black/[0.06] shadow-sm"
+            : "bg-navy/80 backdrop-blur-2xl border-b border-gold/[0.08]"
           : "bg-transparent"
       )}
     >
       <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
-        <a href="#" className="relative z-50">
+        <a href="#" className="relative z-50 transition-all duration-300 hover:brightness-125 hover:drop-shadow-[0_0_8px_rgba(201,168,76,0.3)]">
           <KairaLogo size={30} />
         </a>
 
@@ -42,7 +51,12 @@ export function Navigation() {
             <a
               key={link.href}
               href={link.href}
-              className="text-[13px] font-medium tracking-wide text-cream-dim/50 transition-colors duration-300 hover:text-cream-dim"
+              className={cn(
+                "text-[13px] font-medium tracking-wide transition-colors duration-500",
+                isBright
+                  ? "text-navy/60 hover:text-navy"
+                  : "text-cream-dim/50 hover:text-cream-dim"
+              )}
             >
               {link.label}
             </a>
@@ -53,7 +67,12 @@ export function Navigation() {
         <div className="hidden md:block">
           <a
             href="#begin"
-            className="group inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/[0.06] px-5 py-2.5 text-[13px] font-medium text-gold tracking-wide transition-all duration-300 hover:bg-gold/[0.12] hover:border-gold/50"
+            className={cn(
+              "group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-medium tracking-wide transition-all duration-500",
+              isBright
+                ? "border border-gold/40 bg-gold/[0.08] text-gold-dim hover:bg-gold/[0.15] hover:border-gold/60"
+                : "border border-gold/30 bg-gold/[0.06] text-gold hover:bg-gold/[0.12] hover:border-gold/50"
+            )}
           >
             Begin Your Assessment
             <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
@@ -63,7 +82,10 @@ export function Navigation() {
         {/* Mobile Toggle */}
         <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}
-          className="md:hidden relative z-50 p-2 text-cream-dim"
+          className={cn(
+            "md:hidden relative z-50 p-2 transition-colors duration-500",
+            isBright ? "text-navy" : "text-cream-dim"
+          )}
           aria-label={isMobileOpen ? "Close menu" : "Open menu"}
         >
           {isMobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -73,7 +95,8 @@ export function Navigation() {
       {/* Mobile Menu */}
       <div
         className={cn(
-          "fixed inset-0 z-40 bg-navy/[0.98] backdrop-blur-xl transition-all duration-500 md:hidden",
+          "fixed inset-0 z-40 backdrop-blur-xl transition-all duration-500 md:hidden",
+          isBright ? "bg-white/[0.98]" : "bg-navy/[0.98]",
           isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         )}
       >
@@ -84,7 +107,8 @@ export function Navigation() {
               href={link.href}
               onClick={() => setIsMobileOpen(false)}
               className={cn(
-                "text-2xl font-serif font-bold tracking-wide text-cream-dim transition-all duration-300 hover:text-gold",
+                "text-2xl font-serif font-bold tracking-wide transition-all duration-300 hover:text-gold",
+                isBright ? "text-navy" : "text-cream-dim",
                 isMobileOpen ? "animate-fade-up" : "opacity-0"
               )}
               style={{ animationDelay: `${i * 80}ms` }}

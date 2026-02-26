@@ -16,7 +16,10 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="border-t border-cream/[0.04]">
+    <footer className="relative">
+      {/* Gradient transition — adapts to current scroll brightness */}
+      {/* Gold rule */}
+      <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/10 to-transparent" />
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-4">
           {/* Brand */}
@@ -24,11 +27,11 @@ export function Footer() {
             <a href="#">
               <KairaLogo size={28} />
             </a>
-            <p className="mt-5 text-sm leading-relaxed text-cream-dim/35 max-w-sm">
+            <p className="mt-5 text-sm leading-relaxed text-sub max-w-sm">
               The most comprehensive health intelligence platform ever built.
               Serving clients across North America and the Middle East.
             </p>
-            <p className="mt-4 text-xs text-cream-dim/20">
+            <p className="mt-4 text-xs text-ghost">
               Toronto &middot; Expanding to the United States & Middle East
             </p>
           </div>
@@ -36,7 +39,7 @@ export function Footer() {
           {/* Link columns */}
           {Object.entries(footerLinks).map(([category, links]) => (
             <div key={category}>
-              <h4 className="text-[11px] uppercase tracking-[0.2em] font-medium text-cream-dim/30">
+              <h4 className="text-[11px] uppercase tracking-[0.2em] font-medium text-sub">
                 {category}
               </h4>
               <ul className="mt-4 space-y-3">
@@ -44,7 +47,7 @@ export function Footer() {
                   <li key={link.label}>
                     <a
                       href={link.href}
-                      className="text-sm text-cream-dim/40 transition-colors duration-200 hover:text-cream-dim/70"
+                      className="text-sm text-sub transition-colors duration-200 hover:text-prose-strong"
                     >
                       {link.label}
                     </a>
@@ -56,15 +59,15 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-cream/[0.04] pt-8 sm:flex-row">
-          <p className="text-xs text-cream-dim/20">
+        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
+          <p className="text-xs text-ghost">
             &copy; {new Date().getFullYear()} KAIRA Health. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-xs text-cream-dim/20 hover:text-cream-dim/40 transition-colors">
+            <a href="#" className="text-xs text-ghost hover:text-sub transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="text-xs text-cream-dim/20 hover:text-cream-dim/40 transition-colors">
+            <a href="#" className="text-xs text-ghost hover:text-sub transition-colors">
               Terms of Service
             </a>
           </div>

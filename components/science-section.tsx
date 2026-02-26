@@ -35,9 +35,22 @@ export function ScienceSection() {
   const { ref, isVisible } = useScrollAnimation<HTMLElement>(0.1)
 
   return (
-    <section ref={ref} id="science" className="relative py-28 lg:py-40 bg-navy-light/50">
-      {/* Background accent */}
-      <div className="absolute right-0 top-1/4 w-[500px] h-[500px] bg-gold/[0.02] rounded-full blur-[150px] pointer-events-none" />
+    <section ref={ref} id="science" className="relative py-28 lg:py-40">
+      {/* Neural network background image — fades out as page brightens */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "url('/images/brand/kaira-science-section-bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: "calc(0.10 * (1 - var(--scroll-brightness, 0)))",
+        }}
+      />
+      {/* Background accent — growing gold presence */}
+      <div
+        className="absolute right-0 top-1/4 w-[500px] h-[500px] bg-gold/[0.03] rounded-full blur-[150px] pointer-events-none"
+        style={{ opacity: "calc(1 - var(--scroll-brightness, 0) * 0.6)" }}
+      />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
@@ -47,13 +60,13 @@ export function ScienceSection() {
             isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
           )}
         >
-          <p className="text-[13px] uppercase tracking-[0.3em] text-gold/40 mb-6">
+          <p className="text-[13px] uppercase tracking-[0.3em] text-gold-sub mb-6">
             The Science
           </p>
           <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-5xl text-balance">
             The Most Comprehensive Health Intelligence System Ever Built
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-cream-dim/50 max-w-2xl">
+          <p className="mt-6 text-lg leading-relaxed text-prose max-w-2xl">
             {"Other platforms test. KAIRA "}
             <em>synthesizes</em>
             {". We don\u2019t believe in one test, one scan, or one data point. We believe in resolution \u2014 the kind that comes from aggregating the world\u2019s most advanced diagnostics into a single, coherent picture of your health."}
@@ -68,16 +81,21 @@ export function ScienceSection() {
               <div
                 key={pillar.number}
                 className={cn(
-                  "group relative rounded-2xl border border-cream/[0.06] bg-cream/[0.02] p-8 lg:p-10 transition-all duration-700 hover:border-gold/[0.15] hover:bg-cream/[0.04]",
+                  "group relative rounded-2xl border border-border bg-card backdrop-blur-sm p-8 lg:p-10 transition-all duration-700 hover:border-gold/20 hover:bg-card",
                   isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
                 )}
                 style={{ animationDelay: `${200 + i * 150}ms` }}
               >
-                <span className="text-[11px] font-mono tracking-widest text-gold/30">
+                {/* Decorative watermark number */}
+                <span className="absolute top-4 right-6 text-7xl font-serif font-bold text-gold/[0.07] select-none pointer-events-none leading-none">
                   {pillar.number}
                 </span>
 
-                <div className="mt-6 flex h-12 w-12 items-center justify-center rounded-xl border border-gold/[0.12] bg-gold/[0.05]">
+                <span className="relative text-[11px] font-mono tracking-widest text-gold/30">
+                  {pillar.number}
+                </span>
+
+                <div className="relative mt-6 flex h-12 w-12 items-center justify-center rounded-xl border border-gold/[0.12] bg-gold/[0.05] shadow-[0_0_30px_rgba(201,168,76,0.15)]">
                   <Icon className="h-5 w-5 text-gold/70" strokeWidth={1.5} />
                 </div>
 
@@ -85,11 +103,11 @@ export function ScienceSection() {
                   {pillar.title}
                 </h3>
 
-                <p className="mt-4 text-[15px] leading-relaxed text-cream-dim/45">
+                <p className="mt-4 text-[15px] leading-relaxed text-prose">
                   {pillar.description}
                 </p>
 
-                <p className="mt-6 text-sm italic text-gold/40 leading-relaxed border-t border-cream/[0.04] pt-6">
+                <p className="mt-6 text-sm italic text-gold-sub leading-relaxed border-t border-border pt-6">
                   {pillar.accent}
                 </p>
               </div>

@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Syne } from 'next/font/google'
+import { Inter, Playfair_Display } from 'next/font/google'
+// import { Syne } from 'next/font/google' // kept for easy A/B comparison
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
@@ -8,8 +9,9 @@ const inter = Inter({
   variable: '--font-inter',
 })
 
-const syne = Syne({
+const playfair = Playfair_Display({
   subsets: ['latin'],
+  weight: ['700', '800'],
   variable: '--font-display',
 })
 
@@ -58,7 +60,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${syne.variable}`}>
+    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
       <body className="font-sans antialiased">
         {children}
         <Analytics />

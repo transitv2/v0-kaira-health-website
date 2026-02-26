@@ -8,8 +8,21 @@ export function BrandStatement() {
 
   return (
     <section ref={ref} className="relative py-28 lg:py-40 overflow-hidden">
-      {/* Subtle gold glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gold/[0.03] rounded-full blur-[120px] pointer-events-none" />
+      {/* Brand background image — fades out as page brightens */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: "url('/images/brand/kaira-brand-statement-bg.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          opacity: "calc(0.10 * (1 - var(--scroll-brightness, 0)))",
+        }}
+      />
+      {/* Subtle gold glow — first hint of light */}
+      <div
+        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gold/[0.025] rounded-full blur-[120px] pointer-events-none"
+        style={{ opacity: "calc(1 - var(--scroll-brightness, 0) * 0.6)" }}
+      />
 
       <div className="relative mx-auto max-w-4xl px-6 lg:px-8">
         {/* Etymology block */}
@@ -20,17 +33,17 @@ export function BrandStatement() {
           )}
         >
           <blockquote className="border-l-2 border-gold/30 pl-8 lg:pl-12">
-            <p className="text-lg leading-relaxed text-cream-dim/60 lg:text-xl">
-              In Arabic, <span className="text-gold/80 italic">KAIRA</span> means{" "}
-              <em className="text-cream-dim/80">goodness</em> — the best of what is possible.
+            <p className="text-lg leading-relaxed text-prose-strong lg:text-xl">
+              In Arabic, <span className="text-gold italic">KAIRA</span> means{" "}
+              <em className="text-cream-dim">goodness</em> — the best of what is possible.
             </p>
-            <p className="mt-3 text-lg leading-relaxed text-cream-dim/60 lg:text-xl">
+            <p className="mt-3 text-lg leading-relaxed text-prose-strong lg:text-xl">
               In Sanskrit, it means{" "}
-              <em className="text-cream-dim/80">a ray of light</em>.
+              <em className="text-cream-dim">a ray of light</em>.
             </p>
-            <p className="mt-3 text-lg leading-relaxed text-cream-dim/60 lg:text-xl">
+            <p className="mt-3 text-lg leading-relaxed text-prose-strong lg:text-xl">
               In Greek, it echoes{" "}
-              <em className="text-cream-dim/80">kairos</em> — the right moment.
+              <em className="text-cream-dim">kairos</em> — the right moment.
             </p>
           </blockquote>
         </div>
@@ -42,7 +55,7 @@ export function BrandStatement() {
             isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
           )}
         >
-          <p className="text-[13px] uppercase tracking-[0.3em] text-gold/40 mb-8">
+          <p className="text-[13px] uppercase tracking-[0.3em] text-gold-sub mb-8">
             Our Conviction
           </p>
           <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-[2.75rem] text-balance">
@@ -58,7 +71,7 @@ export function BrandStatement() {
             isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
           )}
         >
-          <div className="max-w-3xl space-y-6 text-base leading-relaxed text-cream-dim/50 lg:text-[17px]">
+          <div className="max-w-3xl space-y-6 text-base leading-relaxed text-prose lg:text-[17px]">
             <p>
               Most healthcare waits for symptoms. By then, the story is already being
               written. KAIRA rewrites the timeline. We combine the world{"'"}s finest

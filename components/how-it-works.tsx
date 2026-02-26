@@ -35,8 +35,16 @@ export function HowItWorks() {
 
   return (
     <section ref={ref} id="how-it-works" className="relative py-28 lg:py-40">
-      {/* Subtle left glow */}
-      <div className="absolute left-0 top-1/3 w-[400px] h-[400px] bg-gold/[0.015] rounded-full blur-[120px] pointer-events-none" />
+      {/* Background — transparent so scroll brightness shows through */}
+      {/* Growing gold glow — light emerging */}
+      <div
+        className="absolute left-0 top-1/3 w-[500px] h-[500px] bg-gold/[0.025] rounded-full blur-[120px] pointer-events-none"
+        style={{ opacity: "calc(1 - var(--scroll-brightness, 0) * 0.6)" }}
+      />
+      <div
+        className="absolute right-0 bottom-1/4 w-[300px] h-[300px] bg-gold/[0.02] rounded-full blur-[100px] pointer-events-none"
+        style={{ opacity: "calc(1 - var(--scroll-brightness, 0) * 0.6)" }}
+      />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
@@ -46,7 +54,7 @@ export function HowItWorks() {
             isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
           )}
         >
-          <p className="text-[13px] uppercase tracking-[0.3em] text-gold/40 mb-6">
+          <p className="text-[13px] uppercase tracking-[0.3em] text-gold-sub mb-6">
             How It Works
           </p>
           <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-5xl text-balance">
@@ -64,15 +72,22 @@ export function HowItWorks() {
               <div
                 key={step.number}
                 className={cn(
-                  "relative flex flex-col lg:flex-row lg:items-start gap-6 lg:gap-12",
+                  "relative flex flex-col lg:flex-row lg:items-start gap-6 lg:gap-16",
                   isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
                 )}
                 style={{ animationDelay: `${200 + i * 150}ms` }}
               >
-                {/* Step number dot */}
+                {/* Step number dot with pulse ring */}
                 <div className="flex-shrink-0 flex items-center gap-4 lg:w-12">
                   <div className="relative flex h-12 w-12 items-center justify-center">
                     <div className="absolute inset-0 rounded-full border border-gold/20 bg-gold/[0.05]" />
+                    {/* Pulse ring on scroll reveal */}
+                    {isVisible && (
+                      <div
+                        className="absolute inset-0 rounded-full border-2 border-gold/30 animate-pulse-ring"
+                        style={{ animationDelay: `${300 + i * 200}ms` }}
+                      />
+                    )}
                     <span className="relative text-xs font-mono font-bold text-gold tracking-widest">
                       {step.number}
                     </span>
@@ -84,7 +99,7 @@ export function HowItWorks() {
                   <h3 className="font-serif text-xl font-bold text-cream lg:text-2xl">
                     {step.title}
                   </h3>
-                  <p className="mt-4 text-[15px] leading-relaxed text-cream-dim/45">
+                  <p className="mt-4 text-[15px] leading-relaxed text-prose">
                     {step.description}
                   </p>
                 </div>

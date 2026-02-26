@@ -75,13 +75,38 @@
   --sidebar-ring: #C9A84C;
 }
 
+/*
+ * Dynamic colors — managed by scroll-brightness.tsx at runtime.
+ * Using @theme (NOT inline) so Tailwind generates var() references
+ * in utilities like text-cream, bg-card, border-border etc.
+ * This allows JS to override these CSS variables dynamically.
+ */
+@theme {
+  --color-gold: #C9A84C;
+  --color-gold-dim: #A08838;
+  --color-navy: #0A1628;
+  --color-navy-light: #0F1D30;
+  --color-cream: #F5F3EF;
+  --color-cream-dim: #E8E4DF;
+  --color-ink: #FFFFFF;
+  --color-border: var(--border);
+  --color-card: var(--card);
+  /* Hierarchy-aware text — alpha baked in, managed by scroll-brightness.
+     On dark bg: low alpha (subtle hierarchy). On bright bg: boosted alpha (readable). */
+  --color-prose: rgba(232, 228, 223, 0.50);
+  --color-prose-strong: rgba(232, 228, 223, 0.65);
+  --color-sub: rgba(232, 228, 223, 0.35);
+  --color-ghost: rgba(232, 228, 223, 0.22);
+  --color-gold-sub: rgba(201, 168, 76, 0.50);
+}
+
+/* Static theme values — inlined for performance */
 @theme inline {
   --font-sans: var(--font-inter), 'Inter', system-ui, sans-serif;
-  --font-serif: var(--font-display), 'Syne', system-ui, sans-serif;
+  --font-serif: var(--font-display), 'Playfair Display', Georgia, serif;
   --font-mono: 'Geist Mono', 'Geist Mono Fallback';
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
@@ -95,7 +120,6 @@
   --color-accent-foreground: var(--accent-foreground);
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
-  --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-chart-1: var(--chart-1);
@@ -115,12 +139,6 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
-  --color-gold: #C9A84C;
-  --color-gold-dim: #A08838;
-  --color-navy: #0A1628;
-  --color-navy-light: #0F1D30;
-  --color-cream: #F5F3EF;
-  --color-cream-dim: #E8E4DF;
 }
 
 @layer base {
@@ -191,6 +209,52 @@
 .delay-1000 { animation-delay: 1000ms; }
 .delay-1200 { animation-delay: 1200ms; }
 .delay-1500 { animation-delay: 1500ms; }
+
+/* === Pulse ring animation for step indicators === */
+@keyframes pulse-ring {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 1.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* === Slide in from left/right === */
+@keyframes slide-in-left {
+  from { opacity: 0; transform: translateX(-30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes slide-in-right {
+  from { opacity: 0; transform: translateX(30px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.animate-slide-left { animation: slide-in-left 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+.animate-slide-right { animation: slide-in-right 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
+
+/* === Global noise texture overlay === */
+.noise-overlay::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: calc(0.035 * (1 - var(--scroll-brightness, 0)));
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 128px 128px;
+}
+
+/* === Section background image utility === */
+.section-bg-image {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  pointer-events: none;
+}
 
 /* === Focus blur utility for scroll-driven effect === */
 .blur-focus-0 { filter: blur(0px); }
