@@ -1,9 +1,10 @@
 import { Navigation } from "@/components/navigation"
 import { Hero } from "@/components/hero"
 import { MissionSection } from "@/components/mission-section"
-import { PackagesMarquee } from "@/components/packages-marquee"
+import { BiomarkerTicker } from "@/components/biomarker-ticker"
 import { ServicesSection } from "@/components/services-section"
 import { ScienceSection } from "@/components/science-section"
+import { DiseaseMonitor } from "@/components/disease-monitor"
 import { StatsSection } from "@/components/stats-section"
 import { AboutSection } from "@/components/about-section"
 import { CTASection } from "@/components/cta-section"
@@ -15,10 +16,11 @@ export default function Home() {
     <main>
       <Navigation />
       <Hero />
-      <PackagesMarquee />
+      <BiomarkerTicker />
       <MissionSection />
       <ServicesSection />
       <ScienceSection />
+      <DiseaseMonitor />
       <StatsSection />
       <TestimonialsSection />
       <AboutSection />
