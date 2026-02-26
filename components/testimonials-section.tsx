@@ -58,7 +58,7 @@ export function TestimonialsSection() {
             <div
               key={testimonial.name}
               className={cn(
-                "group relative rounded-2xl border border-border bg-card p-8 transition-all duration-500 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5",
+                "group relative rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03] backdrop-blur-sm p-8 transition-all duration-500 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/10 hover:bg-foreground/[0.05]",
                 isVisible ? "animate-fade-up" : "opacity-0"
               )}
               style={{ animationDelay: `${200 + i * 100}ms` }}
@@ -67,7 +67,7 @@ export function TestimonialsSection() {
               <p className="text-sm leading-relaxed text-muted-foreground italic">
                 {`"${testimonial.quote}"`}
               </p>
-              <div className="mt-6 flex items-center gap-3 pt-6 border-t border-border">
+              <div className="mt-6 flex items-center gap-3 pt-6 border-t border-foreground/[0.06]">
                 <div className="flex h-10 w-10 items-center justify-center rounded-full bg-accent/10 text-accent text-sm font-bold font-serif">
                   {testimonial.initials}
                 </div>

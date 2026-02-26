@@ -60,7 +60,7 @@ export function ServicesSection() {
   const { ref, isVisible } = useScrollAnimation<HTMLElement>()
 
   return (
-    <section ref={ref} id="services" className="relative py-24 lg:py-32 bg-card">
+    <section ref={ref} id="services" className="relative py-24 lg:py-32 bg-foreground/[0.02]">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         {/* Header */}
         <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
@@ -97,7 +97,7 @@ export function ServicesSection() {
             <div
               key={service.title}
               className={cn(
-                "group relative overflow-hidden rounded-2xl border border-border bg-background p-8 transition-all duration-500 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5 hover:-translate-y-1",
+                "group relative overflow-hidden rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03] backdrop-blur-sm p-8 transition-all duration-500 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/10 hover:-translate-y-1 hover:bg-foreground/[0.05]",
                 isVisible ? "animate-fade-up" : "opacity-0"
               )}
               style={{ animationDelay: `${300 + i * 80}ms` }}
@@ -106,7 +106,7 @@ export function ServicesSection() {
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-accent/10 text-accent transition-all duration-300 group-hover:bg-accent group-hover:text-accent-foreground">
                   <service.icon className="h-6 w-6" />
                 </div>
-                <span className="rounded-full bg-secondary px-3 py-1 text-xs font-medium text-secondary-foreground">
+                <span className="rounded-full bg-accent/10 px-3 py-1 text-xs font-medium text-accent">
                   {service.tag}
                 </span>
               </div>

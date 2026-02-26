@@ -10,18 +10,18 @@ export function CTASection() {
   return (
     <section ref={ref} id="contact" className="relative py-24 lg:py-32 overflow-hidden">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
-        <div className="relative rounded-3xl bg-primary overflow-hidden">
+        <div className="relative rounded-3xl border border-foreground/[0.08] bg-foreground/[0.04] backdrop-blur-sm overflow-hidden">
           {/* Decorative elements */}
           <div className="absolute inset-0 pointer-events-none">
-            <div className="absolute -top-20 -right-20 h-80 w-80 rounded-full bg-accent/15 blur-3xl" />
-            <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
+            <div className="absolute -top-20 -right-20 h-80 w-80 rounded-full bg-accent/[0.12] blur-[80px]" />
+            <div className="absolute -bottom-20 -left-20 h-64 w-64 rounded-full bg-[oklch(0.5_0.1_260)]/[0.08] blur-[60px]" />
           </div>
 
           <div className="relative px-8 py-16 sm:px-16 sm:py-24 lg:px-24 lg:py-32">
             <div className="mx-auto max-w-2xl text-center">
               <h2
                 className={cn(
-                  "font-serif text-3xl font-bold tracking-tight text-primary-foreground sm:text-4xl lg:text-5xl text-balance",
+                  "font-serif text-3xl font-bold tracking-tight text-foreground sm:text-4xl lg:text-5xl text-balance",
                   isVisible ? "animate-fade-up" : "opacity-0"
                 )}
               >
@@ -29,7 +29,7 @@ export function CTASection() {
               </h2>
               <p
                 className={cn(
-                  "mt-6 text-lg leading-relaxed text-primary-foreground/70 text-pretty",
+                  "mt-6 text-lg leading-relaxed text-muted-foreground text-pretty",
                   isVisible ? "animate-fade-up delay-100" : "opacity-0"
                 )}
               >
@@ -52,7 +52,7 @@ export function CTASection() {
                 </a>
                 <a
                   href="tel:18007502745"
-                  className="inline-flex items-center gap-2 rounded-full border border-primary-foreground/20 px-8 py-4 text-base font-semibold text-primary-foreground transition-all duration-300 hover:bg-primary-foreground/10"
+                  className="inline-flex items-center gap-2 rounded-full border border-foreground/[0.15] px-8 py-4 text-base font-semibold text-foreground transition-all duration-300 hover:bg-foreground/[0.05]"
                 >
                   Call 1 (800) 750-2745
                 </a>

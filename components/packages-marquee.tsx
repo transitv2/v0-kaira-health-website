@@ -18,7 +18,7 @@ export function PackagesMarquee() {
   const { ref, isVisible } = useScrollAnimation<HTMLElement>()
 
   return (
-    <section ref={ref} className="py-16 overflow-hidden border-y border-border bg-secondary">
+    <section ref={ref} className="py-16 overflow-hidden border-y border-foreground/[0.06] bg-foreground/[0.02]">
       <div
         className={cn(
           "flex",

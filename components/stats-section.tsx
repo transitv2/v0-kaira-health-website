@@ -68,7 +68,7 @@ export function StatsSection() {
   const { ref, isVisible } = useScrollAnimation<HTMLElement>()
 
   return (
-    <section ref={ref} className="relative py-24 lg:py-32 bg-primary text-primary-foreground overflow-hidden">
+    <section ref={ref} className="relative py-24 lg:py-32 bg-foreground/[0.04] overflow-hidden">
       {/* Background decoration */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-0 left-1/4 h-64 w-64 rounded-full bg-accent/10 blur-3xl" />
@@ -100,7 +100,7 @@ export function StatsSection() {
             <div
               key={stat.label}
               className={cn(
-                "text-center p-6 rounded-2xl border border-primary-foreground/10 bg-primary-foreground/5 backdrop-blur-sm",
+                "text-center p-6 rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03] backdrop-blur-sm",
                 isVisible ? "animate-fade-up" : "opacity-0"
               )}
               style={{ animationDelay: `${200 + i * 100}ms` }}
@@ -108,10 +108,10 @@ export function StatsSection() {
               <div className="text-4xl font-bold text-accent font-serif lg:text-5xl">
                 <AnimatedCounter end={stat.value} suffix={stat.suffix} isVisible={isVisible} />
               </div>
-              <p className="mt-3 text-sm font-medium text-primary-foreground/90">
+              <p className="mt-3 text-sm font-medium text-foreground/90">
                 {stat.label}
               </p>
-              <p className="mt-2 text-xs text-primary-foreground/50">
+              <p className="mt-2 text-xs text-muted-foreground">
                 {stat.detail}
               </p>
             </div>

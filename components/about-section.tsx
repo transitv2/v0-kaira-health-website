@@ -29,7 +29,7 @@ export function AboutSection() {
   const { ref, isVisible } = useScrollAnimation<HTMLElement>()
 
   return (
-    <section ref={ref} id="about" className="relative py-24 lg:py-32 bg-card">
+    <section ref={ref} id="about" className="relative py-24 lg:py-32 bg-foreground/[0.02]">
       <div className="mx-auto max-w-7xl px-6 lg:px-8">
         <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
           {/* Content */}

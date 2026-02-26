@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react"
+import { KairaLogo } from "@/components/kaira-logo"
 
 const footerLinks = {
   Company: [
@@ -23,18 +24,13 @@ const footerLinks = {
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-card">
+    <footer className="border-t border-border/50 bg-foreground/[0.02]">
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-4">
           {/* Brand */}
           <div className="lg:col-span-1">
-            <a href="#" className="flex items-center gap-2">
-              <div className="flex h-9 w-9 items-center justify-center rounded-full bg-accent">
-                <span className="text-sm font-bold text-accent-foreground font-serif">K</span>
-              </div>
-              <span className="text-xl font-bold tracking-tight font-serif text-foreground">
-                Kaira<span className="text-accent">.</span>
-              </span>
+            <a href="#">
+              <KairaLogo size={34} textClassName="text-xl" />
             </a>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground max-w-xs">
               AI-enabled longevity medicine. Live younger, live longer. The future
@@ -66,7 +62,7 @@ export function Footer() {
         </div>
 
         {/* Bottom bar */}
-        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
+        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-foreground/[0.06] pt-8 sm:flex-row">
           <p className="text-xs text-muted-foreground">
             &copy; {new Date().getFullYear()} Kaira Health. All rights reserved.
           </p>

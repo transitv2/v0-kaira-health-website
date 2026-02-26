@@ -72,7 +72,7 @@ export function MissionSection() {
             <div
               key={pillar.number}
               className={cn(
-                "group relative rounded-2xl border border-border bg-card p-8 transition-all duration-500 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/5",
+                "group relative rounded-2xl border border-foreground/[0.08] bg-foreground/[0.03] backdrop-blur-sm p-8 transition-all duration-500 hover:border-accent/30 hover:shadow-lg hover:shadow-accent/10 hover:bg-foreground/[0.05]",
                 isVisible ? "animate-fade-up" : "opacity-0"
               )}
               style={{ animationDelay: `${300 + i * 100}ms` }}

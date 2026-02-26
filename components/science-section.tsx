@@ -39,7 +39,7 @@ export function ScienceSection() {
               <div className="absolute inset-0 bg-gradient-to-t from-foreground/20 to-transparent" />
             </div>
             {/* Floating stat card */}
-            <div className="absolute -bottom-6 -right-4 rounded-xl border border-border bg-card p-5 shadow-xl lg:-right-8 animate-float">
+            <div className="absolute -bottom-6 -right-4 rounded-xl border border-foreground/[0.1] bg-background/80 backdrop-blur-xl p-5 shadow-xl lg:-right-8 animate-float">
               <div className="text-3xl font-bold text-accent font-serif">98%</div>
               <div className="text-xs text-muted-foreground mt-1">Detection Accuracy</div>
             </div>
