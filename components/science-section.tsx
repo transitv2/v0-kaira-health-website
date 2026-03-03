@@ -9,24 +9,24 @@ const pillars = [
     icon: Microscope,
     title: "Advanced Diagnostics Aggregation",
     description:
-      "We draw from the world\u2019s leading laboratories and imaging centers \u2014 not a single vendor, but a curated network of the best. Over 200 biomarkers across metabolic, hormonal, cardiovascular, inflammatory, immune, and genomic panels.",
-    accent: "We don\u2019t choose what\u2019s convenient. We choose what\u2019s definitive.",
+      "We draw from a network of accredited laboratories and imaging centres \u2014 not a single vendor, but a curated selection. Over 200 biomarkers across metabolic, hormonal, cardiovascular, inflammatory, immune, and genomic panels. Advanced imaging when clinically indicated. Screening protocols structured to complement standard care.",
+    accent: "Depth and rigour, built into every assessment.",
     number: "01",
   },
   {
     icon: Brain,
-    title: "AI-Powered Pattern Recognition",
+    title: "AI-Supported Pattern Analysis",
     description:
-      "KAIRA\u2019s proprietary analytics engine identifies patterns, correlations, and early signals that no single physician could spot across hundreds of data points. It learns your baseline. It detects deviation. It flags what matters before it becomes a diagnosis.",
-    accent: "Your data, read with a precision that matches its complexity.",
+      "KAIRA\u2019s analytics platform assists in identifying patterns, correlations, and longitudinal trends across large volumes of data. By establishing an individual baseline and monitoring change over time, it supports earlier recognition of meaningful shifts. All findings are reviewed and interpreted by physicians within the context of your complete clinical picture.",
+    accent: "Your data \u2014 analysed with the depth and structure it deserves.",
     number: "02",
   },
   {
     icon: UserCheck,
-    title: "Physician-Led Concierge Care",
+    title: "Physician-Led Personalised Care",
     description:
-      "Every KAIRA client is matched with a dedicated physician who reviews every result, explains every finding, and builds a personalized longevity protocol \u2014 with direct access, unhurried consultations, and coordination across specialists when needed.",
-    accent: "The rarest thing in modern medicine: a doctor who has the time to care.",
+      "Each KAIRA client is paired with a dedicated physician who reviews results in detail, explains findings clearly, and develops an individualised care plan. Consultations are structured to allow time for thorough discussion and continuity of care, with coordination across specialists when appropriate.",
+    accent: "Personalised medicine requires time, context, and clinical judgment.",
     number: "03",
   },
 ]
@@ -53,23 +53,33 @@ export function ScienceSection() {
       />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Header */}
-        <div
-          className={cn(
-            "max-w-3xl transition-all duration-1000",
-            isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
-          )}
-        >
-          <p className="text-[13px] uppercase tracking-[0.3em] text-gold-sub mb-6">
+        {/* Header — staggered reveal */}
+        <div className="max-w-3xl">
+          <p
+            className={cn(
+              "text-[13px] uppercase tracking-[0.3em] text-gold-sub mb-6 transition-all duration-700",
+              isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
+            )}
+          >
             The Science
           </p>
-          <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-5xl text-balance">
-            The Most Comprehensive Health Intelligence System Ever Built
+          <h2
+            className={cn(
+              "font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-5xl text-balance transition-all duration-700",
+              isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
+            )}
+            style={{ animationDelay: "100ms" }}
+          >
+            A Comprehensive Approach to Health Intelligence
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-prose max-w-2xl">
-            {"Other platforms test. KAIRA "}
-            <em>synthesizes</em>
-            {". We don\u2019t believe in one test, one scan, or one data point. We believe in resolution \u2014 the kind that comes from aggregating the world\u2019s most advanced diagnostics into a single, coherent picture of your health."}
+          <p
+            className={cn(
+              "mt-6 text-lg leading-relaxed text-prose max-w-2xl transition-all duration-700",
+              isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
+            )}
+            style={{ animationDelay: "200ms" }}
+          >
+            Many systems focus on individual tests. KAIRA integrates data. We move beyond isolated lab results or single imaging studies by bringing together advanced diagnostics into a unified, longitudinal view of your health. By combining laboratory testing, imaging, genomics, and AI-supported analysis, we aim to provide a higher-resolution understanding of risk — interpreted by physicians within the context of your full clinical picture.
           </p>
         </div>
 
@@ -84,7 +94,7 @@ export function ScienceSection() {
                   "group relative rounded-2xl border border-border bg-card backdrop-blur-sm p-8 lg:p-10 transition-all duration-700 hover:border-gold/20 hover:bg-card",
                   isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
                 )}
-                style={{ animationDelay: `${200 + i * 150}ms` }}
+                style={{ animationDelay: `${300 + i * 150}ms` }}
               >
                 {/* Decorative watermark number */}
                 <span className="absolute top-4 right-6 text-7xl font-serif font-bold text-gold/[0.07] select-none pointer-events-none leading-none">
@@ -126,9 +136,9 @@ export function ScienceSection() {
               isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
             )}
           >
-            An approach that takes you out of the darkness
+            The most valuable health insight is the one
             <br />
-            and into the light.
+            that arrives before symptoms do.
           </p>
           {/* Decorative wave accent */}
           <div

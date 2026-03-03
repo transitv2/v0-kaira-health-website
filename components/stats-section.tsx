@@ -44,17 +44,17 @@ function AnimatedCounter({
 }
 
 const stats = [
-  { value: 200, suffix: "+", label: "Biomarkers analyzed per client" },
-  { value: 5, suffix: "x", label: "More comprehensive than standard physicals" },
+  { value: 200, suffix: "+", label: "Biomarkers analysed per client" },
+  { value: 6, suffix: "", label: "Diagnostic categories integrated" },
   { value: 2, suffix: "", label: "Markets served: North America & Middle East" },
-  { value: 24, suffix: "/7", label: "Physician access for concierge members" },
+  { value: 60, suffix: "+", label: "Minutes per consultation" },
 ]
 
 const trustSignals = [
   "Currently operating and serving patients",
   "Founded by practicing physicians",
-  "World-leading laboratory and imaging network",
-  "HIPAA-compliant, enterprise-grade security",
+  "Accredited laboratory and imaging network",
+  "PIPEDA/PHIPA and HIPAA-compliant, enterprise-grade security",
 ]
 
 export function StatsSection() {
@@ -67,27 +67,37 @@ export function StatsSection() {
         <div className="absolute top-1/4 left-0 w-[500px] h-[500px] bg-gold/[0.035] rounded-full blur-[150px]" />
         <div className="absolute bottom-1/4 right-0 w-[400px] h-[300px] bg-gold/[0.025] rounded-full blur-[120px]" />
       </div>
+      {/* Subtle grain texture — visible on light background */}
+      <div className="absolute inset-0 pointer-events-none" style={{ opacity: "calc(var(--scroll-brightness, 0) * 0.04)", backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")", backgroundSize: "128px 128px" }} />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Header */}
-        <div
-          className={cn(
-            "max-w-3xl transition-all duration-1000",
-            isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
-          )}
-        >
-          <p className="text-[13px] uppercase tracking-[0.3em] text-gold-sub mb-6">
+        {/* Header — staggered reveal */}
+        <div className="max-w-3xl">
+          <p
+            className={cn(
+              "text-[13px] uppercase tracking-[0.3em] text-gold-sub mb-6 transition-all duration-700",
+              isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
+            )}
+          >
             Built on Evidence
           </p>
-          <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-5xl text-balance">
-            Trusted by Those Who Demand the Best
+          <h2
+            className={cn(
+              "font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-5xl text-balance transition-all duration-700",
+              isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
+            )}
+            style={{ animationDelay: "100ms" }}
+          >
+            Designed for Depth
           </h2>
-          <p className="mt-6 text-lg leading-relaxed text-prose-strong max-w-2xl">
-            {"KAIRA Health was founded by physicians and technologists who believe that the gap between what modern medicine "}
-            <em>can</em>
-            {" detect and what it "}
-            <em>does</em>
-            {" detect is the greatest preventable risk in healthcare today."}
+          <p
+            className={cn(
+              "mt-6 text-lg leading-relaxed text-prose-strong max-w-2xl transition-all duration-700",
+              isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
+            )}
+            style={{ animationDelay: "200ms" }}
+          >
+            KAIRA Health was founded by physicians and technologists who recognised an opportunity: to bring together advanced diagnostics, longitudinal data analysis, and physician-led care into one integrated model — structured for depth, continuity, and earlier understanding.
           </p>
         </div>
 
@@ -100,7 +110,7 @@ export function StatsSection() {
                 "rounded-2xl border border-border bg-card p-6 lg:p-8 transition-all duration-700",
                 isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
               )}
-              style={{ animationDelay: `${200 + i * 100}ms` }}
+              style={{ animationDelay: `${300 + i * 100}ms` }}
             >
               <div className="font-serif text-4xl font-bold text-gold lg:text-6xl">
                 <AnimatedCounter end={stat.value} suffix={stat.suffix} isVisible={isVisible} />

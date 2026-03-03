@@ -23,6 +23,8 @@ export function CTASection() {
       <div className="absolute inset-0 pointer-events-none" style={{ opacity: "calc(1 - var(--scroll-brightness, 0) * 0.6)" }}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[50vh] w-[70vw] rounded-full bg-gold/[0.06] blur-[160px]" />
       </div>
+      {/* Subtle grain texture — visible on light background */}
+      <div className="absolute inset-0 pointer-events-none" style={{ opacity: "calc(var(--scroll-brightness, 0) * 0.04)", backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")", backgroundSize: "128px 128px" }} />
 
       <div className="relative mx-auto max-w-4xl px-6 lg:px-8 text-center">
         <div
@@ -35,7 +37,7 @@ export function CTASection() {
             Begin
           </p>
           <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-[3.5rem] text-balance">
-            Your Health Deserves More Than an Annual Physical
+            A More Comprehensive Approach to Your Health
           </h2>
         </div>
 
@@ -45,10 +47,11 @@ export function CTASection() {
             isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
           )}
         >
-          KAIRA Health offers personalized longevity programs designed around your
-          health profile, risk factors, and goals. Our team will work with you to
-          determine the right level of engagement — from comprehensive annual
-          assessments to full concierge care with continuous monitoring.
+          KAIRA Health offers personalised longevity programs structured around your
+          health profile, risk factors, and goals. Our team works with you to
+          determine the appropriate level of engagement — from expanded annual
+          assessments to concierge care models that include structured follow-up
+          and longitudinal monitoring.
         </p>
 
         <div
@@ -73,7 +76,7 @@ export function CTASection() {
             isVisible ? "animate-fade-in" : "opacity-0"
           )}
         >
-          Programs are tailored by consultation. No generic packages.
+          Programs are structured around your individual health profile.
         </p>
       </div>
     </section>

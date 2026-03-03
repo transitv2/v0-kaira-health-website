@@ -22,6 +22,8 @@ export function GlobalReach() {
       <div className="absolute inset-0 pointer-events-none" style={{ opacity: "calc(1 - var(--scroll-brightness, 0) * 0.6)" }}>
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[50vh] bg-gold/[0.05] rounded-full blur-[140px]" />
       </div>
+      {/* Subtle grain texture — visible on light background */}
+      <div className="absolute inset-0 pointer-events-none" style={{ opacity: "calc(var(--scroll-brightness, 0) * 0.04)", backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")", backgroundSize: "128px 128px" }} />
 
       <div className="relative mx-auto max-w-5xl px-6 lg:px-8 text-center">
         <div
@@ -34,7 +36,7 @@ export function GlobalReach() {
             Global Reach
           </p>
           <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-5xl text-balance">
-            One Standard. No Borders.
+            Consistent Care. Global Reach.
           </h2>
         </div>
 
@@ -45,14 +47,15 @@ export function GlobalReach() {
           )}
         >
           <p className="text-lg leading-relaxed text-prose-strong text-pretty">
-            The best preventive medicine has historically lived in a handful of
-            cities. If you weren{"'"}t near one of those institutions, you traveled to
-            them. KAIRA eliminates that compromise.
+            Access to thorough preventive care has not always been convenient. KAIRA
+            was designed to bring structured, physician-led health intelligence to
+            clients wherever they are.
           </p>
           <p className="mt-6 text-lg leading-relaxed text-prose-strong text-pretty">
-            We deliver the same depth of diagnostic intelligence and physician-led
-            care whether you{"'"}re in Toronto, New York, Dubai, or Riyadh. Your
-            geography should never determine the quality of your health surveillance.
+            We deliver the same depth of diagnostic assessment and physician-led
+            care whether you{"'"}re in Toronto, New York, Dubai, or Riyadh — with
+            multilingual support, culturally informed care, and a concierge model
+            designed around how you actually live.
           </p>
         </div>
 
@@ -95,7 +98,7 @@ export function GlobalReach() {
         {/* Separator line */}
         <div
           className={cn(
-            "mt-16 mx-auto h-px w-24 bg-gradient-to-r from-transparent via-gold/20 to-transparent",
+            "mt-16 mx-auto h-px w-48 bg-gradient-to-r from-transparent via-gold/25 to-transparent",
             isVisible ? "animate-fade-in delay-600" : "opacity-0"
           )}
         />
@@ -106,7 +109,7 @@ export function GlobalReach() {
             isVisible ? "animate-fade-in delay-700" : "opacity-0"
           )}
         >
-          Multilingual support. Culturally informed care. Built around how you live.
+          Structured preventive care, designed to travel with you.
         </p>
       </div>
     </section>

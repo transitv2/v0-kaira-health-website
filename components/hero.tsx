@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react"
 import { AuroraBackground } from "@/components/aurora-background"
 
 /**
- * HERO: "See Everything. Miss Nothing."
+ * HERO: "See More. Miss Less."
  *
  * 5-second torch reveal sequence:
  *
@@ -203,21 +203,21 @@ export function Hero() {
         <div className="flex flex-col items-center text-center">
           {/* Top line — minimal */}
           <p className="text-[11px] uppercase tracking-[0.4em] text-gold-sub font-medium mb-12">
-            The future of preventative medicine
+            The Future of Preventive Medicine
           </p>
 
           {/* Headline */}
           <h1 className="max-w-4xl text-balance font-serif text-5xl font-bold leading-[1.0] tracking-tight text-cream sm:text-6xl md:text-7xl lg:text-[5.5rem]">
-            See Everything.
+            See More.
             <br />
-            <span className="text-gold">Miss Nothing.</span>
+            <span className="text-gold">Miss Less.</span>
           </h1>
 
           {/* Subhead */}
           <p className="mt-10 max-w-2xl text-pretty text-lg leading-relaxed text-prose-strong md:text-xl">
-            KAIRA Health combines the world{"'"}s most advanced diagnostics with
-            AI-powered analysis and physician-led concierge care — so that
-            nothing in your health goes unseen, unfound, or unaddressed.
+            KAIRA Health combines advanced diagnostics with AI-supported analysis
+            and physician-led concierge care — delivering a comprehensive view of
+            your health so that risks can be identified early and addressed proactively.
           </p>
 
           {/* CTA */}
@@ -242,8 +242,8 @@ export function Hero() {
         <div className="mt-24 lg:mt-32 flex justify-center">
           <blockquote className="max-w-xl text-center">
             <p className="text-base italic leading-relaxed text-sub">
-              {"\""}The most important medical discovery is the one that happens
-              before you need it.{"\""}
+              {"\""}The most important medical insight is the one identified
+              before illness takes hold.{"\""}
             </p>
           </blockquote>
         </div>

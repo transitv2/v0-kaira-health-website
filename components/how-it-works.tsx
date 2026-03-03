@@ -8,25 +8,25 @@ const steps = [
     number: "01",
     title: "Comprehensive Assessment",
     description:
-      "Your journey begins with a deep-intake consultation and the most thorough diagnostic panel available \u2014 blood, hormonal, metabolic, inflammatory, and genomic markers, plus advanced imaging as indicated by your risk profile. This is not a checklist. It\u2019s a custom protocol designed around you.",
+      "Your journey begins with an in-depth consultation and an expanded diagnostic panel \u2014 which may include blood, hormonal, metabolic, inflammatory, and genomic markers, along with advanced imaging when clinically appropriate. Each assessment is structured around your individual risk profile and health goals.",
   },
   {
     number: "02",
-    title: "AI-Powered Analysis",
+    title: "AI-Supported Analysis",
     description:
-      "Your results flow into KAIRA\u2019s analytics platform, where AI-enabled pattern recognition synthesizes data across every modality \u2014 identifying correlations, outliers, and early signals that single-test platforms cannot detect. Your health is not a spreadsheet. It\u2019s a system, and we read it as one.",
+      "Your results are integrated into KAIRA\u2019s analytics platform, where AI-enabled tools assist in identifying patterns, correlations, and longitudinal trends across multiple data sources. By examining data collectively rather than in isolation, this approach supports a more structured and contextual understanding of your health. All insights are reviewed and interpreted by physicians.",
   },
   {
     number: "03",
-    title: "Physician Review & Longevity Protocol",
+    title: "Physician Review & Personalised Plan",
     description:
-      "Your dedicated KAIRA physician reviews every finding, translates complexity into clarity, and designs a personalized longevity protocol \u2014 covering nutrition, supplementation, pharmaceutical intervention when warranted, specialist referrals, and ongoing monitoring targets.",
+      "Your dedicated KAIRA physician reviews each finding in detail and develops an individualised health plan. This may include nutrition guidance, supplementation strategies, pharmaceutical therapy when indicated, specialist referrals, and defined monitoring targets.",
   },
   {
     number: "04",
-    title: "Continuous Monitoring & Optimization",
+    title: "Ongoing Monitoring",
     description:
-      "Health is not a snapshot. KAIRA tracks your biomarkers over time, detects trends before they become problems, and adjusts your protocol as your body changes. Your physician is always accessible. Your data is always current. Your health is always attended to.",
+      "Health evolves over time. KAIRA supports periodic reassessment of biomarkers and clinical indicators to help identify meaningful changes and guide adjustments to your care plan as appropriate. Physician access and follow-up are structured to ensure continuity and clarity.",
   },
 ]
 
@@ -56,17 +56,23 @@ export function HowItWorks() {
       />
 
       <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Header */}
-        <div
-          className={cn(
-            "max-w-2xl transition-all duration-1000",
-            isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
-          )}
-        >
-          <p className="text-[13px] uppercase tracking-[0.3em] text-gold-sub mb-6">
+        {/* Header — staggered reveal */}
+        <div className="max-w-2xl">
+          <p
+            className={cn(
+              "text-[13px] uppercase tracking-[0.3em] text-gold-sub mb-6 transition-all duration-700",
+              isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
+            )}
+          >
             How It Works
           </p>
-          <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-5xl text-balance">
+          <h2
+            className={cn(
+              "font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-5xl text-balance transition-all duration-700",
+              isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
+            )}
+            style={{ animationDelay: "100ms" }}
+          >
             From Complexity to Clarity
           </h2>
         </div>

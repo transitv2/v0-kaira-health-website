@@ -37,11 +37,11 @@ export function BrandStatement() {
             </p>
             <p className="mt-3 text-lg leading-relaxed text-prose-strong lg:text-xl">
               In Sanskrit, it means{" "}
-              <em className="text-cream-dim">a ray of light</em>.
+              <em className="text-cream-dim">action — the decisive step</em>.
             </p>
             <p className="mt-3 text-lg leading-relaxed text-prose-strong lg:text-xl">
               In Greek, it echoes{" "}
-              <em className="text-cream-dim">kairos</em> — the right moment.
+              <em className="text-cream-dim">kairos</em> — the favourable moment, timely intervention.
             </p>
           </blockquote>
         </div>
@@ -57,8 +57,8 @@ export function BrandStatement() {
             Our Conviction
           </p>
           <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-[2.75rem] text-balance">
-            The most important medical discovery is the one that happens{" "}
-            <span className="text-gold">before you need it.</span>
+            The most important medical insight is the one identified{" "}
+            <span className="text-gold">before illness takes hold.</span>
           </h2>
         </div>
 
@@ -71,18 +71,16 @@ export function BrandStatement() {
         >
           <div className="max-w-3xl space-y-6 text-base leading-relaxed text-prose lg:text-[17px]">
             <p>
-              Most healthcare waits for symptoms. By then, the story is already being
-              written. KAIRA rewrites the timeline. We combine the world{"'"}s finest
-              laboratory testing, advanced imaging, genomic analysis, and AI-enabled
-              pattern recognition into a single, unified view of your health — read by
-              physicians who have the time, the data, and the mandate to find what
-              others miss.
+              Healthcare often focuses on symptoms. KAIRA focuses on earlier understanding.
+              We integrate advanced laboratory testing, imaging, genomic analysis, and
+              AI-supported pattern recognition into a unified view of your health —
+              interpreted by physicians who prioritise depth, data, and continuity of care.
             </p>
             <p>
-              This is not annual bloodwork. This is not a single scan. This is the
-              aggregation of hundreds of biomarkers, interpreted through technology that
-              learns your body{"'"}s language over time — and a concierge medical team
-              that treats you as a person, not a patient number.
+              This goes beyond routine screening. It brings together a broad range of
+              biomarkers, analysed over time, to provide a more comprehensive understanding
+              of your health trajectory — supported by a concierge medical team committed
+              to personalised care.
             </p>
           </div>
         </div>

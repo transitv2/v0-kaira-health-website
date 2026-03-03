@@ -6,10 +6,9 @@ import { cn } from "@/lib/utils"
 import { KairaLogo } from "@/components/kaira-logo"
 
 const navLinks = [
-  { label: "The Science", href: "#science" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "For Physicians", href: "#physicians" },
-  { label: "About", href: "#about" },
+  { label: "The Science", href: "/#science" },
+  { label: "How It Works", href: "/#how-it-works" },
+  { label: "Global Reach", href: "/#global" },
 ]
 
 export function Navigation() {
@@ -66,7 +65,7 @@ export function Navigation() {
         {/* CTA */}
         <div className="hidden md:block">
           <a
-            href="#begin"
+            href="/#begin"
             className={cn(
               "group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-medium tracking-wide transition-all duration-500",
               isBright
@@ -117,7 +116,7 @@ export function Navigation() {
             </a>
           ))}
           <a
-            href="#begin"
+            href="/#begin"
             onClick={() => setIsMobileOpen(false)}
             className="mt-4 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-8 py-3 text-base font-medium text-gold transition-all hover:bg-gold/20"
           >

@@ -16,11 +16,11 @@ const playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'KAIRA Health | See Everything. Miss Nothing.',
+  title: 'KAIRA Health | See More. Miss Less.',
   description:
-    'KAIRA Health combines the world\'s most advanced diagnostics with AI-powered analysis and physician-led concierge care. The most important medical discovery is the one that happens before you need it.',
+    'KAIRA Health combines advanced diagnostics with AI-supported analysis and physician-led concierge care — delivering a comprehensive view of your health so that risks can be identified early and addressed proactively.',
   keywords: [
-    'preventative healthcare',
+    'preventive healthcare',
     'longevity medicine',
     'AI diagnostics',
     'functional medicine',

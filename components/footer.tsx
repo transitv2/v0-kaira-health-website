@@ -2,15 +2,12 @@ import { KairaLogo } from "@/components/kaira-logo"
 
 const footerLinks = {
   Explore: [
-    { label: "The Science", href: "#science" },
-    { label: "How It Works", href: "#how-it-works" },
-    { label: "For Physicians", href: "#physicians" },
-    { label: "About", href: "#about" },
+    { label: "The Science", href: "/#science" },
+    { label: "How It Works", href: "/#how-it-works" },
+    { label: "Global Reach", href: "/#global" },
   ],
   Connect: [
-    { label: "Contact Us", href: "#begin" },
-    { label: "Email", href: "mailto:info@kairahealth.com" },
-    { label: "LinkedIn", href: "#" },
+    { label: "Contact Us", href: "mailto:info@kairahealth.com" },
   ],
 }
 
@@ -19,7 +16,7 @@ export function Footer() {
     <footer className="relative">
       {/* Gradient transition — adapts to current scroll brightness */}
       {/* Gold rule */}
-      <div className="h-px w-full bg-gradient-to-r from-transparent via-gold/10 to-transparent" />
+      <div className="mx-auto h-px w-full max-w-xs bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
         <div className="grid gap-12 lg:grid-cols-4">
           {/* Brand */}
@@ -28,11 +25,11 @@ export function Footer() {
               <KairaLogo size={28} />
             </a>
             <p className="mt-5 text-sm leading-relaxed text-sub max-w-sm">
-              The most comprehensive health intelligence platform ever built.
+              A comprehensive health intelligence platform.
               Serving clients across North America and the Middle East.
             </p>
             <p className="mt-4 text-xs text-ghost">
-              Toronto &middot; Expanding to the United States & Middle East
+              Toronto &middot; Serving North America & the Middle East
             </p>
           </div>
 
@@ -64,10 +61,10 @@ export function Footer() {
             &copy; {new Date().getFullYear()} KAIRA Health. All rights reserved.
           </p>
           <div className="flex gap-6">
-            <a href="#" className="text-xs text-ghost hover:text-sub transition-colors">
+            <a href="/privacy" className="text-xs text-ghost hover:text-sub transition-colors">
               Privacy Policy
             </a>
-            <a href="#" className="text-xs text-ghost hover:text-sub transition-colors">
+            <a href="/terms" className="text-xs text-ghost hover:text-sub transition-colors">
               Terms of Service
             </a>
           </div>
