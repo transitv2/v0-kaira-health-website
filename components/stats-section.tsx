@@ -26,8 +26,16 @@ export function StatsSection() {
   return (
     <section
       id="credibility"
-      className="relative min-h-screen w-full bg-dark py-24 lg:py-32"
+      className="relative min-h-screen w-full bg-[#0D1525] py-24 lg:py-32"
     >
+      {/* Gradient fade from light section above */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 z-0 h-28"
+        style={{
+          background: "linear-gradient(to bottom, var(--color-light) 0%, #0D1525 100%)",
+        }}
+      />
+
       <div className="relative z-10 mx-auto max-w-5xl px-6">
         {/* ---- Header ---- */}
         <div className="mb-16 md:mb-20">

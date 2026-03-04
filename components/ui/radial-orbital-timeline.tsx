@@ -17,11 +17,14 @@ interface TimelineItem {
 
 interface RadialOrbitalTimelineProps {
   timelineData: TimelineItem[];
+  theme?: "dark" | "light";
 }
 
 export default function RadialOrbitalTimeline({
   timelineData,
+  theme = "dark",
 }: RadialOrbitalTimelineProps) {
+  const isLight = theme === "light";
   const [activeNodeId, setActiveNodeId] = useState<number>(
     timelineData[0]?.id ?? 1
   );
@@ -110,11 +113,11 @@ export default function RadialOrbitalTimeline({
               className="absolute w-22 h-22 rounded-full border border-gold/10 animate-ping opacity-50"
               style={{ animationDelay: "0.5s" }}
             ></div>
-            <div className="w-7 h-7 rounded-full bg-cream/80 backdrop-blur-md"></div>
+            <div className={`w-7 h-7 rounded-full backdrop-blur-md ${isLight ? "bg-white/90" : "bg-cream/80"}`}></div>
           </div>
 
           {/* Orbit ring */}
-          <div className="absolute w-[280px] h-[280px] sm:w-[300px] sm:h-[300px] rounded-full border border-gold/10"></div>
+          <div className={`absolute w-[280px] h-[280px] sm:w-[300px] sm:h-[300px] rounded-full border ${isLight ? "border-gold/20" : "border-gold/10"}`}></div>
 
           {/* Nodes */}
           {timelineData.map((item, index) => {
@@ -165,9 +168,11 @@ export default function RadialOrbitalTimeline({
                     transition-all duration-300 transform
                     ${
                       isActive
-                        ? "bg-gold text-dark border-gold shadow-lg shadow-gold/30 scale-[1.3]"
+                        ? "bg-gold text-white border-gold shadow-lg shadow-gold/30 scale-[1.3]"
                         : isRelated
-                        ? "bg-gold/50 text-dark border-gold animate-pulse"
+                        ? "bg-gold/50 text-white border-gold animate-pulse"
+                        : isLight
+                        ? "bg-white text-[#0B1221] border-gold/30 shadow-sm"
                         : "bg-dark text-cream border-gold/40"
                     }
                   `}
@@ -181,7 +186,10 @@ export default function RadialOrbitalTimeline({
                     absolute top-12 left-1/2 -translate-x-1/2 whitespace-nowrap
                     text-[10px] font-semibold tracking-wider font-sans text-center
                     transition-all duration-300
-                    ${isActive ? "text-cream scale-110" : "text-cream/60"}
+                    ${isActive
+                      ? isLight ? "text-[#0B1221] scale-110" : "text-cream scale-110"
+                      : isLight ? "text-[#4A5568]" : "text-cream/60"
+                    }
                   `}
                 >
                   {item.title}
@@ -205,22 +213,22 @@ export default function RadialOrbitalTimeline({
             </p>
 
             {/* Title */}
-            <h3 className="font-serif text-2xl sm:text-3xl text-cream leading-snug mb-4">
+            <h3 className={`font-serif text-2xl sm:text-3xl leading-snug mb-4 ${isLight ? "text-[#0B1221]" : "text-cream"}`}>
               {activeItem.title}
             </h3>
 
-            {/* Gold accent line */}
+            {/* Accent line */}
             <div className="w-12 h-px bg-gold/40 mb-5" />
 
             {/* Description */}
-            <p className="text-muted text-sm leading-relaxed mb-6">
+            <p className={`text-sm leading-relaxed mb-6 ${isLight ? "text-[#4A5568]" : "text-muted"}`}>
               {activeItem.content}
             </p>
 
             {/* Connected steps */}
             {activeItem.relatedIds.length > 0 && (
-              <div className="pt-5 border-t border-gold/10">
-                <p className="text-cream/40 text-[10px] uppercase tracking-[0.2em] font-sans mb-3">
+              <div className={`pt-5 border-t ${isLight ? "border-gold/15" : "border-gold/10"}`}>
+                <p className={`text-[10px] uppercase tracking-[0.2em] font-sans mb-3 ${isLight ? "text-[#718096]" : "text-cream/40"}`}>
                   Next Steps
                 </p>
                 <div className="flex flex-wrap gap-2">
@@ -234,7 +242,11 @@ export default function RadialOrbitalTimeline({
                         key={relatedId}
                         variant="outline"
                         size="sm"
-                        className="flex items-center h-8 px-3 text-xs border-gold/20 bg-transparent hover:bg-gold/10 text-cream/70 hover:text-cream transition-all rounded-full"
+                        className={`flex items-center h-8 px-3 text-xs transition-all rounded-full ${
+                          isLight
+                            ? "border-gold/25 bg-white hover:bg-gold/10 text-[#4A5568] hover:text-[#0B1221]"
+                            : "border-gold/20 bg-transparent hover:bg-gold/10 text-cream/70 hover:text-cream"
+                        }`}
                         onClick={() => selectNode(relatedId)}
                       >
                         {relatedItem.title}

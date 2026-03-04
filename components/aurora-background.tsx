@@ -3,25 +3,16 @@
 import { useEffect, useRef, useCallback } from "react"
 
 /**
- * Torch in a dark cave — a broad, calm emanating light that follows the cursor.
- * Slow, gentle particles drift around the light source.
- * No flicker — steady, cool blue, meditative.
- *
- * 5-second reveal sequence:
- * 0.0s – 0.3s: Nothing visible (pure darkness)
- * 0.3s – 1.0s: Torch ignites on far left — glow blooms from 0 to full
- * 1.0s – 5.0s: Torch sweeps left → right across content area
- * 5.0s+:       Gentle figure-8 idle pattern; user cursor takes over on desktop
+ * Subtle ambient light that responds to cursor position.
+ * Pitch black when cursor is at or above the 50% mark of the hero.
+ * Light fades in from the bottom as cursor moves below 50%.
+ * Light grey / silver tones — clean, medical, not saturated.
  *
  * Exposes the torch position to the parent via onLightMove callback.
  */
 
-const MAX_PARTICLES = 80
-const TORCH_RADIUS = 300
-const TOTAL_DURATION = 5000  // total reveal time
-const IGNITION_START = 300   // torch begins appearing
-const SWEEP_START = 1000     // sweep begins
-const SWEEP_END = 5000       // sweep ends
+const MAX_PARTICLES = 60
+const TORCH_RADIUS = 320
 
 interface Particle {
   x: number
@@ -31,7 +22,7 @@ interface Particle {
   size: number
   life: number
   maxLife: number
-  isGold: boolean
+  isLight: boolean
 }
 
 interface AuroraBackgroundProps {
@@ -44,9 +35,10 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
   const smoothMouseRef = useRef({ x: -1000, y: -1000 })
   const particlesRef = useRef<Particle[]>([])
   const isMobileRef = useRef(false)
-  const autoLightRef = useRef({ angle: 0 })
-  const startTimeRef = useRef(0)
-  const userMovedRef = useRef(false)
+  // Tracks the raw cursor Y ratio (0 = top, 1 = bottom). Default to 0 (dead zone).
+  const cursorYRatioRef = useRef(0)
+  // Smoothed intensity so transitions aren't jarring
+  const smoothIntensityRef = useRef(0)
 
   const spawnParticle = useCallback((x: number, y: number): Particle => {
     const angle = Math.random() * Math.PI * 2
@@ -59,7 +51,7 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
       size: Math.random() * 2.5 + 0.8,
       life: 0,
       maxLife: Math.random() * 160 + 80,
-      isGold: Math.random() < 0.75,
+      isLight: Math.random() < 0.7,
     }
   }, [])
 
@@ -74,7 +66,6 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
     let w = 0
     let h = 0
 
-    startTimeRef.current = performance.now()
     isMobileRef.current = window.innerWidth < 768
 
     function resize() {
@@ -91,103 +82,52 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
       const rect = canvas!.getBoundingClientRect()
       const rawX = e.clientX - rect.left
       const rawY = e.clientY - rect.top
-      const yRatio = rawY / rect.height // 0 = top, 1 = bottom
 
-      // Hard dead zone: mouse at ≤50% of viewport = torch pushed completely off-screen.
-      // Below 50%, torch linearly rises into view. This keeps the hero pitch black
-      // when the cursor rests at a normal position (center or above).
-      if (yRatio <= 0.5) {
-        // Push torch way below the canvas — invisible
-        mouseRef.current.x = rawX
-        mouseRef.current.y = rect.height * 2
-      } else {
-        // Map 50%–100% of viewport onto the visible bottom portion
-        const visibleT = (yRatio - 0.5) / 0.5 // 0 at 50%, 1 at bottom
-        mouseRef.current.x = rawX
-        mouseRef.current.y = rect.height * (1.0 - visibleT * 0.5) // enters from below
-      }
-      userMovedRef.current = true
+      // Store raw position for the torch to follow
+      mouseRef.current.x = rawX
+      mouseRef.current.y = rawY
+
+      // Store the Y ratio for dead zone calculation
+      cursorYRatioRef.current = rawY / rect.height
     }
 
     function onMouseLeave() {
       mouseRef.current.x = -1000
       mouseRef.current.y = -1000
-    }
-
-    // Ignition position — bottom center (starts in darkness, rises up)
-    function getIgnitionPosition(): { x: number; y: number } {
-      return { x: w * 0.5, y: h * 1.1 }
-    }
-
-    // Sweep: bottom center → rises up to lower-third, then sweeps across
-    function getSweepPosition(t: number): { x: number; y: number } {
-      const eased = t * t * (3 - 2 * t) // smoothstep
-      // First 40%: rise from off-screen to ~75% height
-      // Rest: sweep left-to-right at that height
-      if (t < 0.4) {
-        const riseT = t / 0.4
-        const riseEased = riseT * riseT * (3 - 2 * riseT)
-        return { x: w * 0.3, y: h * 1.1 - riseEased * h * 0.35 }
-      }
-      const sweepT = (t - 0.4) / 0.6
-      const sweepEased = sweepT * sweepT * (3 - 2 * sweepT)
-      const x = w * 0.15 + sweepEased * w * 0.7
-      const y = h * 0.75 + Math.sin(sweepEased * Math.PI) * h * 0.06
-      return { x, y }
+      // Reset to dead zone when cursor leaves
+      cursorYRatioRef.current = 0
     }
 
     function draw() {
       ctx!.clearRect(0, 0, w, h)
 
-      const now = performance.now()
-      const elapsed = now - startTimeRef.current
-
       // Smooth mouse tracking
-      const lerpFactor = 0.22
+      const lerpFactor = 0.12
       smoothMouseRef.current.x += (mouseRef.current.x - smoothMouseRef.current.x) * lerpFactor
       smoothMouseRef.current.y += (mouseRef.current.y - smoothMouseRef.current.y) * lerpFactor
 
-      // Determine light source position and intensity
-      let lightX: number, lightY: number
-      let intensity = 1 // glow intensity multiplier (0–1)
+      // ── DEAD ZONE INTENSITY ──
+      // cursor at ≤50% = 0 intensity (pitch black)
+      // cursor at 50%→100% = ramps 0→1
+      const yRatio = cursorYRatioRef.current
+      const targetIntensity = yRatio <= 0.5 ? 0 : Math.min(1, (yRatio - 0.5) / 0.5)
 
-      const sweepComplete = elapsed >= SWEEP_END
+      // Smooth the intensity transition (fade in/out over ~0.5s)
+      const intensityLerp = targetIntensity > smoothIntensityRef.current ? 0.04 : 0.06
+      smoothIntensityRef.current += (targetIntensity - smoothIntensityRef.current) * intensityLerp
+      const intensity = smoothIntensityRef.current
+
+      // Determine light position — follows cursor directly
+      let lightX: number, lightY: number
       const userHasCursor = !isMobileRef.current && mouseRef.current.x > -500
 
-      if (elapsed < IGNITION_START) {
-        // Before ignition — no light
-        const pos = getIgnitionPosition()
-        lightX = pos.x
-        lightY = pos.y
-        intensity = 0
-      } else if (elapsed < SWEEP_START) {
-        // Ignition phase: torch blooms at far left
-        const ignT = (elapsed - IGNITION_START) / (SWEEP_START - IGNITION_START)
-        const pos = getIgnitionPosition()
-        lightX = pos.x
-        lightY = pos.y
-        intensity = ignT * ignT // ease-in — gentle bloom
-      } else if (!sweepComplete) {
-        // Sweep phase — torch always follows the scripted sweep path
-        // No cursor override: the reveal is cinematic, user gets control after
-        const sweepT = Math.min((elapsed - SWEEP_START) / (SWEEP_END - SWEEP_START), 1)
-        const pos = getSweepPosition(sweepT)
-        lightX = pos.x
-        lightY = pos.y
-        intensity = 1
+      if (userHasCursor) {
+        lightX = smoothMouseRef.current.x
+        lightY = smoothMouseRef.current.y
       } else {
-        // Post-sweep: user cursor or idle figure-8
-        if (userHasCursor && userMovedRef.current) {
-          lightX = smoothMouseRef.current.x
-          lightY = smoothMouseRef.current.y
-        } else {
-          autoLightRef.current.angle += 0.003
-          const a = autoLightRef.current.angle
-          lightX = w * 0.5 + Math.sin(a) * w * 0.15
-          // Idle sits at ~85% height — below the dead zone, a gentle glow from the bottom
-          lightY = h * 0.85 + Math.sin(a * 1.5) * h * 0.06
-        }
-        intensity = 1
+        // Mobile / no cursor: place torch below canvas (invisible)
+        lightX = w * 0.5
+        lightY = h * 1.5
       }
 
       // Report torch position to parent (for mask reveal)
@@ -195,60 +135,60 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
         onLightMove(lightX, lightY)
       }
 
-      if (intensity > 0.01) {
-        // === TORCH GLOW — scaled by intensity ===
+      if (intensity > 0.005) {
         const i = intensity
 
-        // Inner core — warm white / cream (NOT blue)
+        // Inner core — soft silver / light grey
         const coreR = TORCH_RADIUS * 0.35
         const coreGrad = ctx!.createRadialGradient(lightX, lightY, 0, lightX, lightY, coreR)
-        coreGrad.addColorStop(0, `rgba(245, 240, 230, ${0.25 * i})`)
-        coreGrad.addColorStop(0.5, `rgba(235, 230, 218, ${0.12 * i})`)
-        coreGrad.addColorStop(1, "rgba(220, 218, 210, 0)")
+        coreGrad.addColorStop(0, `rgba(210, 215, 220, ${0.28 * i})`)
+        coreGrad.addColorStop(0.5, `rgba(190, 195, 205, ${0.14 * i})`)
+        coreGrad.addColorStop(1, "rgba(170, 178, 190, 0)")
         ctx!.fillStyle = coreGrad
         ctx!.fillRect(0, 0, w, h)
 
-        // Mid glow — soft white with a whisper of blue
+        // Mid glow — cool grey with subtle blue shift
         const midR = TORCH_RADIUS * 0.75
         const midGrad = ctx!.createRadialGradient(lightX, lightY, 0, lightX, lightY, midR)
-        midGrad.addColorStop(0, `rgba(220, 228, 240, ${0.14 * i})`)
-        midGrad.addColorStop(0.4, `rgba(200, 212, 230, ${0.07 * i})`)
-        midGrad.addColorStop(0.8, `rgba(160, 185, 215, ${0.025 * i})`)
+        midGrad.addColorStop(0, `rgba(185, 195, 210, ${0.16 * i})`)
+        midGrad.addColorStop(0.4, `rgba(165, 175, 195, ${0.08 * i})`)
+        midGrad.addColorStop(0.8, `rgba(140, 150, 175, ${0.03 * i})`)
         midGrad.addColorStop(1, "rgba(0, 0, 0, 0)")
         ctx!.fillStyle = midGrad
         ctx!.fillRect(0, 0, w, h)
 
-        // Outer ambient — very subtle blue tint, barely visible
+        // Outer ambient — very faint grey haze
         const outerR = TORCH_RADIUS * 2.5
         const outerGrad = ctx!.createRadialGradient(lightX, lightY, 0, lightX, lightY, outerR)
-        outerGrad.addColorStop(0, `rgba(140, 170, 210, ${0.04 * i})`)
-        outerGrad.addColorStop(0.3, `rgba(100, 140, 190, ${0.02 * i})`)
-        outerGrad.addColorStop(0.6, `rgba(60, 100, 160, ${0.008 * i})`)
+        outerGrad.addColorStop(0, `rgba(150, 160, 180, ${0.05 * i})`)
+        outerGrad.addColorStop(0.3, `rgba(130, 140, 165, ${0.025 * i})`)
+        outerGrad.addColorStop(0.6, `rgba(100, 115, 140, ${0.01 * i})`)
         outerGrad.addColorStop(1, "rgba(0, 0, 0, 0)")
         ctx!.fillStyle = outerGrad
         ctx!.fillRect(0, 0, w, h)
 
-        // Spawn particles (only when torch has some intensity)
-        if (i > 0.3 && particlesRef.current.length < MAX_PARTICLES && Math.random() < 0.3) {
+        // Spawn particles (only when torch is visible)
+        if (i > 0.15 && particlesRef.current.length < MAX_PARTICLES && Math.random() < 0.25) {
           particlesRef.current.push(spawnParticle(lightX, lightY))
         }
       }
 
       // === UPDATE & DRAW PARTICLES ===
       const particles = particlesRef.current
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i]
+      for (let idx = particles.length - 1; idx >= 0; idx--) {
+        const p = particles[idx]
         p.life++
 
         if (p.life >= p.maxLife) {
-          particles.splice(i, 1)
+          particles.splice(idx, 1)
           continue
         }
 
         const lifeRatio = p.life / p.maxLife
         const fadeIn = Math.min(p.life / 20, 1)
         const fadeOut = 1 - lifeRatio * lifeRatio
-        const alpha = fadeIn * fadeOut
+        // Gate particle visibility by the dead zone intensity
+        const alpha = fadeIn * fadeOut * intensity
 
         p.vx += (Math.random() - 0.5) * 0.02
         p.vy -= 0.005
@@ -258,12 +198,12 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
         const currentSize = p.size * (1 - lifeRatio * 0.4)
 
         let r: number, g: number, b: number
-        if (p.isGold) {
-          // Warm cream/white particles
-          r = 240; g = 235; b = 220
+        if (p.isLight) {
+          // Silver / light grey particles
+          r = 200; g = 205; b = 215
         } else {
-          // Pale blue-white accent particles
-          r = 200; g = 215; b = 235
+          // Slightly blue-grey accent
+          r = 175; g = 185; b = 210
         }
 
         if (alpha > 0.01) {
