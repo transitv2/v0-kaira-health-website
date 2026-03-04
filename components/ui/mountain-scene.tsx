@@ -46,17 +46,17 @@ export function GenerativeMountainScene() {
     const segments = isMobile ? 64 : 128
     const geometry = new THREE.PlaneGeometry(12, 8, segments, segments)
 
-    // SHADER MATERIAL — Multi-tone blue with icy edge highlights
+    // SHADER MATERIAL — Silver/grey landscape with white edge highlights
     const material = new THREE.ShaderMaterial({
       side: THREE.DoubleSide,
       wireframe: false,
       uniforms: {
         time: { value: 0 },
         pointLightPosition: { value: new THREE.Vector3(0, 0, 5) },
-        colorDeep: { value: new THREE.Color("#1E3A5F") },   // Deep navy base
-        colorMid: { value: new THREE.Color("#3B82F6") },    // Medical blue mid
-        colorPeak: { value: new THREE.Color("#93C5FD") },   // Light blue peaks
-        colorEdge: { value: new THREE.Color("#DBEAFE") },   // Icy white edge glow
+        colorDeep: { value: new THREE.Color("#2A2F38") },   // Dark charcoal base
+        colorMid: { value: new THREE.Color("#6B7280") },    // Cool grey mid
+        colorPeak: { value: new THREE.Color("#B0B8C4") },   // Silver peaks
+        colorEdge: { value: new THREE.Color("#E2E8F0") },   // White edge glow
       },
       vertexShader: `
         uniform float time;
