@@ -91,15 +91,21 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
       const rect = canvas!.getBoundingClientRect()
       const rawX = e.clientX - rect.left
       const rawY = e.clientY - rect.top
-
-      // Remap Y so that middle of viewport = torch off-screen (below),
-      // and as mouse moves DOWN past ~60% of height, torch rises into view.
-      // This keeps the hero dark when mouse sits at normal resting position (center).
       const yRatio = rawY / rect.height // 0 = top, 1 = bottom
-      const remappedY = rect.height * 0.3 + yRatio * rect.height * 1.2
 
-      mouseRef.current.x = rawX
-      mouseRef.current.y = remappedY
+      // Hard dead zone: mouse at ≤50% of viewport = torch pushed completely off-screen.
+      // Below 50%, torch linearly rises into view. This keeps the hero pitch black
+      // when the cursor rests at a normal position (center or above).
+      if (yRatio <= 0.5) {
+        // Push torch way below the canvas — invisible
+        mouseRef.current.x = rawX
+        mouseRef.current.y = rect.height * 2
+      } else {
+        // Map 50%–100% of viewport onto the visible bottom portion
+        const visibleT = (yRatio - 0.5) / 0.5 // 0 at 50%, 1 at bottom
+        mouseRef.current.x = rawX
+        mouseRef.current.y = rect.height * (1.0 - visibleT * 0.5) // enters from below
+      }
       userMovedRef.current = true
     }
 
@@ -178,7 +184,8 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
           autoLightRef.current.angle += 0.003
           const a = autoLightRef.current.angle
           lightX = w * 0.5 + Math.sin(a) * w * 0.15
-          lightY = h * 0.75 + Math.sin(a * 1.5) * h * 0.08
+          // Idle sits at ~85% height — below the dead zone, a gentle glow from the bottom
+          lightY = h * 0.85 + Math.sin(a * 1.5) * h * 0.06
         }
         intensity = 1
       }
@@ -192,31 +199,31 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
         // === TORCH GLOW — scaled by intensity ===
         const i = intensity
 
-        // Inner cool core
+        // Inner core — warm white / cream (NOT blue)
         const coreR = TORCH_RADIUS * 0.35
         const coreGrad = ctx!.createRadialGradient(lightX, lightY, 0, lightX, lightY, coreR)
-        coreGrad.addColorStop(0, `rgba(147, 197, 253, ${0.22 * i})`)
-        coreGrad.addColorStop(0.5, `rgba(96, 165, 250, ${0.10 * i})`)
-        coreGrad.addColorStop(1, "rgba(59, 130, 246, 0)")
+        coreGrad.addColorStop(0, `rgba(245, 240, 230, ${0.25 * i})`)
+        coreGrad.addColorStop(0.5, `rgba(235, 230, 218, ${0.12 * i})`)
+        coreGrad.addColorStop(1, "rgba(220, 218, 210, 0)")
         ctx!.fillStyle = coreGrad
         ctx!.fillRect(0, 0, w, h)
 
-        // Mid glow — cool blue, broad spread
+        // Mid glow — soft white with a whisper of blue
         const midR = TORCH_RADIUS * 0.75
         const midGrad = ctx!.createRadialGradient(lightX, lightY, 0, lightX, lightY, midR)
-        midGrad.addColorStop(0, `rgba(59, 130, 246, ${0.14 * i})`)
-        midGrad.addColorStop(0.4, `rgba(59, 130, 246, ${0.07 * i})`)
-        midGrad.addColorStop(0.8, `rgba(37, 99, 235, ${0.025 * i})`)
+        midGrad.addColorStop(0, `rgba(220, 228, 240, ${0.14 * i})`)
+        midGrad.addColorStop(0.4, `rgba(200, 212, 230, ${0.07 * i})`)
+        midGrad.addColorStop(0.8, `rgba(160, 185, 215, ${0.025 * i})`)
         midGrad.addColorStop(1, "rgba(0, 0, 0, 0)")
         ctx!.fillStyle = midGrad
         ctx!.fillRect(0, 0, w, h)
 
-        // Outer ambient light — very broad, soft blue
+        // Outer ambient — very subtle blue tint, barely visible
         const outerR = TORCH_RADIUS * 2.5
         const outerGrad = ctx!.createRadialGradient(lightX, lightY, 0, lightX, lightY, outerR)
-        outerGrad.addColorStop(0, `rgba(59, 130, 246, ${0.05 * i})`)
-        outerGrad.addColorStop(0.3, `rgba(59, 130, 246, ${0.025 * i})`)
-        outerGrad.addColorStop(0.6, `rgba(29, 78, 216, ${0.01 * i})`)
+        outerGrad.addColorStop(0, `rgba(140, 170, 210, ${0.04 * i})`)
+        outerGrad.addColorStop(0.3, `rgba(100, 140, 190, ${0.02 * i})`)
+        outerGrad.addColorStop(0.6, `rgba(60, 100, 160, ${0.008 * i})`)
         outerGrad.addColorStop(1, "rgba(0, 0, 0, 0)")
         ctx!.fillStyle = outerGrad
         ctx!.fillRect(0, 0, w, h)
@@ -252,9 +259,11 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
 
         let r: number, g: number, b: number
         if (p.isGold) {
-          r = 96; g = 165; b = 250
+          // Warm cream/white particles
+          r = 240; g = 235; b = 220
         } else {
-          r = 190; g = 215; b = 245
+          // Pale blue-white accent particles
+          r = 200; g = 215; b = 235
         }
 
         if (alpha > 0.01) {
