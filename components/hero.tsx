@@ -11,9 +11,9 @@ const headlineLine2 = ["To", "Live", "Better.", "Longer."]
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen w-full bg-[#0A0A0A] overflow-hidden">
+    <section className="relative min-h-screen w-full bg-[#0B1221] overflow-hidden">
       {/* Three.js mountain landscape — z-0 background layer */}
-      <Suspense fallback={<div className="absolute inset-0 w-full h-full bg-[#0A0A0A]" />}>
+      <Suspense fallback={<div className="absolute inset-0 w-full h-full bg-[#0B1221]" />}>
         <GenerativeMountainScene />
       </Suspense>
 

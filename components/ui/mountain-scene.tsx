@@ -46,19 +46,23 @@ export function GenerativeMountainScene() {
     const segments = isMobile ? 64 : 128
     const geometry = new THREE.PlaneGeometry(12, 8, segments, segments)
 
-    // SHADER MATERIAL — KAIRA gold (#C9A84C)
+    // SHADER MATERIAL — Multi-tone blue with icy edge highlights
     const material = new THREE.ShaderMaterial({
       side: THREE.DoubleSide,
       wireframe: false,
       uniforms: {
         time: { value: 0 },
         pointLightPosition: { value: new THREE.Vector3(0, 0, 5) },
-        color: { value: new THREE.Color("#C9A84C") },
+        colorDeep: { value: new THREE.Color("#1E3A5F") },   // Deep navy base
+        colorMid: { value: new THREE.Color("#3B82F6") },    // Medical blue mid
+        colorPeak: { value: new THREE.Color("#93C5FD") },   // Light blue peaks
+        colorEdge: { value: new THREE.Color("#DBEAFE") },   // Icy white edge glow
       },
       vertexShader: `
         uniform float time;
         varying vec3 vNormal;
         varying vec3 vPosition;
+        varying float vDisplacement;
 
         // --- PERLIN NOISE FUNCTIONS ---
         vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -119,15 +123,20 @@ export function GenerativeMountainScene() {
 
             // Layer 2: Detail
             displacement += snoise(vec3(position.x * noiseFreq * 2.0, position.y * noiseFreq * 2.0 - time * 0.2, 0.0)) * (noiseAmp * 0.5);
+            vDisplacement = displacement;
             vec3 newPosition = position + normal * displacement;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
         }
       `,
       fragmentShader: `
-        uniform vec3 color;
+        uniform vec3 colorDeep;
+        uniform vec3 colorMid;
+        uniform vec3 colorPeak;
+        uniform vec3 colorEdge;
         uniform vec3 pointLightPosition;
         varying vec3 vNormal;
         varying vec3 vPosition;
+        varying float vDisplacement;
 
         void main() {
             vec3 normal = normalize(vNormal);
@@ -135,10 +144,16 @@ export function GenerativeMountainScene() {
 
             float diffuse = max(dot(normal, lightDir), 0.0);
 
-            float fresnel = 1.0 - dot(normal, vec3(0.0, 0.0, 1.0));
-            fresnel = pow(fresnel, 2.0);
+            // Height-based color: deep navy valleys → blue mid → light peaks
+            float heightT = smoothstep(-0.3, 0.8, vDisplacement);
+            vec3 baseColor = mix(colorDeep, colorMid, smoothstep(0.0, 0.5, heightT));
+            baseColor = mix(baseColor, colorPeak, smoothstep(0.5, 1.0, heightT));
 
-            vec3 finalColor = color * diffuse + color * fresnel * 0.5;
+            // Fresnel edge glow — icy white highlights on silhouette edges
+            float fresnel = 1.0 - dot(normal, vec3(0.0, 0.0, 1.0));
+            fresnel = pow(fresnel, 2.5);
+
+            vec3 finalColor = baseColor * (diffuse * 0.8 + 0.2) + colorEdge * fresnel * 0.4;
 
             gl_FragColor = vec4(finalColor, 1.0);
         }

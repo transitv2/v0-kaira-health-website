@@ -4,38 +4,40 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: #0A0A0A;
-  --foreground: #F5F3EF;
-  --card: #141414;
-  --card-foreground: #F5F3EF;
-  --popover: #141414;
-  --popover-foreground: #F5F3EF;
-  --primary: #C9A84C;
-  --primary-foreground: #0A0A0A;
-  --secondary: #1A1A1A;
-  --secondary-foreground: #F5F3EF;
-  --muted: #1A1A1A;
-  --muted-foreground: #8A8A8A;
-  --accent: #C9A84C;
-  --accent-foreground: #0A0A0A;
-  --destructive: #D4785A;
-  --destructive-foreground: #0A0A0A;
-  --border: #2A2A2A;
-  --input: #1A1A1A;
-  --ring: #C9A84C;
+  --background: #0B1221;
+  --foreground: #EDF2F7;
+  --card: #111D33;
+  --card-foreground: #EDF2F7;
+  --popover: #111D33;
+  --popover-foreground: #EDF2F7;
+  --primary: #3B82F6;
+  --primary-foreground: #FFFFFF;
+  --secondary: #0F1A2E;
+  --secondary-foreground: #EDF2F7;
+  --muted: #0F1A2E;
+  --muted-foreground: #7B93AD;
+  --accent: #3B82F6;
+  --accent-foreground: #FFFFFF;
+  --destructive: #EF4444;
+  --destructive-foreground: #FFFFFF;
+  --border: #1E3A5F;
+  --input: #0F1A2E;
+  --ring: #3B82F6;
   --radius: 0.625rem;
 }
 
 /* === Theme tokens === */
 @theme {
-  --color-dark: #0A0A0A;
-  --color-dark-surface: #141414;
-  --color-light: #FAFAF7;
+  --color-dark: #0B1221;
+  --color-dark-surface: #111D33;
+  --color-light: #F0F4F8;
   --color-light-surface: #FFFFFF;
-  --color-gold: #C9A84C;
-  --color-gold-dim: #A08838;
-  --color-cream: #F5F3EF;
-  --color-muted: #8A8A8A;
+  --color-gold: #3B82F6;
+  --color-gold-dim: #2563EB;
+  --color-gold-sub: #60A5FA;
+  --color-cream: #EDF2F7;
+  --color-cream-dim: #CBD5E1;
+  --color-muted: #7B93AD;
   --color-border: var(--border);
   --color-card: var(--card);
 }
@@ -148,7 +150,7 @@
   left: 0;
   right: 0;
   height: 120px;
-  background: linear-gradient(to bottom, #0A0A0A, #FAFAF7);
+  background: linear-gradient(to bottom, #0B1221, #F0F4F8);
   pointer-events: none;
 }
 
@@ -159,7 +161,7 @@
   left: 0;
   right: 0;
   height: 120px;
-  background: linear-gradient(to bottom, #FAFAF7, #0A0A0A);
+  background: linear-gradient(to bottom, #F0F4F8, #0B1221);
   pointer-events: none;
 }
 

@@ -134,7 +134,7 @@ export default function ConsultationPage() {
                   required
                   value={formData.firstName}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-[#2A2A2A] bg-dark-surface px-4 py-3 text-sm text-cream placeholder:text-muted/40 focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors"
+                  className="w-full rounded-lg border border-[#1E3A5F] bg-dark-surface px-4 py-3 text-sm text-cream placeholder:text-muted/40 focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors"
                   placeholder="First name"
                 />
               </div>
@@ -149,7 +149,7 @@ export default function ConsultationPage() {
                   required
                   value={formData.lastName}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-[#2A2A2A] bg-dark-surface px-4 py-3 text-sm text-cream placeholder:text-muted/40 focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors"
+                  className="w-full rounded-lg border border-[#1E3A5F] bg-dark-surface px-4 py-3 text-sm text-cream placeholder:text-muted/40 focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors"
                   placeholder="Last name"
                 />
               </div>
@@ -167,7 +167,7 @@ export default function ConsultationPage() {
                 required
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full rounded-lg border border-[#2A2A2A] bg-dark-surface px-4 py-3 text-sm text-cream placeholder:text-muted/40 focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors"
+                className="w-full rounded-lg border border-[#1E3A5F] bg-dark-surface px-4 py-3 text-sm text-cream placeholder:text-muted/40 focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors"
                 placeholder="you@example.com"
               />
             </div>
@@ -183,7 +183,7 @@ export default function ConsultationPage() {
                 type="tel"
                 value={formData.phone}
                 onChange={handleChange}
-                className="w-full rounded-lg border border-[#2A2A2A] bg-dark-surface px-4 py-3 text-sm text-cream placeholder:text-muted/40 focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors"
+                className="w-full rounded-lg border border-[#1E3A5F] bg-dark-surface px-4 py-3 text-sm text-cream placeholder:text-muted/40 focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors"
                 placeholder="+1 (555) 000-0000"
               />
             </div>
@@ -199,7 +199,7 @@ export default function ConsultationPage() {
                   name="city"
                   value={formData.city}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-[#2A2A2A] bg-dark-surface px-4 py-3 text-sm text-cream focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors appearance-none"
+                  className="w-full rounded-lg border border-[#1E3A5F] bg-dark-surface px-4 py-3 text-sm text-cream focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors appearance-none"
                 >
                   <option value="" className="bg-dark-surface text-muted">Select a city</option>
                   {cityOptions.map((city) => (
@@ -218,7 +218,7 @@ export default function ConsultationPage() {
                   name="interest"
                   value={formData.interest}
                   onChange={handleChange}
-                  className="w-full rounded-lg border border-[#2A2A2A] bg-dark-surface px-4 py-3 text-sm text-cream focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors appearance-none"
+                  className="w-full rounded-lg border border-[#1E3A5F] bg-dark-surface px-4 py-3 text-sm text-cream focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors appearance-none"
                 >
                   <option value="" className="bg-dark-surface text-muted">Select an area</option>
                   {interestOptions.map((opt) => (
@@ -241,7 +241,7 @@ export default function ConsultationPage() {
                 rows={4}
                 value={formData.message}
                 onChange={handleChange}
-                className="w-full rounded-lg border border-[#2A2A2A] bg-dark-surface px-4 py-3 text-sm text-cream placeholder:text-muted/40 focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors resize-none"
+                className="w-full rounded-lg border border-[#1E3A5F] bg-dark-surface px-4 py-3 text-sm text-cream placeholder:text-muted/40 focus:border-gold/40 focus:outline-none focus:ring-1 focus:ring-gold/20 transition-colors resize-none"
                 placeholder="Tell us about your health goals or questions..."
               />
             </div>

@@ -5,7 +5,7 @@ import { useEffect, useRef, useCallback } from "react"
 /**
  * Torch in a dark cave — a broad, calm emanating light that follows the cursor.
  * Slow, gentle particles drift around the light source.
- * No flicker — steady, warm, meditative.
+ * No flicker — steady, cool blue, meditative.
  *
  * 5-second reveal sequence:
  * 0.0s – 0.3s: Nothing visible (pure darkness)
@@ -89,8 +89,17 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
 
     function onMouseMove(e: MouseEvent) {
       const rect = canvas!.getBoundingClientRect()
-      mouseRef.current.x = e.clientX - rect.left
-      mouseRef.current.y = e.clientY - rect.top
+      const rawX = e.clientX - rect.left
+      const rawY = e.clientY - rect.top
+
+      // Remap Y so that middle of viewport = torch off-screen (below),
+      // and as mouse moves DOWN past ~60% of height, torch rises into view.
+      // This keeps the hero dark when mouse sits at normal resting position (center).
+      const yRatio = rawY / rect.height // 0 = top, 1 = bottom
+      const remappedY = rect.height * 0.3 + yRatio * rect.height * 1.2
+
+      mouseRef.current.x = rawX
+      mouseRef.current.y = remappedY
       userMovedRef.current = true
     }
 
@@ -99,16 +108,25 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
       mouseRef.current.y = -1000
     }
 
-    // Ignition position — far left
+    // Ignition position — bottom center (starts in darkness, rises up)
     function getIgnitionPosition(): { x: number; y: number } {
-      return { x: w * 0.05, y: h * 0.40 }
+      return { x: w * 0.5, y: h * 1.1 }
     }
 
-    // Sweep: far left → far right with gentle sine-wave vertical motion
+    // Sweep: bottom center → rises up to lower-third, then sweeps across
     function getSweepPosition(t: number): { x: number; y: number } {
       const eased = t * t * (3 - 2 * t) // smoothstep
-      const x = w * 0.05 + eased * w * 0.85 // 5% → 90% of width
-      const y = h * 0.40 + Math.sin(eased * Math.PI) * h * 0.08
+      // First 40%: rise from off-screen to ~75% height
+      // Rest: sweep left-to-right at that height
+      if (t < 0.4) {
+        const riseT = t / 0.4
+        const riseEased = riseT * riseT * (3 - 2 * riseT)
+        return { x: w * 0.3, y: h * 1.1 - riseEased * h * 0.35 }
+      }
+      const sweepT = (t - 0.4) / 0.6
+      const sweepEased = sweepT * sweepT * (3 - 2 * sweepT)
+      const x = w * 0.15 + sweepEased * w * 0.7
+      const y = h * 0.75 + Math.sin(sweepEased * Math.PI) * h * 0.06
       return { x, y }
     }
 
@@ -160,7 +178,7 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
           autoLightRef.current.angle += 0.003
           const a = autoLightRef.current.angle
           lightX = w * 0.5 + Math.sin(a) * w * 0.15
-          lightY = h * 0.42 + Math.sin(a * 1.5) * h * 0.08
+          lightY = h * 0.75 + Math.sin(a * 1.5) * h * 0.08
         }
         intensity = 1
       }
@@ -174,31 +192,31 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
         // === TORCH GLOW — scaled by intensity ===
         const i = intensity
 
-        // Inner warm core
+        // Inner cool core
         const coreR = TORCH_RADIUS * 0.35
         const coreGrad = ctx!.createRadialGradient(lightX, lightY, 0, lightX, lightY, coreR)
-        coreGrad.addColorStop(0, `rgba(255, 225, 140, ${0.22 * i})`)
-        coreGrad.addColorStop(0.5, `rgba(220, 185, 90, ${0.10 * i})`)
-        coreGrad.addColorStop(1, "rgba(201, 168, 76, 0)")
+        coreGrad.addColorStop(0, `rgba(147, 197, 253, ${0.22 * i})`)
+        coreGrad.addColorStop(0.5, `rgba(96, 165, 250, ${0.10 * i})`)
+        coreGrad.addColorStop(1, "rgba(59, 130, 246, 0)")
         ctx!.fillStyle = coreGrad
         ctx!.fillRect(0, 0, w, h)
 
-        // Mid glow — warm gold, broad spread
+        // Mid glow — cool blue, broad spread
         const midR = TORCH_RADIUS * 0.75
         const midGrad = ctx!.createRadialGradient(lightX, lightY, 0, lightX, lightY, midR)
-        midGrad.addColorStop(0, `rgba(201, 168, 76, ${0.14 * i})`)
-        midGrad.addColorStop(0.4, `rgba(201, 168, 76, ${0.07 * i})`)
-        midGrad.addColorStop(0.8, `rgba(180, 140, 60, ${0.025 * i})`)
+        midGrad.addColorStop(0, `rgba(59, 130, 246, ${0.14 * i})`)
+        midGrad.addColorStop(0.4, `rgba(59, 130, 246, ${0.07 * i})`)
+        midGrad.addColorStop(0.8, `rgba(37, 99, 235, ${0.025 * i})`)
         midGrad.addColorStop(1, "rgba(0, 0, 0, 0)")
         ctx!.fillStyle = midGrad
         ctx!.fillRect(0, 0, w, h)
 
-        // Outer ambient light — very broad, soft warmth
+        // Outer ambient light — very broad, soft blue
         const outerR = TORCH_RADIUS * 2.5
         const outerGrad = ctx!.createRadialGradient(lightX, lightY, 0, lightX, lightY, outerR)
-        outerGrad.addColorStop(0, `rgba(201, 168, 76, ${0.05 * i})`)
-        outerGrad.addColorStop(0.3, `rgba(201, 168, 76, ${0.025 * i})`)
-        outerGrad.addColorStop(0.6, `rgba(180, 150, 70, ${0.01 * i})`)
+        outerGrad.addColorStop(0, `rgba(59, 130, 246, ${0.05 * i})`)
+        outerGrad.addColorStop(0.3, `rgba(59, 130, 246, ${0.025 * i})`)
+        outerGrad.addColorStop(0.6, `rgba(29, 78, 216, ${0.01 * i})`)
         outerGrad.addColorStop(1, "rgba(0, 0, 0, 0)")
         ctx!.fillStyle = outerGrad
         ctx!.fillRect(0, 0, w, h)
@@ -234,9 +252,9 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
 
         let r: number, g: number, b: number
         if (p.isGold) {
-          r = 210; g = 175; b = 80
+          r = 96; g = 165; b = 250
         } else {
-          r = 240; g = 230; b = 200
+          r = 190; g = 215; b = 245
         }
 
         if (alpha > 0.01) {
