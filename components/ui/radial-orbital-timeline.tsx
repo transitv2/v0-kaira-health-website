@@ -60,7 +60,7 @@ export default function RadialOrbitalTimeline({
     if (!isVisibleRef.current) return;
 
     const isMobile = window.innerWidth < 768;
-    angleRef.current = (angleRef.current + (isMobile ? 0.04 : 0.15)) % 360;
+    angleRef.current = (angleRef.current + (isMobile ? 0.032 : 0.12)) % 360;
     const total = timelineData.length;
     const radius = 140;
 
