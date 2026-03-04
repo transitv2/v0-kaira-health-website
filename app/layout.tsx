@@ -1,17 +1,16 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
-// import { Syne } from 'next/font/google' // kept for easy A/B comparison
+import { Montserrat, Cormorant } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const inter = Inter({
+const montserrat = Montserrat({
   subsets: ['latin'],
-  variable: '--font-inter',
+  variable: '--font-montserrat',
 })
 
-const playfair = Playfair_Display({
+const cormorant = Cormorant({
   subsets: ['latin'],
-  weight: ['700', '800'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-display',
 })
 
@@ -60,7 +59,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${inter.variable} ${playfair.variable}`}>
+    <html lang="en" className={`${montserrat.variable} ${cormorant.variable}`}>
       <body className="font-sans antialiased">
         {children}
         <Analytics />

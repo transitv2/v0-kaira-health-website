@@ -15,11 +15,13 @@ interface KairaLogoProps {
  * the transparent background naturally shows whatever is behind it.
  */
 function KairaIconMark({ size = 32 }: { size?: number }) {
+  // viewBox cropped to actual logo bounds (560w x 300h) so visual center aligns with geometric center
+  const aspectRatio = 300 / 560
   return (
     <svg
-      viewBox="240 240 560 500"
+      viewBox="240 245 560 300"
       width={size}
-      height={size}
+      height={Math.round(size * aspectRatio)}
       fill="currentColor"
       aria-hidden="true"
     >

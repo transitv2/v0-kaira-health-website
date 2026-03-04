@@ -1,116 +1,91 @@
 "use client"
 
-import { useScrollAnimation } from "@/hooks/use-scroll-animation"
-import { cn } from "@/lib/utils"
+import RotatingEarth from "@/components/ui/rotating-earth"
+import { InView } from "@/components/ui/in-view"
 
 export function GlobalReach() {
-  const { ref, isVisible } = useScrollAnimation<HTMLElement>(0.15)
-
   return (
-    <section ref={ref} id="global" className="relative py-28 lg:py-40 overflow-hidden">
-      {/* Globe with city connections background */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: "url('/images/brand/kaira-global-section-bg.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          opacity: "calc(0.15 * (1 - var(--scroll-brightness, 0)))",
-        }}
-      />
-      {/* Subtle gold glow accent */}
-      <div className="absolute inset-0 pointer-events-none" style={{ opacity: "calc(1 - var(--scroll-brightness, 0) * 0.6)" }}>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70vw] h-[50vh] bg-gold/[0.05] rounded-full blur-[140px]" />
+    <section
+      id="global-reach"
+      className="relative min-h-screen w-full bg-dark py-24 lg:py-32 overflow-hidden"
+    >
+      {/* Background effects at z-0 */}
+      <div className="absolute inset-0 z-0">
+        <div className="absolute top-1/4 left-1/4 h-[500px] w-[500px] rounded-full bg-gold/[0.03] blur-[120px]" />
       </div>
-      {/* Subtle grain texture — visible on light background */}
-      <div className="absolute inset-0 pointer-events-none" style={{ opacity: "calc(var(--scroll-brightness, 0) * 0.04)", backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E\")", backgroundSize: "128px 128px" }} />
 
-      <div className="relative mx-auto max-w-5xl px-6 lg:px-8 text-center">
-        <div
-          className={cn(
-            "transition-all duration-1000",
-            isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
-          )}
-        >
-          <p className="text-[13px] uppercase tracking-[0.3em] text-gold-sub mb-6">
-            Global Reach
-          </p>
-          <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-5xl text-balance">
-            Consistent Care. Global Reach.
-          </h2>
+      <div className="relative z-10 mx-auto max-w-7xl px-6 lg:px-8">
+        {/* Two-column layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Left column: text content */}
+          <div>
+            <InView
+              transition={{ duration: 0.6, ease: "easeOut" }}
+              viewOptions={{ once: true, margin: "-80px", amount: 0.2 }}
+            >
+              <p className="text-gold/50 uppercase tracking-[0.2em] text-[11px] font-sans">
+                Global Reach
+              </p>
+            </InView>
+
+            <InView
+              transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
+              viewOptions={{ once: true, margin: "-80px", amount: 0.2 }}
+            >
+              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-cream mt-5 leading-[1.1]">
+                Consistent Care.{" "}
+                <span className="text-gold">Global Reach.</span>
+              </h2>
+            </InView>
+
+            <InView
+              transition={{ duration: 0.7, delay: 0.2, ease: "easeOut" }}
+              viewOptions={{ once: true, margin: "-80px", amount: 0.2 }}
+            >
+              <p className="text-muted text-base leading-relaxed mt-6 max-w-lg">
+                Access to thorough preventive care has not always been
+                convenient. KAIRA was designed to bring structured, physician-led
+                health intelligence to clients wherever they are.
+              </p>
+            </InView>
+
+            <InView
+              transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
+              viewOptions={{ once: true, margin: "-80px", amount: 0.2 }}
+            >
+              <p className="text-muted text-base leading-relaxed mt-4 max-w-lg">
+                We deliver the same depth of diagnostic assessment and
+                physician-led care whether you&apos;re in Toronto, New York,
+                Miami, Chicago, or Bahrain — with multilingual support, culturally
+                informed care, and a concierge model designed around how you
+                actually live.
+              </p>
+            </InView>
+
+            {/* Closing line */}
+            <InView
+              transition={{ duration: 0.7, delay: 0.8, ease: "easeOut" }}
+              viewOptions={{ once: true, margin: "-60px", amount: 0.2 }}
+            >
+              <p className="text-cream/60 italic font-serif text-lg mt-10">
+                Structured preventive care, designed to travel with you.
+              </p>
+            </InView>
+          </div>
+
+          {/* Right column: interactive d3 globe */}
+          <InView
+            transition={{ duration: 0.8, delay: 0.3, ease: "easeOut" }}
+            viewOptions={{ once: true, margin: "-60px", amount: 0.1 }}
+            className="flex items-center justify-center"
+          >
+            <RotatingEarth
+              className="w-full max-w-[520px]"
+              width={520}
+              height={520}
+            />
+          </InView>
         </div>
-
-        <div
-          className={cn(
-            "mt-10 max-w-3xl mx-auto transition-all duration-1000 delay-200",
-            isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
-          )}
-        >
-          <p className="text-lg leading-relaxed text-prose-strong text-pretty">
-            Access to thorough preventive care has not always been convenient. KAIRA
-            was designed to bring structured, physician-led health intelligence to
-            clients wherever they are.
-          </p>
-          <p className="mt-6 text-lg leading-relaxed text-prose-strong text-pretty">
-            We deliver the same depth of diagnostic assessment and physician-led
-            care whether you{"'"}re in Toronto, New York, Dubai, or Riyadh — with
-            multilingual support, culturally informed care, and a concierge model
-            designed around how you actually live.
-          </p>
-        </div>
-
-        {/* Location markers */}
-        <div
-          className={cn(
-            "mt-16 flex flex-wrap items-center justify-center gap-8 lg:gap-16",
-            isVisible ? "animate-fade-up delay-400" : "opacity-0"
-          )}
-        >
-          {["Toronto", "New York", "Dubai", "Riyadh"].map((city, i) => (
-            <div key={city} className="flex flex-col items-center gap-2">
-              <div className="relative">
-                <div
-                  className={cn(
-                    "h-2.5 w-2.5 rounded-full transition-all duration-700",
-                    i === 0 ? "bg-gold shadow-[0_0_12px_rgba(201,168,76,0.5)]" : "bg-gold/40"
-                  )}
-                />
-                {/* Pulse ring on visible */}
-                {isVisible && (
-                  <div
-                    className="absolute inset-0 rounded-full border border-gold/40 animate-pulse-ring"
-                    style={{ animationDelay: `${600 + i * 200}ms` }}
-                  />
-                )}
-              </div>
-              <span className="text-sm text-prose-strong tracking-wide font-medium">
-                {city}
-              </span>
-              {i === 0 && (
-                <span className="text-[10px] uppercase tracking-[0.2em] text-gold-sub">
-                  HQ
-                </span>
-              )}
-            </div>
-          ))}
-        </div>
-
-        {/* Separator line */}
-        <div
-          className={cn(
-            "mt-16 mx-auto h-px w-48 bg-gradient-to-r from-transparent via-gold/25 to-transparent",
-            isVisible ? "animate-fade-in delay-600" : "opacity-0"
-          )}
-        />
-
-        <p
-          className={cn(
-            "mt-8 text-sm text-sub italic",
-            isVisible ? "animate-fade-in delay-700" : "opacity-0"
-          )}
-        >
-          Structured preventive care, designed to travel with you.
-        </p>
       </div>
     </section>
   )
