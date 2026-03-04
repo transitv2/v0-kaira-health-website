@@ -59,7 +59,8 @@ export default function RadialOrbitalTimeline({
     rafRef.current = requestAnimationFrame(updatePositions);
     if (!isVisibleRef.current) return;
 
-    angleRef.current = (angleRef.current + 0.3) % 360;
+    const isMobile = window.innerWidth < 768;
+    angleRef.current = (angleRef.current + (isMobile ? 0.075 : 0.3)) % 360;
     const total = timelineData.length;
     const radius = 140;
 
