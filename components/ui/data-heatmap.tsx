@@ -155,6 +155,7 @@ function initHeatmap(
 ): () => void {
   const ctx = canvas.getContext("2d")
   if (!ctx) return () => {}
+  const cx = ctx // narrowed to non-null
 
   // ── IntersectionObserver: pause when off-screen ──
   const observer = new IntersectionObserver(
@@ -186,7 +187,7 @@ function initHeatmap(
     canvas.height = h * dpr
     canvas.style.width = `${w}px`
     canvas.style.height = `${h}px`
-    ctx!.setTransform(dpr, 0, 0, dpr, 0, 0)
+    cx.setTransform(dpr, 0, 0, dpr, 0, 0)
 
     const isMobile = w < 768
     cols = isMobile ? 30 : 50
@@ -195,6 +196,11 @@ function initHeatmap(
     cellH = (h - GAP * (rows - 1)) / rows
   }
   resize()
+
+  // Mobile/touch: no mousemove, so show heatmap at full intensity
+  if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+    lightIntensity = 1
+  }
 
   // ── Pre-compute noise grid ──
   let noiseGrid: Float32Array = new Float32Array(0)
@@ -218,8 +224,8 @@ function initHeatmap(
     const w = container.clientWidth
     const h = container.clientHeight
     // Clear to background color
-    ctx!.fillStyle = "#0A1628"
-    ctx!.fillRect(0, 0, w, h)
+    cx.fillStyle = "#0A1628"
+    cx.fillRect(0, 0, w, h)
 
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
@@ -245,8 +251,8 @@ function initHeatmap(
         const finalG = Math.min(255, (baseG * brightness * lightIntensity) | 0)
         const finalB = Math.min(255, (baseB * brightness * lightIntensity) | 0)
 
-        ctx!.fillStyle = `rgb(${finalR},${finalG},${finalB})`
-        ctx!.fillRect(x, y, cellW, cellH)
+        cx.fillStyle = `rgb(${finalR},${finalG},${finalB})`
+        cx.fillRect(x, y, cellW, cellH)
       }
     }
   }
@@ -286,11 +292,11 @@ function initHeatmap(
   function handleMouseMove(e: MouseEvent) {
     if (!isVisibleRef.current) return
 
-    mouseX = e.clientX
-    mouseY = e.clientY
+    const rect = canvas.getBoundingClientRect()
+    mouseX = e.clientX - rect.left
+    mouseY = e.clientY - rect.top
 
-    // Dead zone: pitch black above ~55% of viewport.
-    // Starts at 10% intensity once past threshold, scales 2x faster to reach 100%.
+    // Dead zone logic stays using viewport coordinates (e.clientY)
     const screenY = e.clientY / window.innerHeight
     const threshold = 0.55
     if (screenY <= threshold) {
@@ -301,8 +307,16 @@ function initHeatmap(
     }
   }
 
+  function handleTouchMove(e: TouchEvent) {
+    if (!isVisibleRef.current || !e.touches[0]) return
+    const rect = canvas.getBoundingClientRect()
+    mouseX = e.touches[0].clientX - rect.left
+    mouseY = e.touches[0].clientY - rect.top
+  }
+
   window.addEventListener("resize", handleResize)
   window.addEventListener("mousemove", handleMouseMove)
+  window.addEventListener("touchmove", handleTouchMove, { passive: true })
 
   // ── Cleanup ──
   return () => {
@@ -310,6 +324,7 @@ function initHeatmap(
     cancelAnimationFrame(frameId)
     window.removeEventListener("resize", handleResize)
     window.removeEventListener("mousemove", handleMouseMove)
+    window.removeEventListener("touchmove", handleTouchMove)
   }
 }
 

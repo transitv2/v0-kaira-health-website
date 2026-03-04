@@ -4,8 +4,8 @@ import dynamic from "next/dynamic"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-const GenerativeMountainScene = dynamic(
-  () => import("@/components/ui/mountain-scene").then((m) => m.GenerativeMountainScene),
+const DataHeatmap = dynamic(
+  () => import("@/components/ui/data-heatmap").then((m) => m.DataHeatmap),
   { ssr: false, loading: () => null }
 )
 
@@ -15,8 +15,8 @@ const headlineLine2 = ["To", "Live", "Better.", "Longer."]
 export function Hero() {
   return (
     <section className="relative min-h-screen w-full bg-[#0A1628] overflow-hidden">
-      {/* Three.js mountain landscape — z-0 background layer */}
-      <GenerativeMountainScene />
+      {/* Data heatmap grid — z-0 background layer */}
+      <DataHeatmap />
 
       {/* Content — z-10 content layer */}
       <div className="relative z-10 flex min-h-screen items-center justify-center">
