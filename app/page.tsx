@@ -1,45 +1,36 @@
+import dynamic from "next/dynamic"
 import { Navigation } from "@/components/navigation"
 import { Hero } from "@/components/hero"
 import { BrandStatement } from "@/components/brand-statement"
 import { ScienceSection } from "@/components/science-section"
-import { HowItWorks } from "@/components/how-it-works"
-import { StatsSection } from "@/components/stats-section"
-import { GlobalReach } from "@/components/global-reach"
-import { CTASection } from "@/components/cta-section"
 import { Footer } from "@/components/footer"
-import { ScrollBrightness } from "@/components/scroll-brightness"
 
-function SectionDivider({ intensity = 15 }: { intensity?: number }) {
-  return (
-    <div
-      className="h-px w-full"
-      style={{
-        background: `linear-gradient(to right, transparent, rgba(201, 168, 76, ${intensity / 100}) 50%, transparent)`,
-      }}
-    />
-  )
-}
+// Below-fold sections: lazy-loaded to reduce initial JS bundle
+const HowItWorks = dynamic(
+  () => import("@/components/how-it-works").then((m) => m.HowItWorks)
+)
+const StatsSection = dynamic(
+  () => import("@/components/stats-section").then((m) => m.StatsSection)
+)
+const GlobalReach = dynamic(
+  () => import("@/components/global-reach").then((m) => m.GlobalReach)
+)
+const CTASection = dynamic(
+  () => import("@/components/cta-section").then((m) => m.CTASection)
+)
 
 export default function Home() {
   return (
-    <ScrollBrightness>
-      <main className="noise-overlay">
-        <Navigation />
-        <Hero />
-        <SectionDivider intensity={8} />
-        <BrandStatement />
-        <SectionDivider intensity={10} />
-        <ScienceSection />
-        <SectionDivider intensity={12} />
-        <HowItWorks />
-        <SectionDivider intensity={15} />
-        <StatsSection />
-        <SectionDivider intensity={18} />
-        <GlobalReach />
-        <SectionDivider intensity={22} />
-        <CTASection />
-        <Footer />
-      </main>
-    </ScrollBrightness>
+    <main>
+      <Navigation />
+      <Hero />
+      <BrandStatement />
+      <ScienceSection />
+      <HowItWorks />
+      <StatsSection />
+      <GlobalReach />
+      <CTASection />
+      <Footer />
+    </main>
   )
 }

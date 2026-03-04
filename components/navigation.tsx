@@ -1,130 +1,141 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { Menu, X, ArrowRight } from "lucide-react"
+import { Menu, ArrowRight } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { KairaLogo } from "@/components/kaira-logo"
+import { Button } from "@/components/ui/button"
+import {
+  Sheet,
+  SheetTrigger,
+  SheetContent,
+  SheetTitle,
+} from "@/components/ui/sheet"
 
 const navLinks = [
-  { label: "The Science", href: "/#science" },
-  { label: "How It Works", href: "/#how-it-works" },
-  { label: "Global Reach", href: "/#global" },
+  { label: "The Science", href: "#science" },
+  { label: "How It Works", href: "#how-it-works" },
+  { label: "About Us", href: "/about" },
+  { label: "Clinic Network", href: "/clinics" },
 ]
 
 export function Navigation() {
   const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileOpen, setIsMobileOpen] = useState(false)
-  const [isBright, setIsBright] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
+    setMounted(true)
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50)
-      // Check if we've scrolled past the dark→light transition point
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight
-      const progress = maxScroll > 0 ? window.scrollY / maxScroll : 0
-      setIsBright(progress > 0.35) // past transition midpoint
+      setIsScrolled(window.scrollY > 20)
     }
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   return (
-    <header
-      className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-700",
-        isScrolled
-          ? isBright
-            ? "bg-white/80 backdrop-blur-2xl border-b border-black/[0.06] shadow-sm"
-            : "bg-navy/80 backdrop-blur-2xl border-b border-gold/[0.08]"
-          : "bg-transparent"
-      )}
-    >
-      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-8">
-        <a href="#" className="relative z-50 transition-all duration-300 hover:brightness-125 hover:drop-shadow-[0_0_8px_rgba(201,168,76,0.3)]">
-          <KairaLogo size={30} />
+    <header className="fixed top-5 left-0 right-0 z-50 flex justify-center px-4">
+      <nav
+        className={cn(
+          "flex w-full max-w-3xl items-center justify-between rounded-full border px-5 py-2.5 transition-all duration-500",
+          isScrolled
+            ? "border-border bg-dark/70 backdrop-blur-2xl shadow-lg shadow-black/10"
+            : "border-border/50 bg-dark/40 backdrop-blur-xl"
+        )}
+      >
+        {/* Logo */}
+        <a
+          href="#"
+          className="relative z-10 flex items-center justify-center transition-all duration-300 hover:brightness-125 hover:drop-shadow-[0_0_8px_rgba(201,168,76,0.3)]"
+        >
+          <KairaLogo size={36} showText={false} />
         </a>
 
-        {/* Desktop Links — centered */}
-        <div className="hidden items-center gap-10 md:flex">
+        {/* Desktop Links */}
+        <div className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => (
             <a
               key={link.href}
               href={link.href}
-              className={cn(
-                "text-[13px] font-medium tracking-wide transition-colors duration-500",
-                isBright
-                  ? "text-navy/60 hover:text-navy"
-                  : "text-cream-dim/50 hover:text-cream-dim"
-              )}
+              className="text-[13px] font-medium tracking-wide text-cream/50 transition-colors duration-300 hover:text-cream"
             >
               {link.label}
             </a>
           ))}
         </div>
 
-        {/* CTA */}
+        {/* Desktop CTA */}
         <div className="hidden md:block">
-          <a
-            href="/#begin"
-            className={cn(
-              "group inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-[13px] font-medium tracking-wide transition-all duration-500",
-              isBright
-                ? "border border-gold/40 bg-gold/[0.08] text-gold-dim hover:bg-gold/[0.15] hover:border-gold/60"
-                : "border border-gold/30 bg-gold/[0.06] text-gold hover:bg-gold/[0.12] hover:border-gold/50"
-            )}
+          <Button
+            asChild
+            size="sm"
+            className="rounded-full border border-gold/30 bg-gold/[0.08] px-5 py-2 text-[12px] font-medium tracking-wide text-gold hover:bg-gold/[0.15] hover:border-gold/50 transition-all duration-300"
           >
-            Begin Your Assessment
-            <ArrowRight className="h-3.5 w-3.5 transition-transform duration-300 group-hover:translate-x-0.5" />
-          </a>
-        </div>
-
-        {/* Mobile Toggle */}
-        <button
-          onClick={() => setIsMobileOpen(!isMobileOpen)}
-          className={cn(
-            "md:hidden relative z-50 p-2 transition-colors duration-500",
-            isBright ? "text-navy" : "text-cream-dim"
-          )}
-          aria-label={isMobileOpen ? "Close menu" : "Open menu"}
-        >
-          {isMobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-        </button>
-      </nav>
-
-      {/* Mobile Menu */}
-      <div
-        className={cn(
-          "fixed inset-0 z-40 backdrop-blur-xl transition-all duration-500 md:hidden",
-          isBright ? "bg-white/[0.98]" : "bg-navy/[0.98]",
-          isMobileOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        )}
-      >
-        <div className="flex h-full flex-col items-center justify-center gap-10">
-          {navLinks.map((link, i) => (
             <a
-              key={link.href}
-              href={link.href}
-              onClick={() => setIsMobileOpen(false)}
-              className={cn(
-                "text-2xl font-serif font-bold tracking-wide transition-all duration-300 hover:text-gold",
-                isBright ? "text-navy" : "text-cream-dim",
-                isMobileOpen ? "animate-fade-up" : "opacity-0"
-              )}
-              style={{ animationDelay: `${i * 80}ms` }}
+              href="/consultation"
+              className="group inline-flex items-center gap-2"
             >
-              {link.label}
+              Schedule Consultation
+              <ArrowRight className="h-3 w-3 transition-transform duration-300 group-hover:translate-x-0.5" />
             </a>
-          ))}
-          <a
-            href="/#begin"
-            onClick={() => setIsMobileOpen(false)}
-            className="mt-4 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-8 py-3 text-base font-medium text-gold transition-all hover:bg-gold/20"
-          >
-            Begin Your Assessment
-            <ArrowRight className="h-5 w-5" />
-          </a>
+          </Button>
         </div>
-      </div>
+
+        {/* Mobile Hamburger + Sheet — only mount after hydration to avoid Radix ID mismatch */}
+        <div className="md:hidden">
+          {mounted ? (
+            <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
+              <SheetTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon-sm"
+                  className="text-cream hover:bg-white/5"
+                  aria-label="Open menu"
+                >
+                  <Menu className="h-5 w-5" />
+                </Button>
+              </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="w-full border-l border-border bg-dark backdrop-blur-2xl sm:max-w-sm"
+            >
+              <SheetTitle className="sr-only">Navigation Menu</SheetTitle>
+              <div className="flex h-full flex-col items-center justify-center gap-10">
+                {navLinks.map((link, i) => (
+                  <a
+                    key={link.href}
+                    href={link.href}
+                    onClick={() => setMobileOpen(false)}
+                    className="text-2xl font-serif font-bold tracking-wide text-cream transition-colors duration-300 hover:text-gold animate-fade-up"
+                    style={{ animationDelay: `${i * 80}ms` }}
+                  >
+                    {link.label}
+                  </a>
+                ))}
+                <a
+                  href="/consultation"
+                  onClick={() => setMobileOpen(false)}
+                  className="mt-6 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-8 py-3 text-base font-medium text-gold transition-all hover:bg-gold/20 animate-fade-up"
+                  style={{ animationDelay: `${navLinks.length * 80}ms` }}
+                >
+                  Schedule Consultation
+                  <ArrowRight className="h-5 w-5" />
+                </a>
+              </div>
+            </SheetContent>
+          </Sheet>
+          ) : (
+            <Button
+              variant="ghost"
+              size="icon-sm"
+              className="text-cream hover:bg-white/5"
+              aria-label="Open menu"
+            >
+              <Menu className="h-5 w-5" />
+            </Button>
+          )}
+        </div>
+      </nav>
     </header>
   )
 }

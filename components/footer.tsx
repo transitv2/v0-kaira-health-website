@@ -1,72 +1,100 @@
 import { KairaLogo } from "@/components/kaira-logo"
 
-const footerLinks = {
-  Explore: [
-    { label: "The Science", href: "/#science" },
-    { label: "How It Works", href: "/#how-it-works" },
-    { label: "Global Reach", href: "/#global" },
-  ],
-  Connect: [
-    { label: "Contact Us", href: "mailto:info@kairahealth.com" },
-  ],
-}
+const exploreLinks = [
+  { label: "The Science", href: "#science" },
+  { label: "How It Works", href: "#how-it-works" },
+  { label: "About Us", href: "/about" },
+  { label: "Clinic Network", href: "/clinics" },
+]
+
+const connectLinks = [
+  { label: "Schedule Consultation", href: "/consultation" },
+  { label: "Contact Us", href: "mailto:consulting@regenalife.ca" },
+]
+
+const legalLinks = [
+  { label: "Privacy Policy", href: "/privacy" },
+  { label: "Terms of Service", href: "/terms" },
+]
 
 export function Footer() {
   return (
-    <footer className="relative">
-      {/* Gradient transition — adapts to current scroll brightness */}
-      {/* Gold rule */}
+    <footer className="relative w-full bg-dark">
+      {/* Top gold accent line */}
       <div className="mx-auto h-px w-full max-w-xs bg-gradient-to-r from-transparent via-gold/20 to-transparent" />
-      <div className="mx-auto max-w-7xl px-6 py-16 lg:px-8">
+
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-12 lg:py-14">
+        {/* Three columns: Brand, Explore, Connect */}
         <div className="grid gap-12 lg:grid-cols-4">
-          {/* Brand */}
+          {/* Brand column — spans 2 */}
           <div className="lg:col-span-2">
-            <a href="#">
+            <a href="#" aria-label="KAIRA Health home">
               <KairaLogo size={28} />
             </a>
-            <p className="mt-5 text-sm leading-relaxed text-sub max-w-sm">
-              A comprehensive health intelligence platform.
-              Serving clients across North America and the Middle East.
+            <p className="mt-5 text-muted text-sm leading-relaxed max-w-sm">
+              A comprehensive health intelligence platform. Serving clients
+              across North America and the Middle East.
             </p>
-            <p className="mt-4 text-xs text-ghost">
-              Toronto &middot; Serving North America & the Middle East
+            <p className="mt-4 text-muted/50 text-xs">
+              Toronto &middot; Serving North America &amp; the Middle East
             </p>
           </div>
 
-          {/* Link columns */}
-          {Object.entries(footerLinks).map(([category, links]) => (
-            <div key={category}>
-              <h4 className="text-[11px] uppercase tracking-[0.2em] font-medium text-sub">
-                {category}
-              </h4>
-              <ul className="mt-4 space-y-3">
-                {links.map((link) => (
-                  <li key={link.label}>
-                    <a
-                      href={link.href}
-                      className="text-sm text-sub transition-colors duration-200 hover:text-prose-strong"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
+          {/* Explore column */}
+          <div>
+            <h4 className="text-gold/50 uppercase tracking-[0.2em] text-[11px] font-medium">
+              Explore
+            </h4>
+            <ul className="mt-4 space-y-3">
+              {exploreLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-muted text-sm hover:text-cream transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Connect column */}
+          <div>
+            <h4 className="text-gold/50 uppercase tracking-[0.2em] text-[11px] font-medium">
+              Connect
+            </h4>
+            <ul className="mt-4 space-y-3">
+              {connectLinks.map((link) => (
+                <li key={link.label}>
+                  <a
+                    href={link.href}
+                    className="text-muted text-sm hover:text-cream transition-colors"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
 
-        {/* Bottom bar */}
-        <div className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-border pt-8 sm:flex-row">
-          <p className="text-xs text-ghost">
-            &copy; {new Date().getFullYear()} KAIRA Health. All rights reserved.
+        {/* Bottom bar: copyright + legal */}
+        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 sm:flex-row">
+          <p className="text-muted/50 text-xs">
+            &copy; {new Date().getFullYear()} KAIRA Health. All rights
+            reserved.
           </p>
           <div className="flex gap-6">
-            <a href="/privacy" className="text-xs text-ghost hover:text-sub transition-colors">
-              Privacy Policy
-            </a>
-            <a href="/terms" className="text-xs text-ghost hover:text-sub transition-colors">
-              Terms of Service
-            </a>
+            {legalLinks.map((link) => (
+              <a
+                key={link.label}
+                href={link.href}
+                className="text-muted/50 text-xs hover:text-cream transition-colors"
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
         </div>
       </div>

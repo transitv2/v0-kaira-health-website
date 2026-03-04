@@ -1,89 +1,185 @@
 "use client"
 
-import { useScrollAnimation } from "@/hooks/use-scroll-animation"
-import { cn } from "@/lib/utils"
-import { PixelatedWaveform } from "@/components/pixelated-waveform"
+import { InView } from "@/components/ui/in-view"
+
+/* ------------------------------------------------------------------ */
+/*  Animation variants                                                 */
+/* ------------------------------------------------------------------ */
+
+const slideFromLeft = {
+  hidden: { opacity: 0, x: -40, filter: "blur(6px)" },
+  visible: { opacity: 1, x: 0, filter: "blur(0px)" },
+}
+
+const slideFromRight = {
+  hidden: { opacity: 0, x: 40, filter: "blur(6px)" },
+  visible: { opacity: 1, x: 0, filter: "blur(0px)" },
+}
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30, filter: "blur(4px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+}
+
+/* ------------------------------------------------------------------ */
+/*  Brand Statement Section                                            */
+/* ------------------------------------------------------------------ */
 
 export function BrandStatement() {
-  const { ref, isVisible } = useScrollAnimation<HTMLElement>(0.2)
-
   return (
-    <section ref={ref} className="relative py-28 lg:py-40 overflow-hidden">
-      {/* Pixelated waveform water animation — subtle animated backdrop */}
+    <section className="relative min-h-screen w-full bg-light py-24 lg:py-32">
+      {/* Gradient fade from dark hero above */}
       <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ opacity: "calc(0.8 * (1 - var(--scroll-brightness, 0) * 0.7))" }}
-      >
-        <PixelatedWaveform />
-      </div>
-      {/* Subtle gold glow — first hint of light */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-gold/[0.025] rounded-full blur-[120px] pointer-events-none"
-        style={{ opacity: "calc(1 - var(--scroll-brightness, 0) * 0.6)" }}
+        className="pointer-events-none absolute inset-x-0 top-0 z-0 h-32"
+        style={{
+          background:
+            "linear-gradient(to bottom, #0A0A0A 0%, #0A0A0A 10%, #FAFAF7 100%)",
+        }}
       />
 
-      <div className="relative mx-auto max-w-4xl px-6 lg:px-8">
-        {/* Etymology block */}
-        <div
-          className={cn(
-            "transition-all duration-1000",
-            isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
-          )}
-        >
-          <blockquote className="border-l-2 border-gold/30 pl-8 lg:pl-12">
-            <p className="text-lg leading-relaxed text-prose-strong lg:text-xl">
-              In Arabic, <span className="text-gold italic">KAIRA</span> means{" "}
-              <em className="text-cream-dim">goodness</em> — the best of what is possible.
-            </p>
-            <p className="mt-3 text-lg leading-relaxed text-prose-strong lg:text-xl">
-              In Sanskrit, it means{" "}
-              <em className="text-cream-dim">action — the decisive step</em>.
-            </p>
-            <p className="mt-3 text-lg leading-relaxed text-prose-strong lg:text-xl">
-              In Greek, it echoes{" "}
-              <em className="text-cream-dim">kairos</em> — the favourable moment, timely intervention.
-            </p>
-          </blockquote>
-        </div>
+      {/* Content */}
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
+        {/* ── Two-column editorial layout ── */}
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-[2fr_3fr] md:gap-0">
+          {/* ── Left column: Etymology ── */}
+          <div className="md:border-r md:border-gold/20 md:pr-12">
+            <InView
+              variants={slideFromLeft}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
+            >
+              <p className="text-base leading-relaxed text-[#4A4A4A]">
+                In Arabic,{" "}
+                <em className="font-medium not-italic text-gold">KAIRA</em>{" "}
+                means{" "}
+                <em className="font-medium not-italic text-[#0A0A0A]">
+                  goodness
+                </em>{" "}
+                — the best of what is possible.
+              </p>
+            </InView>
 
-        {/* Core conviction */}
-        <div
-          className={cn(
-            "mt-16 lg:mt-20 transition-all duration-1000 delay-200",
-            isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
-          )}
-        >
-          <p className="text-[13px] uppercase tracking-[0.3em] text-gold-sub mb-8">
-            Our Conviction
-          </p>
-          <h2 className="font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-[2.75rem] text-balance">
-            The most important medical insight is the one identified{" "}
-            <span className="text-gold">before illness takes hold.</span>
-          </h2>
-        </div>
+            <InView
+              variants={slideFromLeft}
+              transition={{
+                duration: 0.9,
+                delay: 0.15,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
+              className="mt-5"
+            >
+              <p className="text-base leading-relaxed text-[#4A4A4A]">
+                In Sanskrit, it means{" "}
+                <em className="font-medium not-italic text-[#0A0A0A]">
+                  action — the decisive step
+                </em>
+                .
+              </p>
+            </InView>
 
-        {/* Expanded copy */}
-        <div
-          className={cn(
-            "mt-12 transition-all duration-1000 delay-400",
-            isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
-          )}
-        >
-          <div className="max-w-3xl space-y-6 text-base leading-relaxed text-prose lg:text-[17px]">
-            <p>
-              Healthcare often focuses on symptoms. KAIRA focuses on earlier understanding.
-              We integrate advanced laboratory testing, imaging, genomic analysis, and
-              AI-supported pattern recognition into a unified view of your health —
-              interpreted by physicians who prioritise depth, data, and continuity of care.
-            </p>
-            <p>
-              This goes beyond routine screening. It brings together a broad range of
-              biomarkers, analysed over time, to provide a more comprehensive understanding
-              of your health trajectory — supported by a concierge medical team committed
-              to personalised care.
-            </p>
+            <InView
+              variants={slideFromLeft}
+              transition={{
+                duration: 0.9,
+                delay: 0.3,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
+              className="mt-5"
+            >
+              <p className="text-base leading-relaxed text-[#4A4A4A]">
+                In Greek, it echoes{" "}
+                <em className="font-medium not-italic text-[#0A0A0A]">
+                  kairos
+                </em>{" "}
+                — the favourable moment, timely intervention.
+              </p>
+            </InView>
+          </div>
+
+          {/* ── Right column: Our Conviction ── */}
+          <div className="md:pl-12">
+            <InView
+              variants={slideFromRight}
+              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+              viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
+            >
+              <p className="text-xs uppercase tracking-[0.2em] text-gold">
+                Our Conviction
+              </p>
+            </InView>
+
+            <InView
+              variants={slideFromRight}
+              transition={{
+                duration: 0.9,
+                delay: 0.12,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
+              className="mt-6"
+            >
+              <h2 className="font-serif text-3xl leading-tight text-[#0A0A0A] text-balance md:text-4xl">
+                The most important medical insight is the one identified{" "}
+                <strong className="text-gold">
+                  before illness takes hold.
+                </strong>
+              </h2>
+            </InView>
+
+            <InView
+              variants={slideFromRight}
+              transition={{
+                duration: 0.9,
+                delay: 0.24,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
+              className="mt-8"
+            >
+              <p className="text-base leading-relaxed text-[#4A4A4A]">
+                Healthcare often focuses on symptoms. KAIRA focuses on earlier
+                understanding. We integrate advanced laboratory testing, imaging,
+                genomic analysis, and AI-supported pattern recognition into a
+                unified view of your health — interpreted by physicians who
+                prioritise depth, data, and continuity of care.
+              </p>
+            </InView>
+
+            <InView
+              variants={slideFromRight}
+              transition={{
+                duration: 0.9,
+                delay: 0.36,
+                ease: [0.16, 1, 0.3, 1],
+              }}
+              viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
+              className="mt-6"
+            >
+              <p className="text-base leading-relaxed text-[#4A4A4A]">
+                This goes beyond routine screening. It brings together a broad
+                range of biomarkers, analysed over time, to provide a more
+                comprehensive understanding of your health trajectory — supported
+                by a concierge medical team committed to personalised care.
+              </p>
+            </InView>
           </div>
         </div>
+
+        {/* ── Full-width accent line ── */}
+        <InView
+          variants={fadeUp}
+          transition={{
+            duration: 1,
+            delay: 0.5,
+            ease: [0.16, 1, 0.3, 1],
+          }}
+          viewOptions={{ once: true, margin: "-60px", amount: 0.5 }}
+          className="mt-20 flex justify-center"
+        >
+          <div className="h-px w-24 bg-gold/40" />
+        </InView>
       </div>
     </section>
   )

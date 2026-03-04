@@ -1,162 +1,163 @@
 "use client"
 
-import { useScrollAnimation } from "@/hooks/use-scroll-animation"
-import { cn } from "@/lib/utils"
-import { Microscope, Brain, UserCheck } from "lucide-react"
+import { Activity, Brain, Stethoscope } from "lucide-react"
+import type { LucideIcon } from "lucide-react"
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion"
+import { InView } from "@/components/ui/in-view"
 
-const pillars = [
+/* ------------------------------------------------------------------ */
+/*  Animation variants (snappy: 300-500ms)                             */
+/* ------------------------------------------------------------------ */
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 20, filter: "blur(4px)" },
+  visible: { opacity: 1, y: 0, filter: "blur(0px)" },
+}
+
+/* ------------------------------------------------------------------ */
+/*  Data                                                               */
+/* ------------------------------------------------------------------ */
+
+interface Pillar {
+  icon: LucideIcon
+  value: string
+  title: string
+  description: string
+  accent: string
+}
+
+const pillars: Pillar[] = [
   {
-    icon: Microscope,
+    icon: Activity,
+    value: "diagnostics",
     title: "Advanced Diagnostics Aggregation",
     description:
       "We draw from a network of accredited laboratories and imaging centres \u2014 not a single vendor, but a curated selection. Over 200 biomarkers across metabolic, hormonal, cardiovascular, inflammatory, immune, and genomic panels. Advanced imaging when clinically indicated. Screening protocols structured to complement standard care.",
     accent: "Depth and rigour, built into every assessment.",
-    number: "01",
   },
   {
     icon: Brain,
+    value: "analysis",
     title: "AI-Supported Pattern Analysis",
     description:
       "KAIRA\u2019s analytics platform assists in identifying patterns, correlations, and longitudinal trends across large volumes of data. By establishing an individual baseline and monitoring change over time, it supports earlier recognition of meaningful shifts. All findings are reviewed and interpreted by physicians within the context of your complete clinical picture.",
-    accent: "Your data \u2014 analysed with the depth and structure it deserves.",
-    number: "02",
+    accent:
+      "Your data \u2014 analysed with the depth and structure it deserves.",
   },
   {
-    icon: UserCheck,
+    icon: Stethoscope,
+    value: "care",
     title: "Physician-Led Personalised Care",
     description:
       "Each KAIRA client is paired with a dedicated physician who reviews results in detail, explains findings clearly, and develops an individualised care plan. Consultations are structured to allow time for thorough discussion and continuity of care, with coordination across specialists when appropriate.",
-    accent: "Personalised medicine requires time, context, and clinical judgment.",
-    number: "03",
+    accent:
+      "Personalised medicine requires time, context, and clinical judgment.",
   },
 ]
 
+/* ------------------------------------------------------------------ */
+/*  Science Section                                                    */
+/* ------------------------------------------------------------------ */
+
 export function ScienceSection() {
-  const { ref, isVisible } = useScrollAnimation<HTMLElement>(0.1)
-
   return (
-    <section ref={ref} id="science" className="relative py-28 lg:py-40">
-      {/* Neural network background image — fades out as page brightens */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          backgroundImage: "url('/images/brand/kaira-science-section-bg.jpg')",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          opacity: "calc(0.10 * (1 - var(--scroll-brightness, 0)))",
-        }}
-      />
-      {/* Background accent — growing gold presence */}
-      <div
-        className="absolute right-0 top-1/4 w-[500px] h-[500px] bg-gold/[0.03] rounded-full blur-[150px] pointer-events-none"
-        style={{ opacity: "calc(1 - var(--scroll-brightness, 0) * 0.6)" }}
-      />
-
-      <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
-        {/* Header — staggered reveal */}
+    <section
+      id="science"
+      className="relative w-full bg-dark py-24 lg:py-32"
+    >
+      <div className="relative z-10 mx-auto max-w-6xl px-6">
+        {/* ── Section header ── */}
         <div className="max-w-3xl">
-          <p
-            className={cn(
-              "text-[13px] uppercase tracking-[0.3em] text-gold-sub mb-6 transition-all duration-700",
-              isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
-            )}
+          <InView
+            variants={fadeUp}
+            transition={{ duration: 0.4, ease: "easeOut" }}
+            viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
           >
-            The Science
-          </p>
-          <h2
-            className={cn(
-              "font-serif text-3xl font-bold leading-tight text-cream sm:text-4xl lg:text-5xl text-balance transition-all duration-700",
-              isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
-            )}
-            style={{ animationDelay: "100ms" }}
+            <p className="text-xs uppercase tracking-[0.2em] text-gold">
+              The Science
+            </p>
+          </InView>
+
+          <InView
+            variants={fadeUp}
+            transition={{ duration: 0.45, delay: 0.08, ease: "easeOut" }}
+            viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
+            className="mt-6"
           >
-            A Comprehensive Approach to Health Intelligence
-          </h2>
-          <p
-            className={cn(
-              "mt-6 text-lg leading-relaxed text-prose max-w-2xl transition-all duration-700",
-              isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
-            )}
-            style={{ animationDelay: "200ms" }}
+            <h2 className="font-serif text-3xl leading-tight text-cream text-balance md:text-4xl lg:text-5xl">
+              A Comprehensive Approach to Health Intelligence
+            </h2>
+          </InView>
+
+          <InView
+            variants={fadeUp}
+            transition={{ duration: 0.45, delay: 0.16, ease: "easeOut" }}
+            viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
+            className="mt-6"
           >
-            Many systems focus on individual tests. KAIRA integrates data. We move beyond isolated lab results or single imaging studies by bringing together advanced diagnostics into a unified, longitudinal view of your health. By combining laboratory testing, imaging, genomics, and AI-supported analysis, we aim to provide a higher-resolution understanding of risk — interpreted by physicians within the context of your full clinical picture.
-          </p>
+            <p className="text-base leading-relaxed text-muted">
+              Many systems focus on individual tests. KAIRA integrates data. We
+              move beyond isolated lab results or single imaging studies by
+              bringing together advanced diagnostics into a unified, longitudinal
+              view of your health. By combining laboratory testing, imaging,
+              genomics, and AI-supported analysis, we aim to provide a
+              higher-resolution understanding of risk — interpreted by physicians
+              within the context of your full clinical picture.
+            </p>
+          </InView>
         </div>
 
-        {/* Three pillar cards */}
-        <div className="mt-16 lg:mt-24 grid grid-cols-1 gap-6 lg:grid-cols-3 lg:gap-8">
-          {pillars.map((pillar, i) => {
-            const Icon = pillar.icon
-            return (
-              <div
-                key={pillar.number}
-                className={cn(
-                  "group relative rounded-2xl border border-border bg-card backdrop-blur-sm p-8 lg:p-10 transition-all duration-700 hover:border-gold/20 hover:bg-card",
-                  isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
-                )}
-                style={{ animationDelay: `${300 + i * 150}ms` }}
-              >
-                {/* Decorative watermark number */}
-                <span className="absolute top-4 right-6 text-7xl font-serif font-bold text-gold/[0.07] select-none pointer-events-none leading-none">
-                  {pillar.number}
-                </span>
-
-                <span className="relative text-[11px] font-mono tracking-widest text-gold/30">
-                  {pillar.number}
-                </span>
-
-                <div className="relative mt-6 flex h-12 w-12 items-center justify-center rounded-xl border border-gold/[0.12] bg-gold/[0.05] shadow-[0_0_30px_rgba(201,168,76,0.15)]">
-                  <Icon className="h-5 w-5 text-gold/70" strokeWidth={1.5} />
-                </div>
-
-                <h3 className="mt-6 font-serif text-xl font-bold text-cream leading-snug">
-                  {pillar.title}
-                </h3>
-
-                <p className="mt-4 text-[15px] leading-relaxed text-prose">
-                  {pillar.description}
-                </p>
-
-                <p className="mt-6 text-sm italic text-gold-sub leading-relaxed border-t border-border pt-6">
-                  {pillar.accent}
-                </p>
-              </div>
-            )
-          })}
-        </div>
-
-        {/* Transition phrase — fades in as you scroll toward the light */}
-        <div
-          className="mt-24 lg:mt-32"
-          style={{ opacity: "var(--scroll-brightness, 0)" }}
+        {/* ── Accordion pillars ── */}
+        <InView
+          variants={fadeUp}
+          transition={{ duration: 0.5, delay: 0.1, ease: "easeOut" }}
+          viewOptions={{ once: true, margin: "-60px", amount: 0.15 }}
+          className="mt-16 md:mt-24"
         >
-          <p
-            className={cn(
-              "text-center font-serif text-3xl italic text-cream sm:text-4xl lg:text-5xl leading-snug transition-all duration-1000 delay-500",
-              isVisible ? "animate-fade-up" : "opacity-0 translate-y-8"
-            )}
+          <Accordion
+            type="single"
+            collapsible
+            defaultValue="diagnostics"
+            className="space-y-3"
           >
-            The most valuable health insight is the one
-            <br />
-            that arrives before symptoms do.
-          </p>
-          {/* Decorative wave accent */}
-          <div
-            className={cn(
-              "mt-8 flex justify-center transition-all duration-1000 delay-700",
-              isVisible ? "animate-fade-up" : "opacity-0 translate-y-4"
-            )}
-          >
-            <svg width="120" height="20" viewBox="0 0 120 20" fill="none" className="text-gold/40">
-              <path
-                d="M0 10 Q15 0 30 10 Q45 20 60 10 Q75 0 90 10 Q105 20 120 10"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                fill="none"
-              />
-            </svg>
-          </div>
-        </div>
+            {pillars.map(({ icon: Icon, value, title, description, accent }) => (
+              <AccordionItem
+                key={value}
+                value={value}
+                className="group border border-[#2A2A2A] rounded-xl overflow-hidden transition-all duration-300 data-[state=open]:border-gold/30 data-[state=open]:shadow-[0_0_30px_-8px_rgba(201,168,76,0.12)]"
+              >
+                <AccordionTrigger className="flex items-center justify-between w-full px-6 py-5 md:px-8 md:py-6 bg-dark-surface hover:no-underline transition-colors data-[state=open]:bg-dark-surface">
+                  <div className="flex items-center gap-4 flex-1">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gold/10 transition-colors duration-300 group-data-[state=open]:bg-gold/20">
+                      <Icon
+                        className="h-5 w-5 text-gold/60 transition-colors duration-300 group-data-[state=open]:text-gold"
+                        strokeWidth={1.5}
+                      />
+                    </div>
+                    <span className="font-serif text-lg md:text-xl font-semibold text-cream/70 text-left transition-colors duration-300 group-data-[state=open]:text-cream">
+                      {title}
+                    </span>
+                  </div>
+                </AccordionTrigger>
+                <AccordionContent className="px-6 md:px-8 border-t border-[#2A2A2A]">
+                  <div className="pt-5 pb-2 pl-14">
+                    <p className="text-sm leading-relaxed text-muted">
+                      {description}
+                    </p>
+                    <p className="mt-5 text-xs italic text-gold/70">
+                      {accent}
+                    </p>
+                  </div>
+                </AccordionContent>
+              </AccordionItem>
+            ))}
+          </Accordion>
+        </InView>
       </div>
     </section>
   )
