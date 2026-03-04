@@ -83,7 +83,7 @@ export function HowItWorks() {
             transition={{ duration: 0.45, delay: 0.1, ease: "easeOut" }}
             viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
           >
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#0B1221] leading-tight">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#1A1A2E] leading-tight">
               From Complexity to Clarity
             </h2>
           </InView>
@@ -91,7 +91,7 @@ export function HowItWorks() {
             transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
             viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
           >
-            <p className="text-[#4A5568] text-sm sm:text-base mt-4 max-w-lg">
+            <p className="text-[#4A4A5A] text-sm sm:text-base mt-4 max-w-lg">
               Click any node to explore each step of your KAIRA journey
             </p>
           </InView>

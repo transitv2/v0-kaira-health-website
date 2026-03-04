@@ -38,31 +38,35 @@ export function GenerativeMountainScene() {
 
     const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true })
     renderer.setSize(currentMount.clientWidth, currentMount.clientHeight)
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     currentMount.appendChild(renderer.domElement)
 
     // Lower-res geometry on mobile
     const isMobile = window.innerWidth < 768
-    const segments = isMobile ? 64 : 128
+    const segments = isMobile ? 128 : 256
     const geometry = new THREE.PlaneGeometry(12, 8, segments, segments)
 
-    // SHADER MATERIAL — Silver/grey landscape with white edge highlights
+    // SHADER MATERIAL — Warm-cool dual-lit terrain: golden hour ridges, teal ambient, navy valleys
     const material = new THREE.ShaderMaterial({
       side: THREE.DoubleSide,
       wireframe: false,
       uniforms: {
         time: { value: 0 },
+        lightIntensity: { value: 0 },  // 0 = pitch black, 1 = fully lit (driven by mouse Y)
         pointLightPosition: { value: new THREE.Vector3(0, 0, 5) },
-        colorDeep: { value: new THREE.Color("#2A2F38") },   // Dark charcoal base
-        colorMid: { value: new THREE.Color("#6B7280") },    // Cool grey mid
-        colorPeak: { value: new THREE.Color("#B0B8C4") },   // Silver peaks
-        colorEdge: { value: new THREE.Color("#E2E8F0") },   // White edge glow
+        colorValley: { value: new THREE.Color("#0A1628") },  // Deep navy — blends into background
+        colorMid:    { value: new THREE.Color("#1A2A40") },  // Mid slate-blue
+        colorPeak:   { value: new THREE.Color("#2E3E55") },  // Lighter blue-grey for peaks
+        goldLight:   { value: new THREE.Color("#C9A84C") },  // Warm gold for directional highlights
+        tealLight:   { value: new THREE.Color("#5B9EA6") },  // Muted teal for ambient fill
+        goldEdge:    { value: new THREE.Color("#C9A84C") },  // Gold fresnel edge glow
       },
       vertexShader: `
         uniform float time;
         varying vec3 vNormal;
         varying vec3 vPosition;
         varying float vDisplacement;
+        varying vec3 vWorldPosition;
 
         // --- PERLIN NOISE FUNCTIONS ---
         vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -111,49 +115,104 @@ export function GenerativeMountainScene() {
             m = m * m;
             return 42.0 * dot(m * m, vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3)));
         }
-        void main() {
-            vNormal = normal;
-            vPosition = position;
 
+        // Compute displacement at arbitrary point (for finite-difference normals)
+        float getDisplacement(vec3 pos) {
             float noiseFreq = 0.8;
             float noiseAmp = 0.6;
+            float d = snoise(vec3(pos.x * noiseFreq, pos.y * noiseFreq - time * 0.2, 0.0)) * noiseAmp;
+            d += snoise(vec3(pos.x * noiseFreq * 2.0, pos.y * noiseFreq * 2.0 - time * 0.2, 0.0)) * (noiseAmp * 0.5);
+            return d;
+        }
 
-            // Layer 1: Base shape
-            float displacement = snoise(vec3(position.x * noiseFreq, position.y * noiseFreq - time * 0.2, 0.0)) * noiseAmp;
+        void main() {
+            vPosition = position;
 
-            // Layer 2: Detail
-            displacement += snoise(vec3(position.x * noiseFreq * 2.0, position.y * noiseFreq * 2.0 - time * 0.2, 0.0)) * (noiseAmp * 0.5);
-            vDisplacement = displacement;
-            vec3 newPosition = position + normal * displacement;
+            // Compute displacement at this vertex and two neighbors (finite differences)
+            float eps = 0.05;
+            float d0  = getDisplacement(position);
+            float dPx = getDisplacement(position + vec3(eps, 0.0, 0.0));
+            float dPy = getDisplacement(position + vec3(0.0, eps, 0.0));
+
+            // Reconstruct normal from cross product of tangent vectors
+            vec3 tangentX = vec3(eps, 0.0, dPx - d0);
+            vec3 tangentY = vec3(0.0, eps, dPy - d0);
+            vec3 computedNormal = normalize(cross(tangentX, tangentY));
+
+            // Transform normal to world space
+            vNormal = normalize((modelMatrix * vec4(computedNormal, 0.0)).xyz);
+            vDisplacement = d0;
+
+            vec3 newPosition = position + normal * d0;
+            vWorldPosition = (modelMatrix * vec4(newPosition, 1.0)).xyz;
             gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
         }
       `,
       fragmentShader: `
-        uniform vec3 colorDeep;
+        uniform vec3 colorValley;
         uniform vec3 colorMid;
         uniform vec3 colorPeak;
-        uniform vec3 colorEdge;
+        uniform vec3 goldLight;
+        uniform vec3 tealLight;
+        uniform vec3 goldEdge;
         uniform vec3 pointLightPosition;
+        uniform float time;
+        uniform float lightIntensity;
         varying vec3 vNormal;
         varying vec3 vPosition;
+        varying vec3 vWorldPosition;
         varying float vDisplacement;
 
         void main() {
             vec3 normal = normalize(vNormal);
-            vec3 lightDir = normalize(pointLightPosition - vPosition);
 
-            float diffuse = max(dot(normal, lightDir), 0.0);
+            // ── Height-based terrain color ──
+            float heightT = smoothstep(-0.6, 0.9, vDisplacement);
+            vec3 terrainColor = mix(colorValley, colorMid, smoothstep(0.0, 0.5, heightT));
+            terrainColor = mix(terrainColor, colorPeak, smoothstep(0.4, 1.0, heightT));
 
-            // Height-based color: deep navy valleys → blue mid → light peaks
-            float heightT = smoothstep(-0.3, 0.8, vDisplacement);
-            vec3 baseColor = mix(colorDeep, colorMid, smoothstep(0.0, 0.5, heightT));
-            baseColor = mix(baseColor, colorPeak, smoothstep(0.5, 1.0, heightT));
+            // ── Gold directional light (upper-left, like golden hour sun) ──
+            float lightDrift = sin(time * 0.25) * 0.3;
+            vec3 goldDir = normalize(vec3(-0.6 + lightDrift, 0.8, 0.5));
+            float goldDiffuse = max(dot(normal, goldDir), 0.0);
+            float heightBoost = 0.3 + 0.7 * smoothstep(0.1, 0.8, heightT);
+            vec3 goldContribution = goldLight * goldDiffuse * 0.6 * heightBoost;
 
-            // Fresnel edge glow — icy white highlights on silhouette edges
-            float fresnel = 1.0 - dot(normal, vec3(0.0, 0.0, 1.0));
+            // ── Teal ambient fill (opposite side, like cool sky) ──
+            vec3 tealDir = normalize(vec3(0.5, -0.3, 0.6));
+            float tealDiffuse = max(dot(normal, tealDir), 0.0);
+            vec3 tealContribution = tealLight * tealDiffuse * 0.25;
+
+            // ── Mouse-following point light (warm gold-white) ──
+            vec3 pointDir = normalize(pointLightPosition - vWorldPosition);
+            float pointDist = length(pointLightPosition - vWorldPosition);
+            float pointAtten = 1.0 / (1.0 + 0.1 * pointDist * pointDist);
+            float pointDiffuse = max(dot(normal, pointDir), 0.0);
+            vec3 pointContribution = vec3(1.0, 0.9, 0.7) * pointDiffuse * pointAtten * 0.5;
+
+            // ── Ambient base ──
+            vec3 ambient = terrainColor * 0.2;
+
+            // ── Fresnel edge glow — warm gold on silhouette edges ──
+            vec3 viewDir = normalize(cameraPosition - vWorldPosition);
+            float fresnel = 1.0 - max(dot(normal, viewDir), 0.0);
             fresnel = pow(fresnel, 2.5);
+            vec3 fresnelGlow = goldEdge * fresnel * 0.2;
 
-            vec3 finalColor = baseColor * (diffuse * 0.8 + 0.2) + colorEdge * fresnel * 0.4;
+            // ── Compose lit color ──
+            vec3 litColor = ambient
+                + goldContribution
+                + tealContribution
+                + pointContribution
+                + fresnelGlow;
+
+            // Valley fade: lowest areas blend toward background
+            float valleyFade = 1.0 - smoothstep(0.0, 0.25, heightT);
+            litColor = mix(litColor, colorValley, valleyFade * 0.7);
+
+            // ── Mouse-Y dead zone: pitch black until cursor drops below hero text ──
+            // lightIntensity = 0 (dark) to 1 (fully lit), driven by JS
+            vec3 finalColor = litColor * lightIntensity;
 
             gl_FragColor = vec4(finalColor, 1.0);
         }
@@ -171,11 +230,20 @@ export function GenerativeMountainScene() {
     scene.add(pointLight)
 
     let frameId: number
+    let currentIntensity = 0   // mirrors the uniform — checked CPU-side
+    let lastRenderTime = 0
+    const FRAME_INTERVAL = 1000 / 30  // cap at 30 fps (terrain is slow)
 
     const animate = (t: number) => {
       frameId = requestAnimationFrame(animate)
-      // Skip rendering when off-screen
+      // Skip when off-screen
       if (!isVisibleRef.current) return
+      // Skip when pitch black — no GPU work needed
+      if (currentIntensity <= 0) return
+      // Throttle to ~30 fps
+      if (t - lastRenderTime < FRAME_INTERVAL) return
+      lastRenderTime = t
+
       material.uniforms.time.value = t * 0.0003
       renderer.render(scene, camera)
     }
@@ -199,6 +267,19 @@ export function GenerativeMountainScene() {
       }
       if (material.uniforms.pointLightPosition) {
         material.uniforms.pointLightPosition.value = pos
+      }
+
+      // Dead zone: pitch black above "See More" text (~55% of viewport).
+      // Starts at 10% once past threshold, scales 2x faster to reach 100%.
+      const screenY = e.clientY / window.innerHeight
+      const threshold = 0.55
+      if (screenY <= threshold) {
+        currentIntensity = 0
+        material.uniforms.lightIntensity.value = 0
+      } else {
+        const ramp = Math.min(1, ((screenY - threshold) / (1 - threshold)) * 2)
+        currentIntensity = 0.1 + 0.9 * ramp
+        material.uniforms.lightIntensity.value = currentIntensity
       }
     }
 

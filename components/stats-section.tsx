@@ -26,13 +26,13 @@ export function StatsSection() {
   return (
     <section
       id="credibility"
-      className="relative min-h-screen w-full bg-[#0D1525] py-24 lg:py-32"
+      className="relative min-h-screen w-full bg-[#0A1628] py-24 lg:py-32"
     >
       {/* Gradient fade from light section above */}
       <div
         className="pointer-events-none absolute inset-x-0 top-0 z-0 h-28"
         style={{
-          background: "linear-gradient(to bottom, var(--color-light) 0%, #0D1525 100%)",
+          background: "linear-gradient(to bottom, var(--color-light) 0%, #0A1628 100%)",
         }}
       />
 
@@ -83,7 +83,7 @@ export function StatsSection() {
               }}
               viewOptions={{ once: true, margin: "-60px", amount: 0.2 }}
             >
-              <div className="rounded-xl border border-white/[0.06] bg-dark-surface p-6 md:p-8">
+              <div className="rounded-xl border border-teal/[0.08] bg-dark-surface p-6 md:p-8">
                 <CountAnimation
                   target={stat.target}
                   suffix={stat.suffix}
@@ -108,11 +108,11 @@ export function StatsSection() {
               {trustSignals.map((signal) => (
                 <div
                   key={signal}
-                  className="flex items-center gap-2 rounded-full border border-gold/20 bg-gold/[0.04] px-4 py-2 shrink-0"
+                  className="flex items-center gap-2 rounded-full border border-teal/20 bg-teal/[0.04] px-4 py-2 shrink-0"
                 >
                   {/* Gold checkmark icon */}
                   <svg
-                    className="h-3.5 w-3.5 shrink-0 text-gold"
+                    className="h-3.5 w-3.5 shrink-0 text-teal"
                     viewBox="0 0 16 16"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"

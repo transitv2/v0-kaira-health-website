@@ -4,8 +4,10 @@ import { useEffect, useRef, useCallback } from "react"
 
 /**
  * Subtle ambient light that responds to cursor position.
- * Pitch black when cursor is at or above the 50% mark of the hero.
- * Light fades in from the bottom as cursor moves below 50%.
+ * Pitch black when cursor is at or above the 70% mark of the hero.
+ * Light fades in from the bottom as cursor moves below 70%.
+ * Uses a quadratic ramp so brightness stays very low until the cursor
+ * is near the very bottom of the viewport.
  * Light grey / silver tones — clean, medical, not saturated.
  *
  * Exposes the torch position to the parent via onLightMove callback.
@@ -69,7 +71,7 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
     isMobileRef.current = window.innerWidth < 768
 
     function resize() {
-      const dpr = Math.min(window.devicePixelRatio, 2)
+      const dpr = window.devicePixelRatio || 1
       w = canvas!.offsetWidth
       h = canvas!.offsetHeight
       canvas!.width = w * dpr
@@ -107,10 +109,11 @@ export function AuroraBackground({ onLightMove }: AuroraBackgroundProps) {
       smoothMouseRef.current.y += (mouseRef.current.y - smoothMouseRef.current.y) * lerpFactor
 
       // ── DEAD ZONE INTENSITY ──
-      // cursor at ≤50% = 0 intensity (pitch black)
-      // cursor at 50%→100% = ramps 0→1
+      // cursor at ≤70% = 0 intensity (pitch black)
+      // cursor at 70%→100% = quadratic ramp 0→1 (stays very dim until near bottom)
       const yRatio = cursorYRatioRef.current
-      const targetIntensity = yRatio <= 0.5 ? 0 : Math.min(1, (yRatio - 0.5) / 0.5)
+      const linearRamp = yRatio <= 0.7 ? 0 : Math.min(1, (yRatio - 0.7) / 0.3)
+      const targetIntensity = linearRamp * linearRamp // quadratic curve — gentle start, strong finish
 
       // Smooth the intensity transition (fade in/out over ~0.5s)
       const intensityLerp = targetIntensity > smoothIntensityRef.current ? 0.04 : 0.06

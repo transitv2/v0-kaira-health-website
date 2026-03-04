@@ -176,9 +176,9 @@ export default function RotatingEarth({
         0,
         2 * Math.PI
       )
-      context.fillStyle = "#0B1221"
+      context.fillStyle = "#0A1628"
       context.fill()
-      context.strokeStyle = "rgba(59, 130, 246, 0.3)"
+      context.strokeStyle = "rgba(91, 158, 166, 0.3)"
       context.lineWidth = 1.5 * scaleFactor
       context.stroke()
 
@@ -187,7 +187,7 @@ export default function RotatingEarth({
         const graticule = geoGraticule()
         context.beginPath()
         path(graticule() as GeoPermissibleObjects)
-        context.strokeStyle = "rgba(59, 130, 246, 0.08)"
+        context.strokeStyle = "rgba(91, 158, 166, 0.08)"
         context.lineWidth = 0.5 * scaleFactor
         context.stroke()
 
@@ -196,7 +196,7 @@ export default function RotatingEarth({
         landFeatures.features.forEach((feature: ExtendedFeature) => {
           path(feature as GeoPermissibleObjects)
         })
-        context.strokeStyle = "rgba(59, 130, 246, 0.25)"
+        context.strokeStyle = "rgba(91, 158, 166, 0.25)"
         context.lineWidth = 0.8 * scaleFactor
         context.stroke()
 
@@ -218,7 +218,7 @@ export default function RotatingEarth({
               0,
               2 * Math.PI
             )
-            context.fillStyle = "rgba(59, 130, 246, 0.35)"
+            context.fillStyle = "rgba(91, 158, 166, 0.3)"
             context.fill()
           }
         })
@@ -266,44 +266,44 @@ export default function RotatingEarth({
           // Outer glow
           context.beginPath()
           context.arc(px, py, 8 * scaleFactor, 0, 2 * Math.PI)
-          context.fillStyle = "rgba(59, 130, 246, 0.15)"
+          context.fillStyle = "rgba(91, 158, 166, 0.15)"
           context.fill()
 
           // Inner glow
           context.beginPath()
           context.arc(px, py, 5 * scaleFactor, 0, 2 * Math.PI)
-          context.fillStyle = "rgba(59, 130, 246, 0.3)"
+          context.fillStyle = "rgba(91, 158, 166, 0.3)"
           context.fill()
 
           // Core dot
           context.beginPath()
           context.arc(px, py, 3 * scaleFactor, 0, 2 * Math.PI)
-          context.fillStyle = "#3B82F6"
+          context.fillStyle = "#5B9EA6"
           context.fill()
 
           // Leader line
           context.beginPath()
           context.moveTo(px, py)
           context.lineTo(lx, ly)
-          context.strokeStyle = "rgba(59, 130, 246, 0.4)"
+          context.strokeStyle = "rgba(91, 158, 166, 0.4)"
           context.lineWidth = 1 * scaleFactor
           context.stroke()
 
           // Small tick
           context.beginPath()
           context.arc(lx, ly, 1.5 * scaleFactor, 0, 2 * Math.PI)
-          context.fillStyle = "rgba(59, 130, 246, 0.5)"
+          context.fillStyle = "rgba(91, 158, 166, 0.5)"
           context.fill()
 
           // City label
           context.font = `${11 * scaleFactor}px "Montserrat", sans-serif`
-          context.fillStyle = "#EDF2F7"
+          context.fillStyle = "#F5F3EF"
           context.textAlign = "left"
           context.fillText(marker.name, lx + 6 * scaleFactor, ly + 4 * scaleFactor)
 
           if (marker.subtitle) {
             context.font = `${9 * scaleFactor}px "Montserrat", sans-serif`
-            context.fillStyle = "rgba(59, 130, 246, 0.6)"
+            context.fillStyle = "rgba(201, 168, 76, 0.6)"
             context.fillText(
               marker.subtitle,
               lx + 6 * scaleFactor,

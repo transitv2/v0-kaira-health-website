@@ -7,11 +7,11 @@ export function GlobalReach() {
   return (
     <section
       id="global-reach"
-      className="relative min-h-screen w-full bg-[#080E1A] py-24 lg:py-32 overflow-hidden"
+      className="relative min-h-screen w-full bg-[#0A1628] py-24 lg:py-32 overflow-hidden"
     >
       {/* Background effects at z-0 — subtle blue nebula */}
       <div className="absolute inset-0 z-0">
-        <div className="absolute top-1/4 left-1/4 h-[500px] w-[500px] rounded-full bg-[#1E3A5F]/[0.08] blur-[120px]" />
+        <div className="absolute top-1/4 left-1/4 h-[500px] w-[500px] rounded-full bg-teal/[0.05] blur-[120px]" />
         <div className="absolute bottom-1/3 right-1/4 h-[400px] w-[400px] rounded-full bg-gold/[0.03] blur-[100px]" />
       </div>
 
