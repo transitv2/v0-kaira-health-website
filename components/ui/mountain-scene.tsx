@@ -54,34 +54,30 @@ function initScene(
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     currentMount.appendChild(renderer.domElement)
 
-    // Lower-res geometry on mobile
+    // Triple particle density for fine-grained mountain definition
     const isMobile = window.innerWidth < 768
-    const segments = isMobile ? 64 : 128
+    const segments = isMobile ? 128 : 380
     const geometry = new THREE.PlaneGeometry(12, 8, segments, segments)
 
-    // SHADER MATERIAL — Warm-cool dual-lit terrain: golden hour ridges, teal ambient, navy valleys
+    // PARTICLE MATERIAL — Glowing data-point dots on Perlin noise terrain
     const material = new THREE.ShaderMaterial({
-      side: THREE.DoubleSide,
-      wireframe: false,
       uniforms: {
         time: { value: 0 },
-        lightIntensity: { value: 0 },  // 0 = pitch black, 1 = fully lit (driven by mouse Y)
+        lightIntensity: { value: 0 },
         pointLightPosition: { value: new THREE.Vector3(0, 0, 5) },
-        colorValley: { value: new THREE.Color("#0A1628") },  // Deep navy — blends into background
-        colorMid:    { value: new THREE.Color("#1A2A40") },  // Mid slate-blue
-        colorPeak:   { value: new THREE.Color("#2E3E55") },  // Lighter blue-grey for peaks
-        goldLight:   { value: new THREE.Color("#C9A84C") },  // Warm gold for directional highlights
-        tealLight:   { value: new THREE.Color("#5B9EA6") },  // Muted teal for ambient fill
-        goldEdge:    { value: new THREE.Color("#C9A84C") },  // Gold fresnel edge glow
+        colorValley: { value: new THREE.Color("#0A1628") },
+        colorMid:    { value: new THREE.Color("#5B9EA6") },  // Teal for mid-heights
+        colorPeak:   { value: new THREE.Color("#C9A84C") },  // Gold for peaks
+        pixelRatio:  { value: Math.min(window.devicePixelRatio, 2) },
       },
       vertexShader: `
         uniform float time;
-        varying vec3 vNormal;
-        varying vec3 vPosition;
+        uniform float pixelRatio;
         varying float vDisplacement;
         varying vec3 vWorldPosition;
+        varying float vDepthFade;
 
-        // --- PERLIN NOISE FUNCTIONS ---
+        // --- PERLIN NOISE ---
         vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
         vec4 mod289(vec4 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
         vec4 permute(vec4 x) { return mod289(((x*34.0)+1.0)*x); }
@@ -129,7 +125,6 @@ function initScene(
             return 42.0 * dot(m * m, vec4(dot(p0, x0), dot(p1, x1), dot(p2, x2), dot(p3, x3)));
         }
 
-        // Compute displacement at arbitrary point (for finite-difference normals)
         float getDisplacement(vec3 pos) {
             float noiseFreq = 0.8;
             float noiseAmp = 0.6;
@@ -139,108 +134,66 @@ function initScene(
         }
 
         void main() {
-            vPosition = position;
-
-            // Compute displacement at this vertex and two neighbors (finite differences)
-            float eps = 0.05;
-            float d0  = getDisplacement(position);
-            float dPx = getDisplacement(position + vec3(eps, 0.0, 0.0));
-            float dPy = getDisplacement(position + vec3(0.0, eps, 0.0));
-
-            // Reconstruct normal from cross product of tangent vectors
-            vec3 tangentX = vec3(eps, 0.0, dPx - d0);
-            vec3 tangentY = vec3(0.0, eps, dPy - d0);
-            vec3 computedNormal = normalize(cross(tangentX, tangentY));
-
-            // Transform normal to world space
-            vNormal = normalize((modelMatrix * vec4(computedNormal, 0.0)).xyz);
+            float d0 = getDisplacement(position);
             vDisplacement = d0;
 
             vec3 newPosition = position + normal * d0;
             vWorldPosition = (modelMatrix * vec4(newPosition, 1.0)).xyz;
-            gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
+
+            vec4 mvPosition = modelViewMatrix * vec4(newPosition, 1.0);
+            gl_Position = projectionMatrix * mvPosition;
+
+            // 50% smaller dots
+            float heightT = smoothstep(-0.6, 0.9, d0);
+            gl_PointSize = mix(1.4, 2.5, heightT) * pixelRatio;
+
+            // Gentle fade for very near particles only
+            vDepthFade = smoothstep(0.3, 1.5, -mvPosition.z);
         }
       `,
       fragmentShader: `
         uniform vec3 colorValley;
         uniform vec3 colorMid;
         uniform vec3 colorPeak;
-        uniform vec3 goldLight;
-        uniform vec3 tealLight;
-        uniform vec3 goldEdge;
         uniform vec3 pointLightPosition;
-        uniform float time;
         uniform float lightIntensity;
-        varying vec3 vNormal;
-        varying vec3 vPosition;
-        varying vec3 vWorldPosition;
         varying float vDisplacement;
+        varying vec3 vWorldPosition;
+        varying float vDepthFade;
 
         void main() {
-            vec3 normal = normalize(vNormal);
+            // Circular dot with soft edge
+            float dist = length(gl_PointCoord - vec2(0.5));
+            if (dist > 0.5) discard;
+            float dot = 1.0 - smoothstep(0.0, 0.5, dist);
 
-            // ── Height-based terrain color ──
+            // Height-based color: navy → teal → gold
             float heightT = smoothstep(-0.6, 0.9, vDisplacement);
-            vec3 terrainColor = mix(colorValley, colorMid, smoothstep(0.0, 0.5, heightT));
-            terrainColor = mix(terrainColor, colorPeak, smoothstep(0.4, 1.0, heightT));
+            vec3 color = mix(colorValley, colorMid, smoothstep(0.0, 0.5, heightT));
+            color = mix(color, colorPeak, smoothstep(0.4, 1.0, heightT));
 
-            // ── Gold directional light (upper-left, like golden hour sun) ──
-            float lightDrift = sin(time * 0.25) * 0.3;
-            vec3 goldDir = normalize(vec3(-0.6 + lightDrift, 0.8, 0.5));
-            float goldDiffuse = max(dot(normal, goldDir), 0.0);
-            float heightBoost = 0.3 + 0.7 * smoothstep(0.1, 0.8, heightT);
-            vec3 goldContribution = goldLight * goldDiffuse * 0.6 * heightBoost;
+            // Brighten near mouse cursor
+            float mouseDist = length(pointLightPosition - vWorldPosition);
+            float mouseGlow = 1.0 / (1.0 + 0.2 * mouseDist * mouseDist);
+            color = mix(color, vec3(1.0, 0.95, 0.8), mouseGlow * 0.35);
 
-            // ── Teal ambient fill (opposite side, like cool sky) ──
-            vec3 tealDir = normalize(vec3(0.5, -0.3, 0.6));
-            float tealDiffuse = max(dot(normal, tealDir), 0.0);
-            vec3 tealContribution = tealLight * tealDiffuse * 0.25;
+            // Compose: visible but not overpowering
+            vec3 finalColor = color * lightIntensity;
+            float alpha = dot * lightIntensity * vDepthFade * (0.35 + 0.55 * heightT);
 
-            // ── Mouse-following point light (warm gold-white) ──
-            vec3 pointDir = normalize(pointLightPosition - vWorldPosition);
-            float pointDist = length(pointLightPosition - vWorldPosition);
-            float pointAtten = 1.0 / (1.0 + 0.1 * pointDist * pointDist);
-            float pointDiffuse = max(dot(normal, pointDir), 0.0);
-            vec3 pointContribution = vec3(1.0, 0.9, 0.7) * pointDiffuse * pointAtten * 0.5;
-
-            // ── Ambient base ──
-            vec3 ambient = terrainColor * 0.2;
-
-            // ── Fresnel edge glow — warm gold on silhouette edges ──
-            vec3 viewDir = normalize(cameraPosition - vWorldPosition);
-            float fresnel = 1.0 - max(dot(normal, viewDir), 0.0);
-            fresnel = pow(fresnel, 2.5);
-            vec3 fresnelGlow = goldEdge * fresnel * 0.2;
-
-            // ── Compose lit color ──
-            vec3 litColor = ambient
-                + goldContribution
-                + tealContribution
-                + pointContribution
-                + fresnelGlow;
-
-            // Valley fade: lowest areas blend toward background
-            float valleyFade = 1.0 - smoothstep(0.0, 0.25, heightT);
-            litColor = mix(litColor, colorValley, valleyFade * 0.7);
-
-            // ── Mouse-Y dead zone: pitch black until cursor drops below hero text ──
-            // lightIntensity = 0 (dark) to 1 (fully lit), driven by JS
-            vec3 finalColor = litColor * lightIntensity;
-
-            gl_FragColor = vec4(finalColor, 1.0);
+            gl_FragColor = vec4(finalColor, alpha);
         }
       `,
       transparent: true,
+      depthWrite: false,
     })
 
-    const mesh = new THREE.Mesh(geometry, material)
-    mesh.rotation.x = -Math.PI / 2
-    scene.add(mesh)
+    const points = new THREE.Points(geometry, material)
+    points.rotation.x = -Math.PI / 2
+    scene.add(points)
 
-    const pointLight = new THREE.PointLight(0xffffff, 1, 100)
-    pointLight.position.set(0, 0, 5)
-    lightRef.current = pointLight
-    scene.add(pointLight)
+    // No scene point light needed — mouse proximity is handled in shader
+    lightRef.current = null
 
     let frameId: number
     let currentIntensity = 0   // mirrors the uniform — checked CPU-side
