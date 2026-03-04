@@ -129,13 +129,13 @@ export function ScienceSection() {
               <AccordionItem
                 key={value}
                 value={value}
-                className="group border border-[#1E3A5F] rounded-xl overflow-hidden transition-all duration-300 data-[state=open]:border-gold/30 data-[state=open]:shadow-[0_0_30px_-8px_rgba(59,130,246,0.12)]"
+                className="group border border-teal/[0.15] rounded-xl overflow-hidden transition-all duration-300 data-[state=open]:border-teal/[0.3] data-[state=open]:shadow-[0_0_30px_-8px_rgba(91,158,166,0.12)]"
               >
                 <AccordionTrigger className="flex items-center justify-between w-full px-6 py-5 md:px-8 md:py-6 bg-dark-surface hover:no-underline transition-colors data-[state=open]:bg-dark-surface">
                   <div className="flex items-center gap-4 flex-1">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gold/10 transition-colors duration-300 group-data-[state=open]:bg-gold/20">
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-teal/10 transition-colors duration-300 group-data-[state=open]:bg-teal/20">
                       <Icon
-                        className="h-5 w-5 text-gold/60 transition-colors duration-300 group-data-[state=open]:text-gold"
+                        className="h-5 w-5 text-teal/60 transition-colors duration-300 group-data-[state=open]:text-teal"
                         strokeWidth={1.5}
                       />
                     </div>
@@ -144,7 +144,7 @@ export function ScienceSection() {
                     </span>
                   </div>
                 </AccordionTrigger>
-                <AccordionContent className="px-6 md:px-8 border-t border-[#1E3A5F]">
+                <AccordionContent className="px-6 md:px-8 border-t border-teal/[0.15]">
                   <div className="pt-5 pb-2 pl-14">
                     <p className="text-sm leading-relaxed text-muted">
                       {description}

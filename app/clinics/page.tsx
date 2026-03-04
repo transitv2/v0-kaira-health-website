@@ -132,7 +132,7 @@ export default function ClinicsPage() {
                     {cityData.clinics.map((clinic) => (
                       <div
                         key={clinic.name}
-                        className="rounded-xl border border-[#1E3A5F] bg-dark-surface p-6 transition-all duration-300 hover:border-gold/20"
+                        className="rounded-xl border border-teal/[0.15] bg-dark-surface p-6 transition-all duration-300 hover:border-gold/20"
                       >
                         <h3 className="font-serif text-lg text-cream">
                           {clinic.name}
@@ -161,7 +161,7 @@ export default function ClinicsPage() {
                   </div>
                 ) : (
                   /* Coming soon city */
-                  <div className="rounded-xl border border-dashed border-[#1E3A5F] bg-dark-surface/50 p-8 text-center">
+                  <div className="rounded-xl border border-dashed border-teal/[0.15] bg-dark-surface/50 p-8 text-center">
                     <p className="text-muted text-sm">
                       Clinic partnerships in {cityData.city} are being
                       established. Expected launch: {cityData.year}.

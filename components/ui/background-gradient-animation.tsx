@@ -4,14 +4,14 @@ import { cn } from "@/lib/utils"
 import { useEffect, useRef, useState, useCallback } from "react"
 
 export function BackgroundGradientAnimation({
-  gradientBackgroundStart = "rgb(11, 18, 33)",
-  gradientBackgroundEnd = "rgb(11, 18, 33)",
-  firstColor = "59, 130, 246",
-  secondColor = "37, 99, 235",
-  thirdColor = "29, 78, 216",
-  fourthColor = "96, 165, 250",
-  fifthColor = "14, 55, 140",
-  pointerColor = "59, 130, 246",
+  gradientBackgroundStart = "rgb(10, 22, 40)",
+  gradientBackgroundEnd = "rgb(10, 22, 40)",
+  firstColor = "201, 168, 76",
+  secondColor = "184, 149, 63",
+  thirdColor = "91, 158, 166",
+  fourthColor = "212, 182, 94",
+  fifthColor = "74, 139, 147",
+  pointerColor = "201, 168, 76",
   size = "80%",
   blendingValue = "hard-light",
   children,

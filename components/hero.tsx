@@ -11,9 +11,9 @@ const headlineLine2 = ["To", "Live", "Better.", "Longer."]
 
 export function Hero() {
   return (
-    <section className="relative min-h-screen w-full bg-[#0B1221] overflow-hidden">
+    <section className="relative min-h-screen w-full bg-[#0A1628] overflow-hidden">
       {/* Three.js mountain landscape — z-0 background layer */}
-      <Suspense fallback={<div className="absolute inset-0 w-full h-full bg-[#0B1221]" />}>
+      <Suspense fallback={<div className="absolute inset-0 w-full h-full bg-[#0A1628]" />}>
         <GenerativeMountainScene />
       </Suspense>
 
@@ -126,7 +126,7 @@ export function Hero() {
               <Button
                 asChild
                 variant="outline"
-                className="cursor-pointer rounded-full border-cream/[0.1] bg-transparent px-8 py-4 h-auto text-[15px] font-medium text-cream/70 hover:border-cream/[0.2] hover:text-cream hover:bg-transparent transition-all duration-300"
+                className="cursor-pointer rounded-full border-cream/[0.15] bg-transparent px-8 py-4 h-auto text-[15px] font-medium text-cream/70 hover:border-cream/[0.2] hover:text-cream hover:bg-transparent transition-all duration-300"
               >
                 <a href="#science">Explore the Science</a>
               </Button>
@@ -139,7 +139,7 @@ export function Hero() {
             style={{ animationDelay: "2600ms" }}
           >
             <blockquote className="max-w-xl text-center">
-              <p className="text-base italic leading-relaxed text-gold font-serif">
+              <p className="text-base italic leading-relaxed text-cream/70 font-serif">
                 {'"'}The most important medical insight is the one identified
                 before illness takes hold.{'"'}
               </p>

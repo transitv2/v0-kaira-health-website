@@ -49,7 +49,7 @@ const consultants: TeamMember[] = [
 
 function TeamCard({ member }: { member: TeamMember }) {
   return (
-    <div className="group relative rounded-xl border border-[#1E3A5F] bg-dark-surface p-6 transition-all duration-300 hover:border-gold/20">
+    <div className="group relative rounded-xl border border-teal/[0.15] bg-dark-surface p-6 transition-all duration-300 hover:border-gold/20">
       {/* Photo */}
       <div className="mb-5 flex justify-center">
         {member.image && !member.pending ? (

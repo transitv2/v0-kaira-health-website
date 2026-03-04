@@ -33,7 +33,7 @@ export function BrandStatement() {
         className="pointer-events-none absolute inset-x-0 top-0 z-0 h-32"
         style={{
           background:
-            "linear-gradient(to bottom, #0B1221 0%, #0B1221 10%, #F0F4F8 100%)",
+            "linear-gradient(to bottom, #0A1628 0%, #0A1628 10%, #F8F6F2 100%)",
         }}
       />
 
@@ -48,11 +48,11 @@ export function BrandStatement() {
               transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
               viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
             >
-              <p className="text-base leading-relaxed text-[#4A4A4A]">
+              <p className="text-base leading-relaxed text-[#4A4A5A]">
                 In Arabic,{" "}
                 <em className="font-medium not-italic text-gold">KAIRA</em>{" "}
                 means{" "}
-                <em className="font-medium not-italic text-[#0B1221]">
+                <em className="font-medium not-italic text-[#1A1A2E]">
                   goodness
                 </em>{" "}
                 — the best of what is possible.
@@ -69,9 +69,9 @@ export function BrandStatement() {
               viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
               className="mt-5"
             >
-              <p className="text-base leading-relaxed text-[#4A4A4A]">
+              <p className="text-base leading-relaxed text-[#4A4A5A]">
                 In Sanskrit, it means{" "}
-                <em className="font-medium not-italic text-[#0B1221]">
+                <em className="font-medium not-italic text-[#1A1A2E]">
                   action — the decisive step
                 </em>
                 .
@@ -88,9 +88,9 @@ export function BrandStatement() {
               viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
               className="mt-5"
             >
-              <p className="text-base leading-relaxed text-[#4A4A4A]">
+              <p className="text-base leading-relaxed text-[#4A4A5A]">
                 In Greek, it echoes{" "}
-                <em className="font-medium not-italic text-[#0B1221]">
+                <em className="font-medium not-italic text-[#1A1A2E]">
                   kairos
                 </em>{" "}
                 — the favourable moment, timely intervention.
@@ -120,7 +120,7 @@ export function BrandStatement() {
               viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
               className="mt-6"
             >
-              <h2 className="font-serif text-3xl leading-tight text-[#0B1221] text-balance md:text-4xl">
+              <h2 className="font-serif text-3xl leading-tight text-[#1A1A2E] text-balance md:text-4xl">
                 The most important medical insight is the one identified{" "}
                 <strong className="text-gold">
                   before illness takes hold.
@@ -138,7 +138,7 @@ export function BrandStatement() {
               viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
               className="mt-8"
             >
-              <p className="text-base leading-relaxed text-[#4A4A4A]">
+              <p className="text-base leading-relaxed text-[#4A4A5A]">
                 Healthcare often focuses on symptoms. KAIRA focuses on earlier
                 understanding. We integrate advanced laboratory testing, imaging,
                 genomic analysis, and AI-supported pattern recognition into a
@@ -157,7 +157,7 @@ export function BrandStatement() {
               viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
               className="mt-6"
             >
-              <p className="text-base leading-relaxed text-[#4A4A4A]">
+              <p className="text-base leading-relaxed text-[#4A4A5A]">
                 This goes beyond routine screening. It brings together a broad
                 range of biomarkers, analysed over time, to provide a more
                 comprehensive understanding of your health trajectory — supported
