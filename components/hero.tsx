@@ -21,10 +21,25 @@ export function Hero() {
       <div className="relative z-10 flex min-h-screen items-center justify-center">
         <div className="mx-auto max-w-5xl px-6 pt-32 pb-24 lg:px-8 lg:pt-40 lg:pb-32 w-full">
           <div className="flex flex-col items-center text-center">
+            {/* Brand name */}
+            <div
+              className="animate-fade-up mb-3"
+              style={{ animationDelay: "100ms" }}
+            >
+              <h2 className="flex flex-col items-center leading-none">
+                <span className="font-serif text-3xl md:text-4xl font-bold tracking-[0.3em] text-cream-dim">
+                  KAIRA
+                </span>
+                <span className="text-[11px] md:text-xs tracking-[0.4em] text-gold-sub uppercase mt-1">
+                  Health
+                </span>
+              </h2>
+            </div>
+
             {/* Top label */}
             <p
-              className="animate-fade-up text-[11px] uppercase tracking-[0.4em] font-medium text-gold mb-12"
-              style={{ animationDelay: "200ms" }}
+              className="animate-fade-up text-sm md:text-base uppercase tracking-[0.35em] font-medium text-gold/80 mb-12"
+              style={{ animationDelay: "300ms" }}
             >
               The Future of Preventive Medicine
             </p>
