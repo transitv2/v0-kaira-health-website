@@ -4,8 +4,8 @@ import dynamic from "next/dynamic"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-const DataHeatmap = dynamic(
-  () => import("@/components/ui/data-heatmap").then((m) => m.DataHeatmap),
+const GenerativeMountainScene = dynamic(
+  () => import("@/components/ui/mountain-scene").then((m) => m.GenerativeMountainScene),
   { ssr: false, loading: () => null }
 )
 
@@ -15,8 +15,8 @@ const headlineLine2 = ["To", "Live", "Better.", "Longer."]
 export function Hero() {
   return (
     <section className="relative min-h-screen w-full bg-[#0A1628] overflow-hidden">
-      {/* Data heatmap grid — z-0 background layer */}
-      <DataHeatmap />
+      {/* Three.js particle terrain — z-0 background layer */}
+      <GenerativeMountainScene />
 
       {/* Content — z-10 content layer */}
       <div className="relative z-10 flex min-h-screen items-center justify-center">
@@ -42,7 +42,7 @@ export function Hero() {
               className="animate-fade-up text-sm md:text-base uppercase tracking-[0.35em] font-medium text-gold/80 mb-12"
               style={{ animationDelay: "300ms" }}
             >
-              The Future of Preventive Medicine
+              The Future of Proactive Healthcare
             </p>
 
             {/* Headline — staggered cinematic character reveal */}
