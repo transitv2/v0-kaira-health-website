@@ -59,8 +59,16 @@ export function HowItWorks() {
   return (
     <section
       id="how-it-works"
-      className="relative w-full bg-dark py-16 lg:py-20"
+      className="relative w-full bg-light py-16 lg:py-20"
     >
+      {/* Gradient fade from dark science section above */}
+      <div
+        className="pointer-events-none absolute inset-x-0 top-0 z-0 h-24"
+        style={{
+          background: "linear-gradient(to bottom, var(--color-dark) 0%, var(--color-light) 100%)",
+        }}
+      />
+
       <div className="relative z-10 mx-auto max-w-6xl px-4 sm:px-6">
         <div className="mb-6 flex flex-col items-center text-center">
           <InView
@@ -75,7 +83,7 @@ export function HowItWorks() {
             transition={{ duration: 0.45, delay: 0.1, ease: "easeOut" }}
             viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
           >
-            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-cream leading-tight">
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#0B1221] leading-tight">
               From Complexity to Clarity
             </h2>
           </InView>
@@ -83,13 +91,13 @@ export function HowItWorks() {
             transition={{ duration: 0.5, delay: 0.2, ease: "easeOut" }}
             viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
           >
-            <p className="text-muted text-sm sm:text-base mt-4 max-w-lg">
+            <p className="text-[#4A5568] text-sm sm:text-base mt-4 max-w-lg">
               Click any node to explore each step of your KAIRA journey
             </p>
           </InView>
         </div>
 
-        <RadialOrbitalTimeline timelineData={timelineData} />
+        <RadialOrbitalTimeline timelineData={timelineData} theme="light" />
       </div>
     </section>
   )
