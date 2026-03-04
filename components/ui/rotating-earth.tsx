@@ -342,7 +342,7 @@ export default function RotatingEarth({
     // Set up rotation and interaction
     const rotation: [number, number] = [0, 0]
     let autoRotate = true
-    const rotationSpeed = 0.05
+    const rotationSpeed = 0.175
 
     const rotate = () => {
       // Skip when off-screen
