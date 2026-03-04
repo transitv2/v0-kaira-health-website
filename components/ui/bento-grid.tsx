@@ -44,7 +44,7 @@ export function BentoCard({
     <div
       className={cn(
         "group relative flex flex-col justify-between overflow-hidden rounded-xl",
-        "bg-dark-surface border border-[#2A2A2A]",
+        "bg-dark-surface border border-[#1E3A5F]",
         "transition-all duration-300 hover:border-gold/30",
         className
       )}

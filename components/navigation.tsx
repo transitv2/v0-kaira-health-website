@@ -46,7 +46,7 @@ export function Navigation() {
         {/* Logo */}
         <a
           href="#"
-          className="relative z-10 flex items-center justify-center transition-all duration-300 hover:brightness-125 hover:drop-shadow-[0_0_8px_rgba(201,168,76,0.3)]"
+          className="relative z-10 flex items-center justify-center transition-all duration-300 hover:brightness-125 hover:drop-shadow-[0_0_8px_rgba(59,130,246,0.3)]"
         >
           <KairaLogo size={36} showText={false} />
         </a>

@@ -49,7 +49,7 @@ const consultants: TeamMember[] = [
 
 function TeamCard({ member }: { member: TeamMember }) {
   return (
-    <div className="group relative rounded-xl border border-[#2A2A2A] bg-dark-surface p-6 transition-all duration-300 hover:border-gold/20">
+    <div className="group relative rounded-xl border border-[#1E3A5F] bg-dark-surface p-6 transition-all duration-300 hover:border-gold/20">
       {/* Photo */}
       <div className="mb-5 flex justify-center">
         {member.image && !member.pending ? (
@@ -62,7 +62,7 @@ function TeamCard({ member }: { member: TeamMember }) {
             />
           </div>
         ) : (
-          <div className="flex h-40 w-40 flex-col items-center justify-center gap-2 rounded-full bg-[#1A1A1A] text-muted/40">
+          <div className="flex h-40 w-40 flex-col items-center justify-center gap-2 rounded-full bg-[#0F1A2E] text-muted/40">
             <span className="font-serif text-3xl text-gold/40">
               {member.name.charAt(0)}
             </span>

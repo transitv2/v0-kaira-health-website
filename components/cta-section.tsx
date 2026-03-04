@@ -11,14 +11,14 @@ export function CTASection() {
       className="relative w-full overflow-hidden"
     >
       <BackgroundGradientAnimation
-        gradientBackgroundStart="rgb(20, 15, 5)"
-        gradientBackgroundEnd="rgb(15, 10, 5)"
-        firstColor="201, 168, 76"
-        secondColor="180, 140, 50"
-        thirdColor="140, 100, 30"
-        fourthColor="100, 70, 20"
-        fifthColor="60, 40, 10"
-        pointerColor="201, 168, 76"
+        gradientBackgroundStart="rgb(8, 15, 30)"
+        gradientBackgroundEnd="rgb(11, 18, 33)"
+        firstColor="59, 130, 246"
+        secondColor="37, 99, 235"
+        thirdColor="29, 78, 216"
+        fourthColor="96, 165, 250"
+        fifthColor="14, 55, 140"
+        pointerColor="59, 130, 246"
         size="80%"
         blendingValue="hard-light"
         interactive

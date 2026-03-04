@@ -104,7 +104,7 @@ export default function RadialOrbitalTimeline({
           style={{ perspective: "1000px" }}
         >
           {/* Central core */}
-          <div className="absolute w-14 h-14 rounded-full bg-gradient-to-br from-[#C9A84C] via-[#A08838] to-[#C9A84C] animate-pulse flex items-center justify-center z-10">
+          <div className="absolute w-14 h-14 rounded-full bg-gradient-to-br from-[#3B82F6] via-[#2563EB] to-[#3B82F6] animate-pulse flex items-center justify-center z-10">
             <div className="absolute w-18 h-18 rounded-full border border-gold/20 animate-ping opacity-70"></div>
             <div
               className="absolute w-22 h-22 rounded-full border border-gold/10 animate-ping opacity-50"
@@ -150,7 +150,7 @@ export default function RadialOrbitalTimeline({
                     isPulsing ? "animate-pulse" : ""
                   }`}
                   style={{
-                    background: `radial-gradient(circle, rgba(201,168,76,0.2) 0%, rgba(201,168,76,0) 70%)`,
+                    background: `radial-gradient(circle, rgba(59,130,246,0.2) 0%, rgba(59,130,246,0) 70%)`,
                     width: `${item.energy * 0.4 + 36}px`,
                     height: `${item.energy * 0.4 + 36}px`,
                     left: `-${(item.energy * 0.4 + 36 - 36) / 2}px`,
