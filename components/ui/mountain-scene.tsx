@@ -235,10 +235,10 @@ function initScene(
         material.uniforms.pointLightPosition.value = pos
       }
 
-      // Dead zone: pitch black above "See More" text (~55% of viewport).
+      // Dead zone: pitch black above ~40% of viewport.
       // Starts at 10% once past threshold, scales 2x faster to reach 100%.
       const screenY = e.clientY / window.innerHeight
-      const threshold = 0.55
+      const threshold = 0.40
       if (screenY <= threshold) {
         currentIntensity = 0
         material.uniforms.lightIntensity.value = 0
