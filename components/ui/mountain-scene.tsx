@@ -249,15 +249,64 @@ function initScene(
       }
     }
 
+    // Touch support: update light position on drag, no dead zone on mobile
+    const handleTouchMove = (e: TouchEvent) => {
+      if (!isVisibleRef.current) return
+      const touch = e.touches[0]
+      if (!touch) return
+      const x = (touch.clientX / window.innerWidth) * 2 - 1
+      const y = -(touch.clientY / window.innerHeight) * 2 + 1
+      const pos = new THREE.Vector3(x * 5, 2, 2 - y * 2)
+
+      if (material.uniforms.pointLightPosition) {
+        material.uniforms.pointLightPosition.value = pos
+      }
+      // No dead zone on mobile — intensity is managed by the fade-in timer
+    }
+
+    // On touch/mobile: fade particles in after hero text finishes spawning (~2.5s)
+    const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+    let mobileFadeTimer: ReturnType<typeof setTimeout> | null = null
+    let mobileFadeRAF: number | null = null
+
+    if (isTouchDevice) {
+      // Start invisible, then fade up after text animation completes
+      currentIntensity = 0
+      material.uniforms.lightIntensity.value = 0
+
+      mobileFadeTimer = setTimeout(() => {
+        const startTime = performance.now()
+        const fadeDuration = 1200 // ms
+        const targetIntensity = 0.55
+
+        const fadeStep = () => {
+          const elapsed = performance.now() - startTime
+          const t = Math.min(1, elapsed / fadeDuration)
+          // ease-out curve
+          const eased = 1 - (1 - t) * (1 - t)
+          currentIntensity = eased * targetIntensity
+          material.uniforms.lightIntensity.value = currentIntensity
+          if (t < 1) {
+            mobileFadeRAF = requestAnimationFrame(fadeStep)
+          }
+        }
+        mobileFadeRAF = requestAnimationFrame(fadeStep)
+      }, 2500) // wait for hero text to finish
+    }
+
     window.addEventListener("resize", handleResize)
     window.addEventListener("mousemove", handleMouseMove)
+    window.addEventListener("touchmove", handleTouchMove, { passive: true })
 
     // Return cleanup function
     return () => {
       observer.disconnect()
       cancelAnimationFrame(frameId)
+      if (mobileFadeTimer) clearTimeout(mobileFadeTimer)
+      if (mobileFadeRAF) cancelAnimationFrame(mobileFadeRAF)
       window.removeEventListener("resize", handleResize)
       window.removeEventListener("mousemove", handleMouseMove)
+      window.removeEventListener("touchmove", handleTouchMove)
       if (currentMount && renderer.domElement.parentNode === currentMount) {
         currentMount.removeChild(renderer.domElement)
       }
