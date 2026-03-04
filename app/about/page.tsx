@@ -13,16 +13,16 @@ interface TeamMember {
 
 const leadership: TeamMember[] = [
   {
-    name: "Nate Hough",
-    role: "Founder & CEO",
-    bio: "Nate brings a background in health technology and business strategy to KAIRA Health. With experience across clinical operations, digital health platforms, and corporate development, he founded KAIRA to bridge the gap between advanced diagnostics and accessible, physician-led preventive care.",
-    image: "/images/team/nate-hough.jpg",
+    name: "Umar Syed",
+    role: "Chief Executive Officer (CEO)",
+    bio: "Umar Syed (BSc Pharmacy, MBA) is a healthcare and life-sciences executive with over 25 years of experience in Life Sciences, including the pharmaceutical and healthcare industries. He has successfully co-founded and managed multiple life-sciences companies including Opticann, Cynapsus Therapeutics, and MedReleaf. He is a post-graduate trained clinical and industrial pharmacist with an MBA from the Richard Ivey School of Business.",
+    image: "/images/team/umar-syed.png",
   },
   {
-    name: "Kristy",
-    role: "Co-Founder & COO",
-    bio: "Kristy oversees clinical operations and client experience at KAIRA Health. With deep expertise in healthcare administration and patient-centred program design, she ensures every client interaction reflects the rigour and warmth that define the KAIRA standard.",
-    image: "/images/team/kristy.jpg",
+    name: "Dr. Kristy Prouse",
+    role: "Chief Medical Officer (CMO)",
+    bio: "Dr. Kristy Prouse, MD, OB/GYN, FRCSC is an accomplished surgeon and leading OB/GYN with degrees in Psychology, Genetics and Cell Biology and trained in Functional Medicine. Dr. Prouse will be the Medical Director in Niagara Falls and will be the face of innovative care for our clients, bringing her unique background in naturopathic care and innovative functional medicine approaches.",
+    image: "/images/team/kristy-prouse.png",
   },
   {
     name: "Farley",
@@ -34,10 +34,10 @@ const leadership: TeamMember[] = [
 
 const consultants: TeamMember[] = [
   {
-    name: "You",
+    name: "Nate Hough",
     role: "Consultant — Technology",
     bio: "Technology strategy consultant advising KAIRA Health on platform architecture, AI-supported analytics infrastructure, and digital health integrations. Focused on building scalable systems that support physician-led care with data-driven precision.",
-    pending: true,
+    image: "/images/team/nate-hough.jpg",
   },
   {
     name: "Eric",
@@ -51,24 +51,24 @@ function TeamCard({ member }: { member: TeamMember }) {
   return (
     <div className="group relative rounded-xl border border-[#2A2A2A] bg-dark-surface p-6 transition-all duration-300 hover:border-gold/20">
       {/* Photo */}
-      <div className="mb-5 h-48 w-full overflow-hidden rounded-lg bg-[#1A1A1A] flex items-center justify-center">
+      <div className="mb-5 flex justify-center">
         {member.image && !member.pending ? (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
-            src={member.image}
-            alt={member.name}
-            className="h-full w-full object-cover object-top"
-          />
+          <div className="h-40 w-40 overflow-hidden rounded-full border-2 border-gold/20">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={member.image}
+              alt={member.name}
+              className="h-full w-full object-cover object-top"
+            />
+          </div>
         ) : (
-          <div className="flex flex-col items-center gap-2 text-muted/40">
-            <div className="h-16 w-16 rounded-full bg-gold/10 flex items-center justify-center">
-              <span className="font-serif text-2xl text-gold/40">
-                {member.name.charAt(0)}
-              </span>
-            </div>
+          <div className="flex h-40 w-40 flex-col items-center justify-center gap-2 rounded-full bg-[#1A1A1A] text-muted/40">
+            <span className="font-serif text-3xl text-gold/40">
+              {member.name.charAt(0)}
+            </span>
             {member.pending && (
               <span className="text-[10px] uppercase tracking-widest text-gold/30">
-                Photo coming soon
+                Coming soon
               </span>
             )}
           </div>
@@ -159,8 +159,8 @@ export default function AboutPage() {
           <div className="mt-16 rounded-xl border border-gold/10 bg-gold/[0.03] p-6">
             <p className="text-sm text-cream/60 leading-relaxed">
               <span className="text-gold font-medium">Note:</span>{" "}
-              Photos and full bios for Farley, Eric, and the Technology Consultant
-              are being finalised. Please send headshots and bios to Nate for
+              Photos and full bios for Farley and Eric
+              are being finalised. Please send headshots and bios for
               inclusion.
             </p>
           </div>
