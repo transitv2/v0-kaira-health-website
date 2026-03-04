@@ -17,6 +17,19 @@ export function GenerativeMountainScene() {
     const currentMount = mountRef.current
     if (!currentMount) return
 
+    const cleanup = initScene(currentMount, lightRef, isVisibleRef)
+    return cleanup
+  }, [])
+
+  return <div ref={mountRef} className="absolute inset-0 w-full h-full z-0" />
+}
+
+/** All Three.js setup extracted so it can run deferred */
+function initScene(
+  currentMount: HTMLDivElement,
+  lightRef: React.MutableRefObject<THREE.PointLight | null>,
+  isVisibleRef: React.MutableRefObject<boolean>,
+) {
     // Pause animation when off-screen
     const observer = new IntersectionObserver(
       ([entry]) => { isVisibleRef.current = entry.isIntersecting },
@@ -43,7 +56,7 @@ export function GenerativeMountainScene() {
 
     // Lower-res geometry on mobile
     const isMobile = window.innerWidth < 768
-    const segments = isMobile ? 128 : 256
+    const segments = isMobile ? 64 : 128
     const geometry = new THREE.PlaneGeometry(12, 8, segments, segments)
 
     // SHADER MATERIAL — Warm-cool dual-lit terrain: golden hour ridges, teal ambient, navy valleys
@@ -286,6 +299,7 @@ export function GenerativeMountainScene() {
     window.addEventListener("resize", handleResize)
     window.addEventListener("mousemove", handleMouseMove)
 
+    // Return cleanup function
     return () => {
       observer.disconnect()
       cancelAnimationFrame(frameId)
@@ -298,9 +312,6 @@ export function GenerativeMountainScene() {
       material.dispose()
       renderer.dispose()
     }
-  }, [])
-
-  return <div ref={mountRef} className="absolute inset-0 w-full h-full z-0" />
 }
 
 export default GenerativeMountainScene

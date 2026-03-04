@@ -1,10 +1,13 @@
 "use client"
 
-import { Suspense, lazy } from "react"
+import dynamic from "next/dynamic"
 import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
-const GenerativeMountainScene = lazy(() => import("@/components/ui/mountain-scene"))
+const GenerativeMountainScene = dynamic(
+  () => import("@/components/ui/mountain-scene").then((m) => m.GenerativeMountainScene),
+  { ssr: false, loading: () => null }
+)
 
 const headlineLine1 = ["See", "More.", "Earlier."]
 const headlineLine2 = ["To", "Live", "Better.", "Longer."]
@@ -13,9 +16,7 @@ export function Hero() {
   return (
     <section className="relative min-h-screen w-full bg-[#0A1628] overflow-hidden">
       {/* Three.js mountain landscape — z-0 background layer */}
-      <Suspense fallback={<div className="absolute inset-0 w-full h-full bg-[#0A1628]" />}>
-        <GenerativeMountainScene />
-      </Suspense>
+      <GenerativeMountainScene />
 
       {/* Content — z-10 content layer */}
       <div className="relative z-10 flex min-h-screen items-center justify-center">
