@@ -13,8 +13,8 @@ import {
 } from "@/components/ui/sheet"
 
 const navLinks = [
-  { label: "The Science", href: "#science" },
-  { label: "How It Works", href: "#how-it-works" },
+  { label: "The Science", href: "/#science" },
+  { label: "How It Works", href: "/#how-it-works" },
   { label: "About Us", href: "/about" },
   { label: "Clinic Network", href: "/clinics" },
 ]
@@ -45,7 +45,7 @@ export function Navigation() {
       >
         {/* Logo */}
         <a
-          href="#"
+          href="/"
           className="relative z-10 flex items-center justify-center transition-all duration-300 hover:brightness-125 hover:drop-shadow-[0_0_8px_rgba(201,168,76,0.3)]"
         >
           <KairaLogo size={36} showText={false} />
