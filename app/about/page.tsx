@@ -40,10 +40,10 @@ const consultants: TeamMember[] = [
     image: "/images/team/nate-hough.jpg",
   },
   {
-    name: "Eric",
+    name: "Eric Feist",
     role: "Consultant — Legal",
-    bio: "Legal counsel advising KAIRA Health on regulatory compliance, healthcare privacy law (PIPEDA/PHIPA, HIPAA), corporate structuring, and cross-border operational requirements across North American and Middle Eastern markets.",
-    pending: true,
+    bio: "Eric Feist (B.A., LL.B.) is a business-focused legal advisor licensed in Quebec and Ontario, with extensive experience in corporate and commercial law spanning the healthcare, technology, and SaaS sectors. He provides strategic counsel on contracts, governance, compliance, and commercial operations across jurisdictions. Eric has built legal functions and operational frameworks from the ground up, bringing depth in cross-border transactions and high-growth environments.",
+    image: "/images/team/eric-feist.png",
   },
 ]
 
@@ -159,8 +159,8 @@ export default function AboutPage() {
           <div className="mt-16 rounded-xl border border-gold/10 bg-gold/[0.03] p-6">
             <p className="text-sm text-cream/60 leading-relaxed">
               <span className="text-gold font-medium">Note:</span>{" "}
-              Photos and full bios for Farley and Eric
-              are being finalised. Please send headshots and bios for
+              Photo and full bio for Farley
+              are being finalised. Please send headshot and bio for
               inclusion.
             </p>
           </div>
