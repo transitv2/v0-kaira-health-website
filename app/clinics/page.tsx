@@ -98,7 +98,7 @@ export default function ClinicsPage() {
               <span className="text-gold">Clinics</span>
             </h1>
             <p className="mt-6 text-muted text-base md:text-lg leading-relaxed max-w-2xl">
-              KAIRA Health partners with leading clinics to deliver consistent,
+              KAIRA Health partners with select clinics to deliver consistent,
               physician-led preventive care. Our network is expanding across
               North America and the Middle East.
             </p>
@@ -184,6 +184,13 @@ export default function ClinicsPage() {
                 )}
               </div>
             ))}
+          </div>
+
+          {/* Independence disclaimer */}
+          <div className="mt-12 rounded-xl border border-gold/10 bg-gold/[0.03] p-6">
+            <p className="text-sm text-cream/60 leading-relaxed">
+              Partner clinics are independent medical practices. Clinical services are delivered by those practices in accordance with the regulations governing healthcare in their jurisdictions.
+            </p>
           </div>
 
           {/* Contact CTA */}

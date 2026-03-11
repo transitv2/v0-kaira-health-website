@@ -9,7 +9,7 @@ const stats: {
   suffix?: string
   label: string
 }[] = [
-  { target: 200, suffix: "+", label: "Biomarkers analysed per client" },
+  { target: 200, suffix: "+", label: "Biomarkers available depending on program and clinical indication" },
   { target: 6, label: "Diagnostic categories integrated" },
   { target: 2, label: "Markets served: North America & Middle East (2027)" },
   { target: 60, suffix: "+", label: "Minutes per consultation" },
@@ -18,8 +18,8 @@ const stats: {
 const trustSignals: string[] = [
   "Currently operating and serving patients",
   "Founded by practicing physicians",
-  "Accredited laboratory and imaging network",
-  "PIPEDA/PHIPA and HIPAA-compliant, enterprise-grade security",
+  "Established laboratory and imaging provider network",
+  "Designed to support compliance with applicable privacy legislation",
 ]
 
 export function StatsSection() {

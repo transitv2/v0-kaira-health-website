@@ -15,33 +15,33 @@ const leadership: TeamMember[] = [
   {
     name: "Umar Syed",
     role: "Chief Executive Officer (CEO)",
-    bio: "Umar Syed (BSc Pharmacy, MBA) is a healthcare and life-sciences executive with over 25 years of experience in Life Sciences, including the pharmaceutical and healthcare industries. He has successfully co-founded and managed multiple life-sciences companies including Opticann, Cynapsus Therapeutics, and MedReleaf. He is a post-graduate trained clinical and industrial pharmacist with an MBA from the Richard Ivey School of Business.",
+    bio: "Umar Syed is a healthcare and life sciences executive with more than 25 years of experience across the pharmaceutical, biotechnology, and healthcare sectors. As Chief Executive Officer of KAIRA Health, he leads the organization's strategic development and operational growth, guiding the expansion of a preventive health platform designed to integrate advanced diagnostics, physician expertise, and data-driven health insights. Mr. Syed has co-founded and led several life sciences companies spanning drug development, biotechnology, and healthcare innovation. He holds a Bachelor of Science in Pharmacy and an MBA from the Richard Ivey School of Business.",
     image: "/images/team/umar-syed.png",
   },
   {
     name: "Dr. Kristy Prouse",
     role: "Chief Medical Officer (CMO)",
-    bio: "Dr. Kristy Prouse, MD, OB/GYN, FRCSC is an accomplished surgeon and leading OB/GYN with degrees in Psychology, Genetics and Cell Biology and trained in Functional Medicine. Dr. Prouse will be the Medical Director in Niagara Falls and will be the face of innovative care for our clients, bringing her unique background in naturopathic care and innovative functional medicine approaches.",
+    bio: "Dr. Kristy Prouse is an obstetrician\u2013gynecologist and physician leader with a focus on women\u2019s health, preventive medicine, and innovative models of healthcare delivery. As Chief Medical Officer of KAIRA Health, she provides clinical leadership for the organization\u2019s preventive health framework, guiding the medical strategy, clinical standards, and physician governance that underpin the platform. Dr. Prouse brings extensive experience in medical governance and oversight across multidisciplinary clinical environments. Her work has included developing clinical protocols, supporting physician and practitioner teams, and helping design care models that responsibly integrate advanced diagnostics and emerging health technologies within evidence-based medical practice.",
     image: "/images/team/kristy-prouse.png",
   },
   {
-    name: "Farley",
+    name: "Michael Farley, PhD",
     role: "VP, Corporate Development",
-    bio: "Farley leads corporate development and strategic partnerships at KAIRA Health, working to expand the clinic network and build relationships with leading diagnostic and technology partners across North America and the Middle East.",
-    pending: true,
+    bio: "Michael leads corporate and business development at KAIRA Health working with investors, clinics and diagnostic partners to accelerate the company\u2019s global expansion plans. Michael co-founded several companies and advised on $US 150M in life science transactions in Canada, United States and Europe. During the 1990s he managed technology investment programs at the Canadian Foreign Affairs Department.",
+    image: "/images/team/michael-farley.png",
   },
 ]
 
 const consultants: TeamMember[] = [
   {
     name: "Nate Hough",
-    role: "Consultant — Technology",
-    bio: "Technology strategy consultant advising KAIRA Health on platform architecture, AI-supported analytics infrastructure, and digital health integrations. Focused on building scalable systems that support physician-led care with data-driven precision.",
-    image: "/images/team/nate-hough.jpg",
+    role: "Technology",
+    bio: "Nate Hough is a seasoned technology executive with over nine years of experience building and scaling high-growth companies. He currently serves as a transit technology executive at Velocia, where, as Chief Operating Officer, he leads customer success initiatives and scales the company\u2019s solutions. Previously, Nate co-founded Evolution Optiks, an ophthalmology device manufacturer, where he played a pivotal role in the company\u2019s foundational growth and strategic success, establishing a strong track record of leadership in the health-tech space.",
+    image: "/images/team/nate-hough.png",
   },
   {
     name: "Eric Feist",
-    role: "Consultant — Legal",
+    role: "Legal",
     bio: "Eric Feist (B.A., LL.B.) is a business-focused legal advisor licensed in Quebec and Ontario, with extensive experience in corporate and commercial law spanning the healthcare, technology, and SaaS sectors. He provides strategic counsel on contracts, governance, compliance, and commercial operations across jurisdictions. Eric has built legal functions and operational frameworks from the ground up, bringing depth in cross-border transactions and high-growth environments.",
     image: "/images/team/eric-feist.png",
   },
@@ -155,15 +155,6 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Note about pending content */}
-          <div className="mt-16 rounded-xl border border-gold/10 bg-gold/[0.03] p-6">
-            <p className="text-sm text-cream/60 leading-relaxed">
-              <span className="text-gold font-medium">Note:</span>{" "}
-              Photo and full bio for Farley
-              are being finalised. Please send headshot and bio for
-              inclusion.
-            </p>
-          </div>
         </div>
       </main>
       <Footer />

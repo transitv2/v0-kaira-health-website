@@ -63,6 +63,17 @@ export function GlobalReach() {
               </p>
             </InView>
 
+            <InView
+              transition={{ duration: 0.7, delay: 0.4, ease: "easeOut" }}
+              viewOptions={{ once: true, margin: "-80px", amount: 0.2 }}
+            >
+              <p className="text-muted/60 text-sm leading-relaxed mt-4 max-w-lg">
+                Clinical services are delivered by appropriately licensed
+                clinicians within the jurisdictions where care is provided.
+                Service availability varies by location.
+              </p>
+            </InView>
+
             {/* Closing line */}
             <InView
               transition={{ duration: 0.7, delay: 0.8, ease: "easeOut" }}

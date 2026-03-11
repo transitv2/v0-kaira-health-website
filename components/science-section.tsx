@@ -37,7 +37,7 @@ const pillars: Pillar[] = [
     value: "diagnostics",
     title: "Advanced Diagnostics Aggregation",
     description:
-      "We draw from a network of accredited laboratories and imaging centres \u2014 not a single vendor, but a curated selection. Over 200 biomarkers across metabolic, hormonal, cardiovascular, inflammatory, immune, and genomic panels. Advanced imaging when clinically indicated. Screening protocols structured to complement standard care.",
+      "Testing is performed through established laboratories and imaging providers operating under the regulatory and accreditation frameworks applicable in their respective jurisdictions — not a single vendor, but a curated selection. Comprehensive panels may include analysis of more than 200 biomarkers across metabolic, hormonal, cardiovascular, inflammatory, immune, and genomic categories depending on the program selected and clinical indication. Advanced imaging when clinically indicated. Screening protocols structured to complement standard care.",
     accent: "Depth and rigour, built into every assessment.",
   },
   {
@@ -111,6 +111,29 @@ export function ScienceSection() {
             </p>
           </InView>
         </div>
+
+        {/* ── AI Transparency ── */}
+        <InView
+          variants={fadeUp}
+          transition={{ duration: 0.45, delay: 0.24, ease: "easeOut" }}
+          viewOptions={{ once: true, margin: "-80px", amount: 0.3 }}
+          className="mt-10"
+        >
+          <div className="rounded-xl border border-teal/[0.12] bg-dark-surface p-6">
+            <h3 className="text-sm font-semibold uppercase tracking-[0.15em] text-teal/80 mb-3">
+              How the KAIRA Platform Works
+            </h3>
+            <p className="text-sm leading-relaxed text-muted">
+              KAIRA integrates clinical data, laboratory results, imaging
+              findings, and health history into a unified analytical platform.
+              Analytical tools assist clinicians in identifying patterns and
+              potential risk signals across datasets. These tools support
+              physician decision-making but do not independently diagnose
+              medical conditions. All clinical interpretations and care
+              recommendations are reviewed by appropriately licensed physicians.
+            </p>
+          </div>
+        </InView>
 
         {/* ── Accordion pillars ── */}
         <InView

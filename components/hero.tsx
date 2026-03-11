@@ -141,8 +141,8 @@ export function Hero() {
           >
             <blockquote className="max-w-xl text-center">
               <p className="text-base italic leading-relaxed text-cream/70 font-serif">
-                {'"'}The most important medical insight is the one identified
-                before illness takes hold.{'"'}
+                {'"'}The most valuable health insight is the one that arrives
+                before symptoms do.{'"'}
               </p>
             </blockquote>
           </div>

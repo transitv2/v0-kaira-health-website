@@ -15,6 +15,9 @@ const StatsSection = dynamic(
 const GlobalReach = dynamic(
   () => import("@/components/global-reach").then((m) => m.GlobalReach)
 )
+const ClinicalGovernance = dynamic(
+  () => import("@/components/clinical-governance").then((m) => m.ClinicalGovernance)
+)
 const CTASection = dynamic(
   () => import("@/components/cta-section").then((m) => m.CTASection)
 )
@@ -29,6 +32,7 @@ export default function Home() {
       <HowItWorks />
       <StatsSection />
       <GlobalReach />
+      <ClinicalGovernance />
       <CTASection />
       <Footer />
     </main>
