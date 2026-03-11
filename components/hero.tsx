@@ -102,9 +102,9 @@ export function Hero() {
               className="animate-fade-up mt-10 max-w-2xl text-pretty text-lg leading-relaxed text-muted md:text-xl"
               style={{ animationDelay: "1800ms" }}
             >
-              KAIRA Health combines advanced diagnostics with AI-supported analysis
-              and physician-led concierge care — delivering a comprehensive view of
-              your health so that risks can be identified early and addressed proactively.
+              KAIRA integrates advanced diagnostics, physician expertise, and
+              data-driven health analysis through a proprietary platform with a
+              network of partner clinics.
             </p>
 
             {/* CTAs */}

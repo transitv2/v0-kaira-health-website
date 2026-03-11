@@ -25,7 +25,7 @@ const clinicNetwork: CityNetwork[] = [
       {
         name: "RegenaLife",
         description:
-          "MedAdvance functional medicine clinic offering comprehensive diagnostic panels, hormone optimization, and longevity-focused care.",
+          "MedAdvance functional medicine clinic offering comprehensive diagnostic panels, hormonal health assessments, and preventive care programs.",
         address: "Toronto, ON",
         website: "https://regenalife.ca",
       },
@@ -39,13 +39,13 @@ const clinicNetwork: CityNetwork[] = [
       {
         name: "Hui Clinic",
         description:
-          "Led by Dr. Melody Hui, MD, CCFP(EM), certified in longevity medicine through the American Academy of Anti-Aging and Regenerative Medicine. Focused on personalised health optimization.",
+          "Led by Dr. Melody Hui, MD, CCFP(EM), with additional training in longevity and preventive medicine. Focused on personalised health assessment and preventive care.",
         address: "Toronto & Oakville, ON",
       },
       {
         name: "Marsden Centre",
         description:
-          "Naturopathic and integrative medicine centre offering evidence-based approaches to cancer care, chronic disease management, and preventive health strategies.",
+          "Naturopathic and integrative medicine centre offering evidence-based approaches to chronic disease management, preventive health strategies, and comprehensive wellness programs.",
         address: "Toronto, ON",
         website: "https://marsdencentre.com",
       },
@@ -173,7 +173,7 @@ export default function ClinicsPage() {
                       className="mt-4 rounded-full border-gold/20 text-cream/60 hover:bg-gold/10 hover:text-cream"
                     >
                       <a
-                        href="mailto:consulting@regenalife.ca"
+                        href="mailto:clinics@kairahealth.ai"
                         className="inline-flex items-center gap-2"
                       >
                         <Mail className="h-3.5 w-3.5" />
@@ -206,7 +206,7 @@ export default function ClinicsPage() {
               asChild
               className="rounded-full bg-gold text-dark hover:bg-gold/90 px-8 py-3 h-auto text-sm font-semibold cursor-pointer"
             >
-              <a href="mailto:consulting@regenalife.ca">
+              <a href="mailto:clinics@kairahealth.ai">
                 Get in Touch
               </a>
             </Button>
