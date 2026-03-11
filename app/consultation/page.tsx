@@ -34,6 +34,8 @@ export default function ConsultationPage() {
     interest: "",
     message: "",
   })
+  const [consentPrivacy, setConsentPrivacy] = useState(false)
+  const [consentCommunications, setConsentCommunications] = useState(false)
   const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle")
   const [errorMsg, setErrorMsg] = useState("")
 
@@ -251,6 +253,38 @@ export default function ConsultationPage() {
               <p className="text-red-400 text-sm">{errorMsg}</p>
             )}
 
+            {/* Consent checkboxes */}
+            <div className="space-y-4">
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  required
+                  checked={consentPrivacy}
+                  onChange={(e) => setConsentPrivacy(e.target.checked)}
+                  className="mt-1 h-4 w-4 shrink-0 rounded border border-teal/[0.15] bg-dark-surface accent-gold cursor-pointer"
+                />
+                <span className="text-muted text-sm leading-relaxed">
+                  I consent to KAIRA Health collecting and using the information submitted through this form for the purpose of responding to my inquiry and coordinating a consultation. I have read and agree to the{" "}
+                  <a href="/privacy" className="text-gold hover:text-gold/80 underline underline-offset-2 transition-colors">
+                    Privacy Policy
+                  </a>
+                  . <span className="text-red-400">*</span>
+                </span>
+              </label>
+
+              <label className="flex items-start gap-3 cursor-pointer group">
+                <input
+                  type="checkbox"
+                  checked={consentCommunications}
+                  onChange={(e) => setConsentCommunications(e.target.checked)}
+                  className="mt-1 h-4 w-4 shrink-0 rounded border border-teal/[0.15] bg-dark-surface accent-gold cursor-pointer"
+                />
+                <span className="text-muted text-sm leading-relaxed">
+                  I agree to receive communications from KAIRA Health related to my inquiry or future services. I understand that I can withdraw consent at any time.
+                </span>
+              </label>
+            </div>
+
             {/* Submit */}
             <Button
               type="submit"
@@ -270,9 +304,17 @@ export default function ConsultationPage() {
               )}
             </Button>
 
-            <p className="text-muted/50 text-xs text-center">
-              Your information is kept confidential and will only be used to
-              arrange your consultation.
+            {/* Emergency disclaimer */}
+            <p className="text-muted/40 text-xs text-center leading-relaxed">
+              Note: KAIRA consultations are intended for preventive and non-urgent health discussions. If you are experiencing a medical emergency, please contact local emergency services immediately.
+            </p>
+
+            <p className="text-muted/50 text-xs text-center leading-relaxed">
+              Information submitted through this form will be used to respond to your inquiry and coordinate a consultation. Additional information regarding how personal data may be used, stored, and protected is available in our{" "}
+              <a href="/privacy" className="text-gold/60 hover:text-gold underline underline-offset-2 transition-colors">
+                Privacy Policy
+              </a>
+              .
             </p>
           </form>
         </div>

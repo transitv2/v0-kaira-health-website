@@ -1,15 +1,15 @@
 import { KairaLogo } from "@/components/kaira-logo"
 
 const exploreLinks = [
-  { label: "The Science", href: "#science" },
-  { label: "How It Works", href: "#how-it-works" },
+  { label: "The Science", href: "/#science" },
+  { label: "How It Works", href: "/#how-it-works" },
   { label: "About Us", href: "/about" },
   { label: "Clinic Network", href: "/clinics" },
 ]
 
 const connectLinks = [
   { label: "Schedule Consultation", href: "/consultation" },
-  { label: "Contact Us", href: "mailto:consulting@regenalife.ca" },
+  { label: "Contact Us", href: "mailto:info@kairahealth.com" },
 ]
 
 const legalLinks = [
@@ -28,7 +28,7 @@ export function Footer() {
         <div className="grid gap-12 lg:grid-cols-4">
           {/* Brand column — spans 2 */}
           <div className="lg:col-span-2">
-            <a href="#" aria-label="KAIRA Health home">
+            <a href="/" aria-label="KAIRA Health home">
               <KairaLogo size={28} />
             </a>
             <p className="mt-5 text-muted text-sm leading-relaxed max-w-sm">
@@ -79,8 +79,13 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Emergency disclaimer */}
+        <p className="mt-10 text-xs text-cream/30 text-center leading-relaxed">
+          KAIRA does not provide emergency medical services. If you are experiencing a medical emergency, contact your local emergency services.
+        </p>
+
         {/* Bottom bar: copyright + legal */}
-        <div className="mt-10 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 sm:flex-row">
+        <div className="mt-4 flex flex-col items-center justify-between gap-4 border-t border-border pt-6 sm:flex-row">
           <p className="text-muted/50 text-xs">
             &copy; {new Date().getFullYear()} KAIRA Health. All rights
             reserved.

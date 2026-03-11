@@ -162,6 +162,8 @@ export function BrandStatement() {
                 range of biomarkers, analysed over time, to provide a more
                 comprehensive understanding of your health trajectory — supported
                 by a concierge medical team committed to personalised care.
+                KAIRA programs are designed to complement — not replace — the
+                care provided by a primary care physician or specialist.
               </p>
             </InView>
           </div>
