@@ -158,12 +158,12 @@ export function BrandStatement() {
               className="mt-6"
             >
               <p className="text-base leading-relaxed text-[#4A4A5A]">
-                This goes beyond routine screening. It brings together a broad
-                range of biomarkers, analysed over time, to provide a more
-                comprehensive understanding of your health trajectory — supported
-                by a concierge medical team committed to personalised care.
-                KAIRA programs are designed to complement — not replace — the
-                care provided by a primary care physician or specialist.
+                By bringing together a broad range of biomarkers, analysed over
+                time, we provide a more comprehensive understanding of your
+                health trajectory — supported by a concierge medical team
+                committed to personalised care. KAIRA programs are designed to
+                complement — not replace — the care provided by a primary care
+                physician or specialist.
               </p>
             </InView>
           </div>

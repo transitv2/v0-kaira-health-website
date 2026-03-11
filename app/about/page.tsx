@@ -1,6 +1,9 @@
+"use client"
+
+import { useState } from "react"
 import { Navigation } from "@/components/navigation"
 import { Footer } from "@/components/footer"
-import { ArrowLeft, Linkedin } from "lucide-react"
+import { ArrowLeft, Linkedin, ChevronDown } from "lucide-react"
 
 interface TeamMember {
   name: string
@@ -48,6 +51,10 @@ const consultants: TeamMember[] = [
 ]
 
 function TeamCard({ member }: { member: TeamMember }) {
+  const paragraphs = member.bio.split("\n\n")
+  const hasMultipleParagraphs = paragraphs.length > 1
+  const [expanded, setExpanded] = useState(false)
+
   return (
     <div className="group relative rounded-xl border border-teal/[0.15] bg-dark-surface p-6 transition-all duration-300 hover:border-gold/20">
       {/* Photo */}
@@ -80,9 +87,51 @@ function TeamCard({ member }: { member: TeamMember }) {
       <p className="mt-1 text-xs uppercase tracking-[0.15em] text-gold/60">
         {member.role}
       </p>
-      <p className="mt-4 text-sm leading-relaxed text-muted">
-        {member.bio}
-      </p>
+
+      {/* Bio with paragraph breaks and expand/collapse */}
+      <div className="mt-4">
+        {hasMultipleParagraphs ? (
+          <>
+            {/* First paragraph always visible */}
+            <p className="text-sm leading-relaxed text-muted">
+              {paragraphs[0]}
+            </p>
+
+            {/* Remaining paragraphs — collapsed by default */}
+            <div
+              className={`overflow-hidden transition-all duration-500 ease-in-out ${
+                expanded ? "max-h-[2000px] opacity-100 mt-3" : "max-h-0 opacity-0"
+              }`}
+            >
+              {paragraphs.slice(1).map((paragraph, i) => (
+                <p
+                  key={i}
+                  className="text-sm leading-relaxed text-muted mt-3 first:mt-0"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            </div>
+
+            {/* Toggle button */}
+            <button
+              onClick={() => setExpanded(!expanded)}
+              className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-gold/60 hover:text-gold transition-colors cursor-pointer"
+            >
+              {expanded ? "Show less" : "Read more"}
+              <ChevronDown
+                className={`h-3 w-3 transition-transform duration-300 ${
+                  expanded ? "rotate-180" : ""
+                }`}
+              />
+            </button>
+          </>
+        ) : (
+          <p className="text-sm leading-relaxed text-muted">
+            {member.bio}
+          </p>
+        )}
+      </div>
 
       {member.linkedin && (
         <a
